@@ -1,0 +1,1 @@
+[{"constant":false,"inputs":[{"name":"_value","type":"string"}],"name":"setValue","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"store","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"}]
