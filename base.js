@@ -105,7 +105,7 @@ function open_account() {
 			sko.history(account,10000).then(function(history) {
 					history=history.reverse();
 					var html="<table class='table table-striped'>";
-					html+="<tr><th>Block</th><th>Von</th><th>An</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Betrag</th>";					
+					html+="<tr><th>Block</th><th>Von</th><th>An</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
 					var saldo=0;					
 					$.each(history,function(i,v) {
 						if(i<5) {
@@ -136,6 +136,7 @@ function open_account() {
 				
 					if(owner==node.wallet.address) {
 						$('#show_transfer').show();
+						$('#tmpl_b64').hide();
 						$('#show_transfer').click(function() {
 							$('#sko_blance').hide();
 							$('#sko_transfer').show();
@@ -143,6 +144,42 @@ function open_account() {
 						$('#fnct_transfer_cancel').click(function() {
 							$('#sko_blance').show();
 							$('#sko_transfer').hide();
+						});
+						$('#fnct_transfer_template').click(function() {
+							var from=$('#transfer_from').val();
+							var to=$('#transfer_to').val();
+							if(window.localStorage.getItem("name_"+from)!=null) {
+								from=window.localStorage.getItem("name_"+from);
+							}
+							if(window.localStorage.getItem("name_"+to)!=null) {
+								to=window.localStorage.getItem("name_"+to);
+							}
+							
+							var tx={};
+							tx.from=from;
+							tx.to=to;
+							tx.base=$('#transfer_base').val()*1000;
+							tx.value=$('#transfer_value').val()*10000000;
+							var str=btoa(JSON.stringify(tx));
+							$('#tmpl_b64').val(str);
+							$('#tmpl_b64').show();
+							$('#tmpl_b64').attr('readonly','readonly');
+							
+							
+						});
+						$('#fnct_transfer_load').click(function() {
+								if($('#tmpl_b64').is(":visible")) {
+									var tx=JSON.parse(atob($('#tmpl_b64').val()));
+									$('#transfer_from').val(lookup(tx.from));
+									$('#transfer_to').val(lookup(tx.to));								
+									$('#transfer_base').val(tx.base/1000);
+									$('#transfer_value').val(tx.value/10000000);
+									$('#tmpl_b64').hide();
+									console.log(tx);
+								} else {
+									$('#tmpl_b64').show();
+									$('#tmpl_b64').removeAttr('readonly');
+								}								
 						});
 						$('#fnct_transfer').click(function() {
 							$('#fnct_transfer').attr('disabled','disabled');

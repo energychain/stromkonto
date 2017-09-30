@@ -39,7 +39,7 @@
 							</form>
 						</div>
 						<div id="sko_transfer" style="display:none">
-							<hr/>
+					
 							<h3>Überweisung</h3>
 							 <div class="form-group">
 								<label for="transfer_from">Von</label>
@@ -57,12 +57,26 @@
 								<label for="transfer_base">Betrag Energie (KWh)</label>
 								<input type="number" class="form-control" id="transfer_base" placeholder="0.123">
 							  </div>	
-							<button id="fnct_transfer_cancel" class="btn btn-default">abbrechen</button>
-							<button id="fnct_transfer" class="btn btn-danger">hinzufügen</button>
+							  <hr/>
+							<div class="row">
+								<div class="col-md-6">
+									<button id="fnct_transfer_load" class="btn btn-primary">laden</button>						
+									<button id="fnct_transfer_template" class="btn btn-primary">speichern</button>
+								</div>
+								<div class="col-md-6" style="text-align:right">
+									<button id="fnct_transfer_cancel" class="btn btn-default">abbrechen</button>	
+									<button id="fnct_transfer" class="btn btn-danger">freigeben</button><br/>
+								</div>
+							</div>
+
 							<span id="status_transfer"></span>
-						</div>			
+							
+							<textarea class="form-control" id="tmpl_b64" style="display:none;margin-top:20px;"></textarea>
+							
+						</div>	
+						
 						<div id="sko_blance" style="display:none">
-							<hr/>
+					
 							<h3><span id="dsp_account"></span>&nbsp;<span class="glyphicon glyphicon-pencil" id="edit_alias">&nbsp;</span></h3>
 								<div class="row">
 									<div class="col-md-6">
@@ -75,8 +89,8 @@
 								&nbsp;								
 								<div id="history"><em>Bislang keine Transaktionen</em></div>
 								<hr/>
-								<a href="?" class="btn btn-danger" id="btnunterbilanzierung" style="display:none">Unterbilanzierung</a>
-								<button id="show_transfer" class="btn btn-danger" style="display:none">Überweisung</button>
+								<a href="?" class="btn btn-primary" id="btnunterbilanzierung" style="display:none">Unterbilanzierung</a>
+								<button id="show_transfer" class="btn btn-primary" style="display:none">Überweisung</button>
 						</div>
 
 					</div>
