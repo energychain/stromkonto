@@ -90,7 +90,16 @@
 								<div id="history"><em>Bislang keine Transaktionen</em></div>
 								<hr/>
 								<a href="?" class="btn btn-primary" id="btnunterbilanzierung" style="display:none">Unterbilanzierung</a>
-								<button id="show_transfer" class="btn btn-primary" style="display:none">Überweisung</button>
+								<a href="?" class="btn btn-primary" id="btnxferkto" style="display:none">Offene Transfers</a>
+								<div class="btn-group">
+								<button id="show_transfer" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none">Überweisung <span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a href="#" id="show_transfer_to">Senden</a></li>
+									<li><a href="#" id="show_transfer_from">Anfordern</a></li>									
+									<li role="separator" class="divider"></li>
+									<li><a href="#" id="show_transfer_free">Freie Überweisung</a></li>
+							  </ul>
+							  </div>
 						</div>
 
 					</div>

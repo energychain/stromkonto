@@ -1,4 +1,5 @@
 var sko_sc="0x19BF166624F485f191d82900a5B7bc22Be569895";
+var xferkto="0x19BF166624F485f191d82900a5B7bc22Be569895";
 
 function nameLookup(address) {
 		node.roleLookup().then(function(rl) {
@@ -18,6 +19,12 @@ function lookup(address) {
 function open_subbalance() {
 	node.roleLookup().then(function(rl) {
 			rl.relations($('#account').val(),42).then(function(tx) {
+				if(sko_sc!=xferkto) {
+					$('#btnxferkto').attr('href','?account='+$('#account').val()+'&sc=0x19BF166624F485f191d82900a5B7bc22Be569895');
+					$('#btnxferkto').show();
+				} else {
+					$('#btnxferkto').hide();
+				}
 				if(tx!="0x0000000000000000000000000000000000000000") {
 					if(sko_sc!=tx) {
 						$('#btnunterbilanzierung').attr('href','?account='+$('#account').val()+'&sc='+tx);
@@ -112,7 +119,11 @@ function open_account() {
 							html+="<tr>";
 							html+="<td>#"+v.blockNumber+"</td>";
 							html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
-							html+="<td><a href='?account="+v.to+"&sc="+sko_sc+"' class='"+v.to+"'>"+lookup(v.to)+"</a></td>";
+							if((sko_sc==xferkto)&&(v.to.toLowerCase()==node.wallet.address)) {
+								html+="<td><a href='?account="+v.to+"&sc="+sko_sc+"' class='"+v.to+"'>"+lookup(v.to)+"</a> - bestätigen</td>";
+							} else {
+								html+="<td><a href='?account="+v.to+"&sc="+sko_sc+"' class='"+v.to+"'>"+lookup(v.to)+"</a></td>";
+							}
 							html+="<td align='right'>"+(parseInt(v.base, 16)/1000).toFixed(3).toLocaleString()+"&nbsp;KWh</td>";
 							html+="<td align='right'>"+(parseInt(v.value, 16)/10000000).toFixed(2).toLocaleString()+"&nbsp;€</td>";
 							nameLookup(v.from);
@@ -131,13 +142,25 @@ function open_account() {
 						$('#history').html(html);
 					}
 			});
-			//sko.owner().then(function(owner) {
-			owner=node.wallet.address;
-				
-					if(owner==node.wallet.address) {
+			sko.owner().then(function(owner) {								
+					if(owner[0]==node.wallet.address) {
 						$('#show_transfer').show();
-						$('#tmpl_b64').hide();
 						$('#show_transfer').click(function() {
+							$('#transfer_to').val("");
+							$('#transfer_from').val("");
+						});
+						$('#tmpl_b64').hide();
+						$('#show_transfer_to').click(function() {
+							$('#transfer_from').val(lookup(node.wallet.address));
+							$('#sko_blance').hide();
+							$('#sko_transfer').show();
+						});
+						$('#show_transfer_from').click(function() {
+							$('#transfer_to').val(lookup(node.wallet.address));
+							$('#sko_blance').hide();
+							$('#sko_transfer').show();
+						});
+						$('#show_transfer_free').click(function() {
 							$('#sko_blance').hide();
 							$('#sko_transfer').show();
 						});
@@ -194,12 +217,16 @@ function open_account() {
 								to=window.localStorage.getItem("name_"+to);
 							}
 							sko.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
-								$('#fnct_transfer').removeAttr('disabled');
-								$('#fnct_transfer_cancel').removeAttr('disabled');
-								$('#sko_blance').show();
-								$('#sko_transfer').hide();					
-								$('#status_transfer').html("");			
-								open_account();
+								node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {									
+								sko_reply.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+										$('#fnct_transfer').removeAttr('disabled');
+										$('#fnct_transfer_cancel').removeAttr('disabled');
+										$('#sko_blance').show();
+										$('#sko_transfer').hide();					
+										$('#status_transfer').html("");		
+										open_account();					
+									});
+								});									
 							}).catch(function(e) {
 								$('#status_transfer').html("Fehler bei der Bestätigung");
 								console.log(e);
@@ -209,7 +236,7 @@ function open_account() {
 							
 						});
 					}
-			//});
+			});
 			$('#edit_alias').click(function() {
 				$('#edit_alias').hide();
 				var html="";
