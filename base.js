@@ -216,7 +216,53 @@ function open_account() {
 							if(window.localStorage.getItem("name_"+to)!=null) {
 								to=window.localStorage.getItem("name_"+to);
 							}
-							sko.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+
+							
+							if((from.toLowerCase()==node.wallet.address.toLowerCase())||(to.toLowerCase()==node.wallet.address.toLowerCase())) {
+								
+								if(from.toLowerCase()==node.wallet.address.toLowerCase()) {									
+									var peer=to;
+								}
+								if(to.toLowerCase()==node.wallet.address.toLowerCase()) {									
+									var peer=from;
+								}
+								
+								node.assetsliabilitiesfactory().then(function(albf) {								
+									albf.build(peer).then(function(anderkonto) {
+										node.assetsliability(anderkonto).then(function(ianderkonto) {
+											ianderkonto.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {});												
+										});
+										if(from.toLowerCase()==node.wallet.address.toLowerCase()) {
+											sko.addTx(node.wallet.address,anderkonto,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {});												
+											node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {
+												sko_reply.addTx(anderkonto,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+													$('#fnct_transfer').removeAttr('disabled');
+													$('#fnct_transfer_cancel').removeAttr('disabled');
+													$('#sko_blance').show();
+													$('#sko_transfer').hide();					
+													$('#status_transfer').html("");		
+													open_account();															
+												});
+											});
+										} else {
+											sko.addTx(anderkonto,node.wallet.address,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {});												
+											node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {
+												sko_reply.addTx(to,anderkonto,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+													$('#fnct_transfer').removeAttr('disabled');
+													$('#fnct_transfer_cancel').removeAttr('disabled');
+													$('#sko_blance').show();
+													$('#sko_transfer').hide();					
+													$('#status_transfer').html("");		
+													open_account();															
+												});
+											});																						
+										}
+									});
+								});
+								
+							}	else
+							{
+								sko.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
 								node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {									
 								sko_reply.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
 										$('#fnct_transfer').removeAttr('disabled');
@@ -225,15 +271,15 @@ function open_account() {
 										$('#sko_transfer').hide();					
 										$('#status_transfer').html("");		
 										open_account();					
-									});
-								});									
-							}).catch(function(e) {
-								$('#status_transfer').html("Fehler bei der Bestätigung");
-								console.log(e);
-								$('#fnct_transfer').removeAttr('disabled');
-								$('#fnct_transfer_cancel').removeAttr('disabled');
-							});
-							
+										});
+									});									
+								}).catch(function(e) {
+									$('#status_transfer').html("Fehler bei der Bestätigung");
+									console.log(e);
+									$('#fnct_transfer').removeAttr('disabled');
+									$('#fnct_transfer_cancel').removeAttr('disabled');
+								});
+							}
 						});
 					}
 			});
