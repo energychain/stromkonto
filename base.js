@@ -229,34 +229,45 @@ function open_account() {
 								
 								node.assetsliabilitiesfactory().then(function(albf) {								
 									albf.build(peer).then(function(anderkonto) {
-										node.assetsliability(anderkonto).then(function(ianderkonto) {
-											ianderkonto.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {});												
-										});
-										if(from.toLowerCase()==node.wallet.address.toLowerCase()) {
-											sko.addTx(node.wallet.address,anderkonto,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {});												
-											node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {
-												sko_reply.addTx(anderkonto,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
-													$('#fnct_transfer').removeAttr('disabled');
-													$('#fnct_transfer_cancel').removeAttr('disabled');
-													$('#sko_blance').show();
-													$('#sko_transfer').hide();					
-													$('#status_transfer').html("");		
-													open_account();															
-												});
+										node.assetsliabilities(anderkonto).then(function(ianderkonto) {
+											ianderkonto.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+												console.log("Tx1 (Anderkonto)",tx);												
+												$('#status_transfer').html("Anderkonto eingerichtet.");	
+												if(from.toLowerCase()==node.wallet.address.toLowerCase()) {
+												sko.addTx(node.wallet.address,anderkonto,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+														$('#status_transfer').html("Konsens: Unterbilanz hergestellt");															
+														node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {															
+															sko_reply.addTx(anderkonto,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+																$('#status_transfer').html("Konsens: Transferkonto hergestellt");	
+																$('#fnct_transfer').removeAttr('disabled');
+																$('#fnct_transfer_cancel').removeAttr('disabled');
+																$('#sko_blance').show();
+																$('#sko_transfer').hide();					
+																$('#status_transfer').html("");		
+																open_account();															
+															});
+														});
+													});												
+
+												} else {
+													sko.addTx(anderkonto,node.wallet.address,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+															$('#status_transfer').html("Konsens: Unterbilanz hergestellt");	
+															node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {
+																sko_reply.addTx(to,anderkonto,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
+																	$('#status_transfer').html("Konsens: Transferkonto hergestellt");	
+																	$('#fnct_transfer').removeAttr('disabled');
+																	$('#fnct_transfer_cancel').removeAttr('disabled');
+																	$('#sko_blance').show();
+																	$('#sko_transfer').hide();					
+																	$('#status_transfer').html("");		
+																	open_account();															
+																});
+															});	
+														});																																	
+												}
 											});
-										} else {
-											sko.addTx(anderkonto,node.wallet.address,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {});												
-											node.stromkonto("0x19BF166624F485f191d82900a5B7bc22Be569895").then(function(sko_reply) {
-												sko_reply.addTx(to,anderkonto,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx) {
-													$('#fnct_transfer').removeAttr('disabled');
-													$('#fnct_transfer_cancel').removeAttr('disabled');
-													$('#sko_blance').show();
-													$('#sko_transfer').hide();					
-													$('#status_transfer').html("");		
-													open_account();															
-												});
-											});																						
-										}
+										});
+										
 									});
 								});
 								
