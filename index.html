@@ -40,24 +40,28 @@
 						</div>
 						<div id="sko_transfer" style="display:none">
 					
-							<h3>Überweisung</h3>
+							<h3 id="dsp_auftrag">Auftrag</h3>
 							 <div class="form-group">
 								<label for="transfer_from">Von</label>
-								<input type="text" class="form-control" id="transfer_from" placeholder="0x..">
+								<input type="text" class="form-control tx" id="transfer_from" placeholder="0x.." >
 							  </div>
 							 <div class="form-group">
 								<label for="transfer_to">An</label>
-								<input type="text" class="form-control" id="transfer_to" placeholder="0x..">
+								<input type="text" class="form-control tx" id="transfer_to" placeholder="0x..">
 							  </div>	
 							 <div class="form-group">
 								<label for="transfer_value">Betrag Geld (€)</label>
-								<input type="number" class="form-control" id="transfer_value" placeholder="0.12">
+								<input type="number" class="form-control tx" id="transfer_value" placeholder="0.12">
 							  </div>	
 							<div class="form-group">
 								<label for="transfer_base">Betrag Energie (KWh)</label>
-								<input type="number" class="form-control" id="transfer_base" placeholder="0.123">
+								<input type="number" class="form-control tx" id="transfer_base" placeholder="0.123">
 							  </div>	
-							  <hr/>
+							<div class="form-group">
+								<label for="transfer_text">Referenz</label>
+								<input type="text" class="form-control tx" id="transfer_text" placeholder="">
+							  </div>							  
+							<hr/>
 							<div class="row">
 								<div class="col-md-6">
 									<button id="fnct_transfer_load" class="btn btn-primary">laden</button>						
@@ -69,7 +73,7 @@
 								</div>
 							</div>
 
-							<span id="status_transfer"></span>
+							<span id="status_transfer" style="margin-top:30px;background-color:#f0f0f0"></span>
 							
 							<textarea class="form-control" id="tmpl_b64" style="display:none;margin-top:20px;"></textarea>
 							
@@ -78,7 +82,7 @@
 						<div id="sko_blance" style="display:none">
 					
 							<h3><span id="dsp_account"></span>&nbsp;<span class="glyphicon glyphicon-pencil" id="edit_alias">&nbsp;</span></h3>
-								<div class="row">
+								<div class="row" id="enerstat">
 									<div class="col-md-6">
 										<h4><strong>Energie: <span class="power_saldo"></span> KWh</strong></h4>Soll: <span id="power_soll"></span> / Haben: <span id="power_haben"></span>
 									</div>								
@@ -92,10 +96,10 @@
 								<a href="?" class="btn btn-primary" id="btnunterbilanzierung" style="display:none">Unterbilanzierung</a>
 								<a href="?" class="btn btn-primary" id="btnxferkto" style="display:none">Offene Transfers</a>
 								<div class="btn-group">
-								<button id="show_transfer" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none">Buchung <span class="caret"></span></button>
+								<button id="show_transfer" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none">Auftrag <span class="caret"></span></button>
 								<ul class="dropdown-menu">
-									<li><a href="#" id="show_transfer_to">Verbindlichkeit</a></li>
-									<li><a href="#" id="show_transfer_from">Forderung</a></li>									
+									<li><a href="#" id="show_transfer_to">Überweisung</a></li>
+									<li><a href="#" id="show_transfer_from">Lastschrift</a></li>									
 									<li role="separator" class="divider"></li>
 									<li><a href="#" id="show_transfer_free">Freie Überweisung</a></li>
 							  </ul>
@@ -108,6 +112,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>        
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://rawgit.com/energychain/StromDAO-BusinessObject/master/dist/loader.js"></script>
+	<!--<script src="./loader.js"></script>-->
 	<script src="./base.js"></script>
   </body>
 </html>
