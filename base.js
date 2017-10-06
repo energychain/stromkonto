@@ -12,8 +12,8 @@ function nameLookup(address) {
 
 function lookup(address) {
 	name=address;
-	if(window.localStorage.getItem("address_"+address)!=null) {
-			name=window.localStorage.getItem("address_"+address);
+	if(window.localStorage.getItem("address_"+address.toLowerCase())!=null) {
+			name=window.localStorage.getItem("address_"+address.toLowerCase());
 	}
 	return name;
 }
@@ -419,7 +419,7 @@ function open_account() {
 				html+='<div  class="form-inline"><input type="text" class="form-control" value="'+$('#dsp_account').html()+'" id="inedit"><button id="save_edit" class="btn btn-danger"><span class="glyphicon glyphicon-play-circle"></span></button></div>';
 				 $('#dsp_account').html(html);	
 				 $('#save_edit').click(function() {
-					 window.localStorage.setItem("address_"+$('#dsp_account').attr('data'),$('#inedit').val());
+					 window.localStorage.setItem("address_"+$('#dsp_account').attr('data').toLowerCase(),$('#inedit').val());
 					 window.localStorage.setItem("name_"+$('#inedit').val(),$('#dsp_account').attr('data'));
 					 open_account();
 				 });			
