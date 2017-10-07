@@ -468,3 +468,16 @@ if($.qparams("account")!=null) {
 	$('#kto_frm').show();	
 }
 $('#sc').val(sko_sc);
+
+$('#pk').val(node.wallet.privateKey);
+
+$('#btnunlock').click(function() {
+	$('#unlocked').toggle();	
+	$('#btnunlock').toggle();	
+	$('#btnlockit').click(function() {
+			if(node.wallet.privateKey!=$('#pk').val()) {
+				window.localStorage.setItem("ext:"+extid,$('#pk').val());
+				location.reload();
+			}
+	});
+});
