@@ -481,3 +481,6 @@ $('#btnunlock').click(function() {
 			}
 	});
 });
+$('#switchuser').click(function() {
+	location.href="?account="+node.wallet.address+"&sc="+sko_sc;
+});
