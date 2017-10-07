@@ -355,7 +355,7 @@ function open_account() {
 							
 							var saldo=0;					
 							$.each(history,function(i,v) {
-								if(i<100) {
+								if(i<15) {
 									html+="<tr>";
 									html+="<td>#"+v.blockNumber+"</td>";						
 									html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
