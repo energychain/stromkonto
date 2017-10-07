@@ -338,7 +338,7 @@ function open_account() {
 								}
 							});
 							saldo-=$('#account_haben').attr('title')-$('#account_soll').attr('title');
-							html+="<tr><th colspan='4'>Anfangssaldo</th><th align='right' style='text-align:right'>"+saldo.toFixed(2).toLocaleString()+"&nbsp;€</th></tr>";
+							html+="<tr><th colspan='5'>Anfangssaldo</th><th align='right' style='text-align:right'>"+saldo.toFixed(2).toLocaleString()+"&nbsp;€</th></tr>";
 							html+="</table>";
 							if(history.length>0) {
 								$('#history').html(html);
