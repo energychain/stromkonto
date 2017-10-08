@@ -2,6 +2,8 @@ var sko_sc="0x19BF166624F485f191d82900a5B7bc22Be569895";
 var xferkto="0x5856b2AE31ed0FCf82F02a4090502DC5CCEec93E";
 var pers_sc="";
 var history_length=15;
+var last_block=0;
+var account_interval=0;
 
 function nameLookup(address) {
 		node.roleLookup().then(function(rl) {
@@ -66,6 +68,7 @@ function open_subbalance() {
 
 
 function open_xferkto() {
+	window.clearInterval(account_interval);
 	$('#account').val(node.wallet.address);	
 	open_subbalance();
 	$('#sko_transfer').hide();
@@ -132,6 +135,7 @@ function open_xferkto() {
 							$('.tx').attr('readonly','readonly');						
 					}
 					node.stringstorage(msg).then(function(str) {
+						window.clearInterval(account_interval);
 						str.str().then(function(msg) {
 							$('#tmpl_b64').val(msg);
 							loadb64();
@@ -192,16 +196,19 @@ function skoEvents() {
 			$('#dsp_auftrag').html("Auftrag - Überweisung");
 			$('#transfer_from').val(lookup(node.wallet.address));
 			$('#sko_blance').hide();
+			window.clearInterval(account_interval);
 			$('#sko_transfer').show();
 		});
 		$('#show_transfer_from').click(function() {
 			$('#dsp_auftrag').html("Auftrag - Lastschrift");
 			$('#transfer_to').val(lookup(node.wallet.address));
 			$('#sko_blance').hide();
+			window.clearInterval(account_interval);
 			$('#sko_transfer').show();
 		});
 		$('#show_transfer_free').click(function() {
 			$('#sko_blance').hide();
+			window.clearInterval(account_interval);
 			$('#sko_transfer').show();
 		});
 		$('#fnct_transfer_cancel').click(function() {
@@ -254,6 +261,7 @@ function saveb64() {
 	$('#tmpl_b64').attr('readonly','readonly');
 }
 function open_account() {
+	window.clearInterval(account_interval);
 	open_subbalance();
 	$('#sko_transfer').hide();
 	$('#kto_frm').hide();
@@ -468,6 +476,13 @@ function open_account() {
 				 });			
 			});
 	});	
+	node.rpcprovider.getBlockNumber().then(function(x) {
+		$('#konsens_block').html(x);
+		getBlockTime(x,function(y) {
+		$('#konsens_time').html(new Date(y).toLocaleString());	
+		});
+	});
+	account_interval=setInterval("open_account()",5000);
 }
 
 $.qparams = function(name){
@@ -515,6 +530,7 @@ $('#sc').val(sko_sc);
 $('#pk').val(node.wallet.privateKey);
 
 $('#btnunlock').click(function() {
+	window.clearInterval(account_interval);
 	$('#unlocked').toggle();	
 	$('#btnunlock').toggle();	
 	$('#btnlockit').click(function() {
