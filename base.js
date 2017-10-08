@@ -19,7 +19,7 @@ function lookup(address) {
 }
 
 function getBlockTime(blocknr,cb) {
-	if(window.localStorage.getItem("block_"+blocknr)==null) 
+	if(window.localStorage.getItem("xblock_"+blocknr)==null) 
 	{			
 		$.ajax({
 			url: "https://fury.network/rpc",
