@@ -102,24 +102,41 @@
 										<h4><strong>Geld: <span class="account_saldo"></span> €</strong></h4>Soll: <span id="account_soll"></span> / Haben: <span id="account_haben"></span>																	
 									</div>
 								</div>
-								&nbsp;								
-								<div id="history"><em>Bislang keine Transaktionen</em></div>
 								<hr/>
 								<a href="?" class="btn btn-primary" id="btnunterbilanzierung" style="display:none">Unterbilanzierung</a>
 								<a href="?" class="btn btn-primary" id="btnxferkto" style="display:none">Offene Transfers</a>
 								<div class="btn-group">
 								<button id="show_transfer" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none">Auftrag <span class="caret"></span></button>
-								<ul class="dropdown-menu">
-									<li><a href="#" id="show_transfer_to">Überweisung</a></li>
-									<li><a href="#" id="show_transfer_from">Lastschrift</a></li>									
-									<li role="separator" class="divider"></li>
-									<li><a href="#" id="show_transfer_free">Freie Überweisung</a></li>
-							  </ul>
-							  </div>
+									<ul class="dropdown-menu">
+										<li><a href="#" id="show_transfer_to">Überweisung</a></li>
+										<li><a href="#" id="show_transfer_from">Lastschrift</a></li>									
+										<li role="separator" class="divider"></li>
+										<li><a href="#" id="show_transfer_free">Freie Überweisung</a></li>
+									</ul>
+								</div>
+								<hr/>
+								<h4>Umsätze</h4>								
+								<div id="history"><em>Bislang keine Transaktionen</em></div>
+
+							  
 						</div>
 
 					</div>
 		</div> 	
+		<div class="panel panel-warning">
+			<div class="panel-heading">Einstellungen</div>
+			<div class="panel-body">
+				<div class="btn-group">
+				<button id="downloadStorage" class="btn btn-default">Profil herunterladen</button>		
+				<button id="uploadStorage" class="btn btn-default">Profil hochladen</button>
+				</div>
+				<form id="upForm" style="display:none" >
+				  <p>
+					<input id="myfile" name="files[]" multiple="" class="form-control" type="file" />				
+				  </p>
+				</form>
+			</div>
+		</div>
 	</div>  
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>        
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

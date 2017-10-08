@@ -1,6 +1,7 @@
 var sko_sc="0x19BF166624F485f191d82900a5B7bc22Be569895";
 var xferkto="0x5856b2AE31ed0FCf82F02a4090502DC5CCEec93E";
 var pers_sc="";
+var history_length=15;
 
 function nameLookup(address) {
 		node.roleLookup().then(function(rl) {
@@ -340,7 +341,7 @@ function open_account() {
 							html+="<tr><th>Konsens</th><th>Von</th><th>An</th><th>&nbsp;</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
 							var saldo=0;					
 							$.each(history,function(i,v) {
-								if(i<10) {
+								if(i<history_length) {
 									html+="<tr>";
 									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";
 									html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
@@ -359,6 +360,8 @@ function open_account() {
 									} else {
 										saldo+=(parseInt(v.value, 16)/10000000);
 									}
+								} else {
+									
 								}
 							});
 							saldo-=$('#account_haben').attr('title')-$('#account_soll').attr('title');
@@ -384,7 +387,7 @@ function open_account() {
 							
 							var saldo=0;					
 							$.each(history,function(i,v) {
-								if(i<15) {
+								if(i<history_length) {
 									html+="<tr>";
 									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";					
 									html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
@@ -396,10 +399,16 @@ function open_account() {
 							});
 														
 							if(history.length>0) {
-								$('#history').html(html);
+								html+="<tr><td colspan='6' align='right' style='text-align:right'><button id='more10' class='btn btn-default'>Ältere Umsätze</button></td></tr>";
+								html+="</table>";
+								$('#history').html(html);								
 								$.each($('.blocks'),function(i,v) {
 									getBlockTime($(v).attr("data"),function(o) {
 												$(v).html(new Date(o).toLocaleString());
+									});
+									$('#more10').click(function() {
+											history_length+=10;
+											open_account();
 									});
 								});
 							}
@@ -517,4 +526,32 @@ $('#btnunlock').click(function() {
 });
 $('#switchuser').click(function() {
 	location.href="?account="+node.wallet.address+"&sc="+sko_sc;
+});
+$('#downloadStorage').click(function() {	
+		uriContent = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(window.localStorage));
+		newWindow = window.open(uriContent, 'Storage');
+});
+$('#uploadStorage').click(function() {
+	$('#upForm').show();
+	$("#myfile").on("change", function (changeEvent) {
+	  for (var i = 0; i < changeEvent.target.files.length; ++i) {
+		(function (file) {               // Wrap current file in a closure.
+		  var loader = new FileReader();
+		  loader.onload = function (loadEvent) {
+			if (loadEvent.target.readyState != 2)
+			  return;
+			if (loadEvent.target.error) {
+			  alert("Error while reading file " + file.name + ": " + loadEvent.target.error);
+			  return;
+			}
+			var tokens=JSON.parse(loadEvent.target.result);
+			$.each( tokens, function( key, value ) {
+					window.localStorage.setItem(key,value);
+			});
+			location.reload();
+		  };
+		  loader.readAsText(file);
+		})(changeEvent.target.files[i]);
+	  }
+	});	
 });
