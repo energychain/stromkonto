@@ -482,7 +482,7 @@ function open_account() {
 		$('#konsens_time').html(new Date(y).toLocaleString());	
 		});
 	});
-	account_interval=setInterval("open_account()",5000);
+	account_interval=setInterval("open_account()",60000);
 }
 
 $.qparams = function(name){
