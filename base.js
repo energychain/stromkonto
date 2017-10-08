@@ -17,6 +17,31 @@ function lookup(address) {
 	}
 	return name;
 }
+
+function getBlockTime(blocknr,cb) {
+	if(window.localStorage.getItem("block_"+blocknr)==null) 
+	{
+			console.log("bnr",blocknr.toString(16));
+		$.ajax({
+			url: "https://fury.network/rpc",
+			type: 'POST',
+			dataType: 'json',
+			contentType: 'application/json',
+			processData: false,
+			data: '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["'+blocknr+'", true],"id":1}',
+			success: function (data) {				
+			  var ts=parseInt(data.result.timestamp)*1000;
+			  window.localStorage.setItem("block_"+blocknr,ts);
+			  cb(ts);
+			},
+			error: function(){
+			  console.log("ERROR");
+			}
+		});
+	} else {
+			cb(window.localStorage.getItem("block_"+blocknr));
+	}
+}
 function open_subbalance() {
 	node.roleLookup().then(function(rl) {
 			rl.relations($('#account').val(),42).then(function(tx) {
@@ -59,7 +84,7 @@ function open_xferkto() {
 			sko.history(account,20000).then(function(history) {	
 			history=history.reverse();
 			var html="<table class='table table-striped'>";
-			html+="<tr><th>Block</th><th>Von</th><th>Art</th><th>&nbsp;</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
+			html+="<tr><th>Konsens</th><th>Von</th><th>Art</th><th>&nbsp;</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
 			var saldo=0;							
 			$.each(history,function(i,v) {
 				if(v.sender.toLowerCase()!=node.wallet.address.toLowerCase()) { 
@@ -69,7 +94,7 @@ function open_xferkto() {
 								bc="#c0c0c0";							
 						}
 						html+="<tr style='background-color:"+bc+"'>";
-						html+="<td>#"+v.blockNumber+"</td>";
+						html+="<td class='block_"+v.blockNumber+",blocks'>#"+v.blockNumber+"</td>";
 						html+="<td><a href='?account="+v.sender+"&sc="+pers_sc+"' class='"+v.sender+"'>"+lookup(v.sender)+"</a></td>";
 						//console.log(v);
 						var art="Geldeingang";
@@ -313,12 +338,12 @@ function open_account() {
 					sko.history(account,10000).then(function(history) {	
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
-							html+="<tr><th>Block</th><th>Von</th><th>An</th><th>&nbsp;</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
+							html+="<tr><th>Konsens</th><th>Von</th><th>An</th><th>&nbsp;</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
 							var saldo=0;					
 							$.each(history,function(i,v) {
 								if(i<10) {
 									html+="<tr>";
-									html+="<td>#"+v.blockNumber+"</td>";
+									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";
 									html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
 									if((sko_sc==xferkto)&&(v.to.toLowerCase()==node.wallet.address.toLowerCase())) {
 										html+="<td><a href='?account="+v.to+"&sc="+sko_sc+"' class='"+v.to+"'>"+lookup(v.to)+"</a></td>";
@@ -342,6 +367,11 @@ function open_account() {
 							html+="</table>";
 							if(history.length>0) {
 								$('#history').html(html);
+								$.each($('.blocks'),function(i,v) {
+									getBlockTime($(v).attr("data"),function(o) {
+												$(v).html(new Date(o).toLocaleString());
+									});
+								});
 							}							
 						});						
 					} else {
@@ -454,15 +484,15 @@ $('.account').html(node.wallet.address);
 $('#account').val(node.wallet.address);
 $('#open_account').click(open_account);
 if($.qparams("sc")!=null) {
-		sko_sc=$.qparams("sc");		
+		sko_sc=$.qparams("sc");	
+		node.storage.setItemSync("last_sc",sko_sc);	
+} else {
+		if(node.storage.setItemSync("last_sc")!=null) {
+			sko_sc=$.qparams("sc");	
+		}	
 }
 if($.qparams("account")!=null) {
-		if($.qparams("account").toLowerCase()!=node.wallet.address.toLowerCase()) {
-			//sko_sc=$.qparams("account");
-			//$('#account').val(node.wallet.address);
-		} 
-		$('#account').val($.qparams("account"));
-				
+		$('#account').val($.qparams("account"));				
 		open_account();		
 } else {
 	$('#kto_frm').show();	
