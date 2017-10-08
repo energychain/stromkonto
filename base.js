@@ -20,8 +20,7 @@ function lookup(address) {
 
 function getBlockTime(blocknr,cb) {
 	if(window.localStorage.getItem("block_"+blocknr)==null) 
-	{
-			console.log("bnr",blocknr.toString(16));
+	{			
 		$.ajax({
 			url: "https://fury.network/rpc",
 			type: 'POST',
@@ -379,7 +378,7 @@ function open_account() {
 						sko.history(account,10000).then(function(history) {
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
-							html+="<tr><th>Block</th><th>Von</th><th>An</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th></tr>";					
+							html+="<tr><th>Konsens</th><th>Von</th><th>An</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th></tr>";					
 							
 
 							
@@ -387,7 +386,7 @@ function open_account() {
 							$.each(history,function(i,v) {
 								if(i<15) {
 									html+="<tr>";
-									html+="<td>#"+v.blockNumber+"</td>";						
+									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";					
 									html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
 									html+="<td><a href='?account="+v.to+"&sc="+sko_sc+"' class='"+v.to+"'>"+lookup(v.to)+"</a></td>";
 									html+="<td align='right'>"+(parseInt(v.base, 16)/1000).toFixed(3).toLocaleString()+"&nbsp;KWh</td>";
@@ -398,6 +397,11 @@ function open_account() {
 														
 							if(history.length>0) {
 								$('#history').html(html);
+								$.each($('.blocks'),function(i,v) {
+									getBlockTime($(v).attr("data"),function(o) {
+												$(v).html(new Date(o).toLocaleString());
+									});
+								});
 							}
 						});	
 						
