@@ -75,8 +75,8 @@ function open_xferkto() {
 	$('#kto_frm').hide();
 	var html=":&nbsp;";
 	html=node.wallet.address+"@"+sko_sc;
-	$('#kto_heading').html(lookup(node.wallet.address));
-	$('#kto_heading').attr('title',html);
+	//$('#kto_heading').html(lookup(node.wallet.address));
+	$('#dsp_account').attr('title',html);
 	
 	var account=$('#account').val();	
 	$('#dsp_account').attr('class',account);
@@ -268,9 +268,8 @@ function open_account() {
 	$('#kto_frm').hide();
 	$('#sko_blance').show();
 	var html=":&nbsp;";
-	html=node.wallet.address+"@"+sko_sc;
-	$('#kto_heading').html(lookup(node.wallet.address));
-	$('#kto_heading').attr('title',html);
+	html=node.wallet.address+"@"+sko_sc;	
+	$('#dsp_account').attr('title',html);
 	var account=$('#account').val();	
 	$('#dsp_account').attr('class',account);
 	$('#dsp_account').attr('data',account);
