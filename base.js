@@ -413,7 +413,7 @@ function open_account() {
 									var mul=-1;
 									if(v.to.toLowerCase()==node.wallet.address.toLowerCase()) {
 											ref=v.from;
-											col='#000080';
+											col='#000000';
 											mul=1;
 									}	
 									html+="<tr>";
