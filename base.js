@@ -401,7 +401,7 @@ function open_account() {
 						sko.history(account,10000).then(function(history) {
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
-							html+="<tr><th>Konsens</th><th>Verwendung/Begünstigter</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th></tr>";					
+							html+="<tr><th>Konsens</th><th>Schuldner/Gläubiger</th><th align='right' style='text-align:right'>Energie (KWh)</th><th align='right' style='text-align:right'>Geld (€)</th></tr>";					
 							
 
 							
@@ -419,8 +419,8 @@ function open_account() {
 									html+="<tr>";
 									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";					
 									html+="<td><a href='?account="+ref+"&sc="+sko_sc+"' class='"+ref+"'>"+lookup(ref)+"</a></td>";									
-									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.base, 16)/1000*mul).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 })+"&nbsp;KWh</td>";
-									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.value, 16)/10000000*mul).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+"&nbsp;€</td>";							
+									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.base, 16)/1000*mul).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 })+"</td>";
+									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.value, 16)/10000000*mul).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+"</td>";							
 									html+="</tr>";
 								}
 							});
