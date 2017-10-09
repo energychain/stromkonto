@@ -495,6 +495,14 @@ function open_account() {
 					 open_account();
 				 });			
 			});
+			node.transferable(sko_sc).then(function(sko) {
+			sko.history(account,20000).then(function(history) {	
+					if(history.length==0) {
+						$('#btnxferkto').hide();
+					} else {
+						$('#btnxferkto').show();
+					}
+			});
 	});	
 	node.rpcprovider.getBlockNumber().then(function(x) {
 		$('#konsens_block').html(x);
