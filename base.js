@@ -401,19 +401,26 @@ function open_account() {
 						sko.history(account,10000).then(function(history) {
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
-							html+="<tr><th>Konsens</th><th>Von</th><th>An</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th></tr>";					
+							html+="<tr><th>Konsens</th><th>Verwendung/Begünstigter</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th></tr>";					
 							
 
 							
 							var saldo=0;					
-							$.each(history,function(i,v) {
+							$.each(history,function(i,v) {								
 								if(i<history_length) {
+									var col='#ff0000';
+									var ref=v.from;
+									var mul=-1;
+									if(v.from.toLowerCase()==node.wallet.address.toLowerCase()) {
+											ref=v.to;
+											col='#00ffff';
+											mul=1;
+									}	
 									html+="<tr>";
 									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";					
-									html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
-									html+="<td><a href='?account="+v.to+"&sc="+sko_sc+"' class='"+v.to+"'>"+lookup(v.to)+"</a></td>";
-									html+="<td align='right'>"+(parseInt(v.base, 16)/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 })+"&nbsp;KWh</td>";
-									html+="<td align='right'>"+(parseInt(v.value, 16)/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+"&nbsp;€</td>";							
+									html+="<td><a href='?account="+ref+"&sc="+sko_sc+"' class='"+ref+"'>"+lookup(ref)+"</a></td>";									
+									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.base, 16)/1000*mul).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 })+"&nbsp;KWh</td>";
+									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.value, 16)/10000000*mul).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+"&nbsp;€</td>";							
 									html+="</tr>";
 								}
 							});
