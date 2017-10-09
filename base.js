@@ -409,11 +409,11 @@ function open_account() {
 							$.each(history,function(i,v) {								
 								if(i<history_length) {
 									var col='#ff0000';
-									var ref=v.from;
+									var ref=v.to;
 									var mul=-1;
-									if(v.from.toLowerCase()==node.wallet.address.toLowerCase()) {
-											ref=v.to;
-											col='#00ffff';
+									if(v.to.toLowerCase()==node.wallet.address.toLowerCase()) {
+											ref=v.from;
+											col='#000080';
 											mul=1;
 									}	
 									html+="<tr>";
