@@ -6,11 +6,16 @@ var last_block=0;
 var account_interval=0;
 
 function nameLookup(address) {
-		node.roleLookup().then(function(rl) {
-			rl.getName(address).then(function(tx) {
-				$('.'+address).html(tx);
+		if(node.storage.getItemSync("rl_name_"+address)==null) {
+			node.roleLookup().then(function(rl) {
+				rl.getName(address).then(function(tx) {
+					$('.'+address).html(tx);
+					node.storage.setItemSync("rl_name_"+address,tx);
+				});
 			});
-		});
+		} else {
+			$('.'+address).html(node.storage.getItemSync("rl_name_"+address));
+		}
 }
 
 function lookup(address) {
@@ -22,7 +27,7 @@ function lookup(address) {
 }
 
 function getBlockTime(blocknr,cb) {
-	if(window.localStorage.getItem("xblock_"+blocknr)==null) 
+	if(window.localStorage.getItem("ablock_"+blocknr)==null) 
 	{			
 		$.ajax({
 			url: "https://fury.network/rpc",
@@ -31,7 +36,8 @@ function getBlockTime(blocknr,cb) {
 			contentType: 'application/json',
 			processData: false,
 			data: '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["'+blocknr+'", true],"id":1}',
-			success: function (data) {				
+			success: function (data) {	
+				console.log(data.result);			
 			  var ts=parseInt(data.result.timestamp)*1000;
 			  window.localStorage.setItem("block_"+blocknr,ts);
 			  cb(ts);
@@ -40,8 +46,8 @@ function getBlockTime(blocknr,cb) {
 			  console.log("ERROR");
 			}
 		});
-	} else {
-			cb(window.localStorage.getItem("block_"+blocknr));
+	} else {			
+			cb(window.localStorage.getItem("block_"+blocknr)*1);
 	}
 }
 function open_subbalance() {
@@ -496,21 +502,21 @@ function open_account() {
 				 });			
 			});
 			node.transferable(sko_sc).then(function(sko) {
-			sko.history(account,20000).then(function(history) {	
-					if(history.length==0) {
-						$('#btnxferkto').hide();
-					} else {
-						$('#btnxferkto').show();
-					}
-			});
-	});	
+				sko.history(account,20000).then(function(history) {	
+						if(history.length==0) {
+							$('#btnxferkto').hide();
+						} else {
+							$('#btnxferkto').show();
+						}
+				});
+			});	
+	});
 	node.rpcprovider.getBlockNumber().then(function(x) {
 		$('#konsens_block').html(x);
 		getBlockTime(x,function(y) {
 		$('#konsens_time').html(new Date(y).toLocaleString());	
 		});
-	});
-	account_interval=setInterval("open_account()",60000);
+	});	
 }
 
 $.qparams = function(name){
