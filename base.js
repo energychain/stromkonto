@@ -333,7 +333,7 @@ function open_account() {
 				}								
 				$('.account_saldo').html(($('#account_haben').attr('title')-$('#account_soll').attr('title')).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));
 				if($('#account_haben').attr('title')-$('#account_soll').attr('title')!=0) {
-						$('#work_saldo').html(((($('#power_haben').attr('title')-$('#power_soll').attr('title'))/($('#account_haben').attr('title')-$('#account_soll').attr('title')))/10).toLocaleString(undefined, { minimumFractionDigits:4, maximumFractionDigits:4 }));
+						$('#work_saldo').html((((($('#account_haben').attr('title')-$('#account_soll').attr('title')))/10)/($('#power_haben').attr('title')-$('#power_soll').attr('title'))).toLocaleString(undefined, { minimumFractionDigits:4, maximumFractionDigits:4 }));
 				}
 			});
 			sko.balancesSoll(account).then(function(soll) {
@@ -348,7 +348,7 @@ function open_account() {
 				}
 				$('.account_saldo').html(($('#account_haben').attr('title')-$('#account_soll').attr('title')).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));
 				if($('#account_haben').attr('title')-$('#account_soll').attr('title')!=0) {
-						$('#work_saldo').html(((($('#power_haben').attr('title')-$('#power_soll').attr('title'))/($('#account_haben').attr('title')-$('#account_soll').attr('title')))/10).toLocaleString(undefined, { minimumFractionDigits:4, maximumFractionDigits:4 }));
+						$('#work_saldo').html((((($('#account_haben').attr('title')-$('#account_soll').attr('title')))/10)/($('#power_haben').attr('title')-$('#power_soll').attr('title'))).toLocaleString(undefined, { minimumFractionDigits:4, maximumFractionDigits:4 }));
 				}
 			});
 			sko.baseSoll(account).then(function(soll) {
@@ -363,7 +363,7 @@ function open_account() {
 				}
 				$('.power_saldo').html(($('#power_haben').attr('title')-$('#power_soll').attr('title')).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }));
 				if($('#account_haben').attr('title')-$('#account_soll').attr('title')!=0) {
-						$('#work_saldo').html(((($('#power_haben').attr('title')-$('#power_soll').attr('title'))/($('#account_haben').attr('title')-$('#account_soll').attr('title')))/10).toLocaleString(undefined, { minimumFractionDigits:4, maximumFractionDigits:4 }));
+						$('#work_saldo').html((((($('#account_haben').attr('title')-$('#account_soll').attr('title')))/10)/($('#power_haben').attr('title')-$('#power_soll').attr('title'))).toLocaleString(undefined, { minimumFractionDigits:4, maximumFractionDigits:4 }));
 				}
 			});
 			sko.baseHaben(account).then(function(haben) {
