@@ -36,8 +36,7 @@ function getBlockTime(blocknr,cb) {
 			contentType: 'application/json',
 			processData: false,
 			data: '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["'+blocknr+'", true],"id":1}',
-			success: function (data) {	
-				console.log(data.result);			
+			success: function (data) {					
 			  var ts=parseInt(data.result.timestamp)*1000;
 			  window.localStorage.setItem("block_"+blocknr,ts);
 			  cb(ts);
@@ -233,6 +232,30 @@ function skoEvents() {
 					$('#tmpl_b64').removeAttr('readonly');
 				}								
 		});	
+	 $("#reffile").on("change", function (changeEvent) {
+
+	  for (var i = 0; i < changeEvent.target.files.length; ++i) {
+		(function (file) {               // Wrap current file in a closure.
+		var loader = new FileReader();		  
+		loader.readAsBinaryString(file);
+		console.log(file.name);
+		loader.onload = function (loadEvent) {
+			if (loadEvent.target.readyState != 2)
+			  return;
+			if (loadEvent.target.error) {
+			  alert("Error while reading file " + file.name + ": " + loadEvent.target.error);
+			  return;
+			}
+		 ipfs.files.add({path:'/'+file.name,content:new ipfs.types.Buffer(loadEvent.target.result,'ascii')}, function (err, files) {
+						$('#transfer_text').val("https://stromdao.de/ipfs/"+files[0].hash);
+						$('#transfer_text').attr('readonly','readonly');
+						//console.log(err,files);
+			});
+		 };
+		})(changeEvent.target.files[i]);
+		 
+		}
+	});	
 }
 
 function loadb64() {
@@ -605,3 +628,12 @@ $('#uploadStorage').click(function() {
 	  }
 	});	
 });
+
+const ipfs = new Ipfs()
+
+ipfs.on('ready', () => {
+  // Your node is now ready to use \o/
+  
+  // stopping a node
+  
+})
