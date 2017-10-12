@@ -321,6 +321,14 @@ function open_account() {
 			return;
 	}
 	$('#enerstat').show();
+	var sko_name=sko_sc;
+	if(lookup(sko_sc)==sko_name) {
+		sko_name="Stromkonto Abrechnung";
+	} else {
+			sko_name=lookup(sko_sc);
+	}
+	$('#dsp_sc').html(sko_name);
+	
 	node.stromkonto(sko_sc).then(function(sko) {
 
 			node.mpr().then(function(mpr) {
