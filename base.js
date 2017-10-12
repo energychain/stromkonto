@@ -267,6 +267,14 @@ function loadb64() {
 	$('#transfer_base').val(tx.base/1000);
 	$('#transfer_value').val(tx.value/10000000);
 	$('#transfer_text').val(tx.text);
+	if(tx.text.substr(0,6)=="/ipfs/") {
+		$('#refForm').hide();
+		$('#btnrefownload').show();
+		$('#btnrefownload').attr('href',"https://stromdao.de/ipfs/"+tx.text);
+	} else { 		
+		$('#refForm').show();
+		$('#btnrefownload').hide();
+	}
 	$('#tmpl_b64').hide();
 }
 
