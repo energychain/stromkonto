@@ -247,8 +247,10 @@ function skoEvents() {
 			  return;
 			}
 		 ipfs.files.add({path:'/'+file.name,content:new ipfs.types.Buffer(loadEvent.target.result,'ascii')}, function (err, files) {
-						$('#transfer_text').val("https://stromdao.de/ipfs/"+files[0].hash);
+						$('#transfer_text').val("/ipfs/"+files[0].hash);
 						$('#transfer_text').attr('readonly','readonly');
+						$.get("https://ipfs.io/ipfs/"+files[0].hash,function(data) {});
+						$.get("https://stromdao.de/ipfs/"+files[0].hash,function(data) {});
 						//console.log(err,files);
 			});
 		 };
@@ -524,7 +526,7 @@ function open_account() {
 					 open_account();
 				 });			
 			});
-			node.transferable(sko_sc).then(function(sko) {
+			node.transferable(xferkto).then(function(sko) {
 				sko.history(account,20000).then(function(history) {	
 						if(history.length==0) {
 							$('#btnxferkto').hide();
