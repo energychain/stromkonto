@@ -582,7 +582,7 @@ if($.qparams("pk")!=null) {
 	pk=$.qparams("pk");
 	window.localStorage.setItem("ext:"+extid,pk);
 }
-var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"https://raw.githubusercontent.com/energychain/StromDAO-BusinessObject/master/smart_contracts/"});
+var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
 
 // Fill View (HTML) using JQuery
 $('.account').html(node.wallet.address);
