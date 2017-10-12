@@ -395,7 +395,7 @@ function open_account() {
 			});
 			sko.owner().then(function(owner) {	
 					$('#sko_blance').show();
-					if(owner[0]!=node.wallet.address) {
+					if(owner[0]!=account) {
 						$('#edit_alias').show();
 					sko.history(account,10000).then(function(history) {	
 							history=history.reverse();
