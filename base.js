@@ -130,7 +130,7 @@ function open_xferkto() {
 					var to=$(o.currentTarget).attr('data-to');
 					var base=$(o.currentTarget).attr('data-base');
 					var value=$(o.currentTarget).attr('data-value');		
-					var msg=$(o.currentTarget).attr('data-msg');
+					var msg=$(o.currentTarget).attr('data-msg');					
 					var block=$(o.currentTarget).attr('data-block');
 					var state=$(o.currentTarget).attr('data-state');
 					if(state=="enabled") {
