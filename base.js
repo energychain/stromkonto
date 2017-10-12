@@ -270,9 +270,11 @@ function loadb64() {
 	if(tx.text.substr(0,6)=="/ipfs/") {
 		$('#refForm').hide();
 		$('#btnrefownload').show();
-		$('#btnrefownload').attr('href',"https://stromdao.de/ipfs/"+tx.text);
+		$('#btnrefownload').attr('href',"https://stromdao.de/"+tx.text);
+		$('#transfer_text').attr('readonly','readonly');
 	} else { 		
 		$('#refForm').show();
+		$('#transfer_text').removeAttr('readonly');
 		$('#btnrefownload').hide();
 	}
 	$('#tmpl_b64').hide();
