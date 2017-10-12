@@ -71,7 +71,107 @@ function open_subbalance() {
 		});	
 }
 
+function balanceAccount(account) {
+	var balance=0;	
+	balance=parseInt($('#psoll_'+account).attr('data-haben'),16)-parseInt($('#psoll_'+account).attr('data-soll'),16);
+	if(balance<0) {
+		balance=balance*(-1);
+		$("#phaben_"+account).hide();
+		$("#psoll_"+account).show();
+		$('#v_soll_'+account).html((balance/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));
+	} else {
+		$("#phaben_"+account).show();
+		$("#psoll_"+account).hide();	
+		$('#v_haben_'+account).html((balance/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));
+	}	
+}
 
+function ebalanceAccount(account) {
+	var balance=0;	
+	balance=parseInt($('#esoll_'+account).attr('data-ehaben'),16)-parseInt($('#esoll_'+account).attr('data-esoll'),16);
+	if(balance<0) {
+		balance=balance*(-1);
+		$("#ehaben_"+account).hide();
+		$("#esoll_"+account).show();
+		$('#e_soll_'+account).html((balance/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }));
+	} else {
+		$("#ehaben_"+account).show();
+		$("#esoll_"+account).hide();	
+		$('#e_haben_'+account).html((balance/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }));
+	}	
+}
+function blk_sc(account) {
+node.stromkonto(sko_sc).then(function(sko) {
+		sko.balancesSoll(account).then(function(v) {				
+				$('#psoll_'+account).attr('data-soll',v);	
+				balanceAccount(account);	
+		});
+		sko.balancesHaben(account).then(function(v) {
+				$('#psoll_'+account).attr('data-haben',v);
+				balanceAccount(account);
+		});
+		sko.baseSoll(account).then(function(v) {		
+				$('#esoll_'+account).attr('data-esoll',v);	
+				ebalanceAccount(account);	
+		});
+		sko.baseHaben(account).then(function(v) {
+				$('#esoll_'+account).attr('data-ehaben',v);
+				ebalanceAccount(account);
+		});
+});	
+	
+}
+
+function open_blk() {
+	$('#sko_blance').hide();
+	$('#blk_balance').show();
+	$('#edit_alias').hide();
+	$('#dsp_account').html("Bilanz");
+	var accounts = [];
+	
+	if(window.localStorage.getItem("balance_accounts")!=null) {
+			var adrbk=window.localStorage.getItem("balance_accounts");
+			adrbk=adrbk.split(',');
+			$.each(adrbk,function(i,v) {
+					accounts.push(v);
+			});
+	}	
+	if(accounts.length==0) {
+		accounts.push(node.wallet.address);	
+	}
+	var html="<table class='table table-condensed'>";	
+	var aktiva = html;
+	var passiva = html;
+	var eaktiva = html;
+	var epassiva = html;
+	
+	$.each(accounts,function(i,v) {
+			aktiva+="<tr id='psoll_"+v+"'><td>"+lookup(v)+"</td><td id='v_soll_"+v+"' style='text-align:right'></td></tr>";
+			passiva+="<tr id='phaben_"+v+"'><td>"+lookup(v)+"</td><td id='v_haben_"+v+"' style='text-align:right'></td></tr>";
+			eaktiva+="<tr id='esoll_"+v+"'><td>"+lookup(v)+"</td><td id='e_soll_"+v+"' style='text-align:right'></td></tr>";
+			epassiva+="<tr id='ehaben_"+v+"'><td>"+lookup(v)+"</td><td id='e_haben_"+v+"' style='text-align:right'></td></tr>";
+			blk_sc(v);
+	});
+	
+	aktiva+="</table>";
+	passiva+="</table>";
+	$('#aktiva').html(aktiva);
+	$('#passiva').html(passiva);
+	eaktiva+="</table>";
+	epassiva+="</table>";
+	$('#eaktiva').html(eaktiva);
+	$('#epassiva').html(epassiva);
+	$('#btn_balance_add').click(function() {
+			accounts.push($("#nblcadr").val());
+			var uniqueAccounts=[];
+			$.each(accounts, function(i, el){
+					if($.inArray(el, uniqueAccounts) === -1) uniqueAccounts.push(el);
+			});
+			window.localStorage.setItem("balance_accounts",uniqueAccounts);
+			open_blk();
+	});
+	
+}
 function open_xferkto() {
 	window.clearInterval(account_interval);
 	$('#account').val(node.wallet.address);	
