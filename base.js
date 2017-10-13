@@ -73,49 +73,59 @@ function open_subbalance() {
 
 function balanceAccount(account) {
 	var balance=0;	
-	balance=parseInt($('#psoll_'+account).attr('data-haben'),16)-parseInt($('#psoll_'+account).attr('data-soll'),16);
+	balance=$('#v_haben_'+account).attr('data')-$('#v_soll_'+account).attr('data');
+	balance/=10000000;
+	$('#v_saldo_'+account).html(balance.toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));
 	if(balance<0) {
-		balance=balance*(-1);
-		$("#phaben_"+account).hide();
-		$("#psoll_"+account).show();
-		$('#v_soll_'+account).html((balance/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));
-	} else {
-		$("#phaben_"+account).show();
-		$("#psoll_"+account).hide();	
-		$('#v_haben_'+account).html((balance/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));
-	}	
+			$('#v_saldo_'+account).css("color","red");
+		} else {
+			$('#v_saldo_'+account).css("color","black");
+		}
+	tbalance();
 }
 
 function ebalanceAccount(account) {
 	var balance=0;	
-	balance=parseInt($('#esoll_'+account).attr('data-ehaben'),16)-parseInt($('#esoll_'+account).attr('data-esoll'),16);
+	balance=$('#e_haben_'+account).attr('data')-$('#e_soll_'+account).attr('data');
+	balance/=1000;
+	$('#e_saldo_'+account).html(balance.toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }));	
 	if(balance<0) {
-		balance=balance*(-1);
-		$("#ehaben_"+account).hide();
-		$("#esoll_"+account).show();
-		$('#e_soll_'+account).html((balance/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }));
+		$('#e_saldo_'+account).css("color","red");
 	} else {
-		$("#ehaben_"+account).show();
-		$("#esoll_"+account).hide();	
-		$('#e_haben_'+account).html((balance/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }));
-	}	
+		$('#e_saldo_'+account).css("color","black");
+	}
+	tbalance();
+}
+
+function tbalance() {
+	var v_soll =0; $.each($('.v_soll'),function(i,v) { v_soll+=$(v).attr("data")*1; });
+	var v_haben =0; $.each($('.v_haben'),function(i,v) { v_haben+=$(v).attr("data")*1; });
+	var v_saldo =0; $.each($('.v_saldo'),function(i,v) { v_saldo+=$(v).attr("data")*1; });
+	var p_soll =0; $.each($('.b_soll'),function(i,v) { p_soll+=$(v).attr("data")*1; });
+	var p_haben =0; $.each($('.b_haben'),function(i,v) { p_haben+=$(v).attr("data")*1; });
+	var p_saldo =0; $.each($('.b_saldo'),function(i,v) { p_saldo+=$(v).attr("data")*1; });
+	
 }
 function blk_sc(account) {
 node.stromkonto(sko_sc).then(function(sko) {
-		sko.balancesSoll(account).then(function(v) {				
-				$('#psoll_'+account).attr('data-soll',v);	
+		sko.balancesSoll(account).then(function(v) {								
+				$('#v_soll_'+account).html((v/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }))				
+				$('#v_soll_'+account).attr('data',v);
 				balanceAccount(account);	
 		});
-		sko.balancesHaben(account).then(function(v) {
-				$('#psoll_'+account).attr('data-haben',v);
+		sko.balancesHaben(account).then(function(v) {				
+				$('#v_haben_'+account).html((v/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }))
+				$('#v_haben_'+account).attr('data',v);
 				balanceAccount(account);
 		});
-		sko.baseSoll(account).then(function(v) {		
-				$('#esoll_'+account).attr('data-esoll',v);	
+		sko.baseSoll(account).then(function(v) {								
+				$('#e_soll_'+account).html((v/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }))
+				$('#e_soll_'+account).attr('data',v);
 				ebalanceAccount(account);	
 		});
-		sko.baseHaben(account).then(function(v) {
-				$('#esoll_'+account).attr('data-ehaben',v);
+		sko.baseHaben(account).then(function(v) {				
+				$('#e_haben_'+account).html((v/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }))
+				$('#e_haben_'+account).attr('data',v);
 				ebalanceAccount(account);
 		});
 });	
@@ -126,7 +136,7 @@ function open_blk() {
 	$('#sko_blance').hide();
 	$('#blk_balance').show();
 	$('#edit_alias').hide();
-	$('#dsp_account').html("Bilanz");
+	$('#dsp_account').html("Salden Bilanzgruppe");
 	var accounts = [];
 	
 	if(window.localStorage.getItem("balance_accounts")!=null) {
@@ -139,28 +149,52 @@ function open_blk() {
 	if(accounts.length==0) {
 		accounts.push(node.wallet.address);	
 	}
-	var html="<table class='table table-condensed'>";	
-	var aktiva = html;
-	var passiva = html;
-	var eaktiva = html;
-	var epassiva = html;
+	var html="<table class='table table-striped'>";	
+	html+="<tr><th>Konto</th><th style='text-align:right'>Soll</th><th style='text-align:right'>Haben</th><th style='text-align:right'>Saldo</th></tr>";
+	var pvalue = html;
+	var penergy = html;
+	
+	var pvalue_last="";
+	var penergy_last="";
 	
 	$.each(accounts,function(i,v) {
-			aktiva+="<tr id='psoll_"+v+"'><td>"+lookup(v)+"</td><td id='v_soll_"+v+"' style='text-align:right'></td></tr>";
-			passiva+="<tr id='phaben_"+v+"'><td>"+lookup(v)+"</td><td id='v_haben_"+v+"' style='text-align:right'></td></tr>";
-			eaktiva+="<tr id='esoll_"+v+"'><td>"+lookup(v)+"</td><td id='e_soll_"+v+"' style='text-align:right'></td></tr>";
-			epassiva+="<tr id='ehaben_"+v+"'><td>"+lookup(v)+"</td><td id='e_haben_"+v+"' style='text-align:right'></td></tr>";
-			blk_sc(v);
+			if(v.length>1) {
+				var rvalue="";
+				var renergy="";
+				
+				rvalue+="<tr><td>"+lookup(v)+"</td>";
+				renergy+="<tr><td>"+lookup(v)+"</td>";
+				
+				rvalue+="<td id='v_soll_"+v+"' style='text-align:right' data='0' class='v_soll'>0,00</td>";
+				renergy+="<td id='e_soll_"+v+"' style='text-align:right' data='0' class='b_soll'>0,000</td>";
+				rvalue+="<td id='v_haben_"+v+"' style='text-align:right' data='0' class='v_haben'>0,00</td>";
+				renergy+="<td id='e_haben_"+v+"' style='text-align:right' data='0' class='b_haben'>0,000</td>";					
+				rvalue+="<td id='v_saldo_"+v+"' style='text-align:right' data='0' class='v_soll'>0,00</td>";
+				renergy+="<td id='e_saldo_"+v+"' style='text-align:right' data='0' class='b_soll'>0,000</td>";
+				
+				rvalue+="</tr>";
+				renergy+="</tr>";
+											
+				blk_sc(v);
+				if(i==0) {						
+						pvalue_last=rvalue;
+						penergy_last=renergy;						
+				} else {
+						pvalue+=rvalue;
+						penergy+=renergy;
+				}				
+			}
 	});
+	pvalue_last=pvalue_last.replace(/td/g, 'th');
+	penergy_last=penergy_last.replace(/td/g, 'th');
+	pvalue+=pvalue_last
+	pvalue+="</table>";
+	penergy+=penergy_last
+	penergy+="</table>";
 	
-	aktiva+="</table>";
-	passiva+="</table>";
-	$('#aktiva').html(aktiva);
-	$('#passiva').html(passiva);
-	eaktiva+="</table>";
-	epassiva+="</table>";
-	$('#eaktiva').html(eaktiva);
-	$('#epassiva').html(epassiva);
+	
+	$('#pvalue').html(pvalue);
+	$('#penergy').html(penergy);
 	$('#btn_balance_add').click(function() {
 			add_BLK();
 			open_blk();
@@ -776,3 +810,5 @@ ipfs.on('ready', () => {
   // stopping a node
   
 })
+
+$('#dsp_sc').click(function() {open_blk();});
