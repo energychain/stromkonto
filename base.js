@@ -162,15 +162,33 @@ function open_blk() {
 	$('#eaktiva').html(eaktiva);
 	$('#epassiva').html(epassiva);
 	$('#btn_balance_add').click(function() {
+			add_BLK();
+			open_blk();
+	});
+	
+}
+
+function add_BLK() {
+	
+			var accounts = [];
+	
+			if(window.localStorage.getItem("balance_accounts")!=null) {
+					var adrbk=window.localStorage.getItem("balance_accounts");
+					adrbk=adrbk.split(',');
+					$.each(adrbk,function(i,v) {
+							accounts.push(v);
+					});
+			}	
+			if(accounts.length==0) {
+				accounts.push(node.wallet.address);	
+			}
 			accounts.push($("#nblcadr").val());
 			var uniqueAccounts=[];
 			$.each(accounts, function(i, el){
 					if($.inArray(el, uniqueAccounts) === -1) uniqueAccounts.push(el);
 			});
 			window.localStorage.setItem("balance_accounts",uniqueAccounts);
-			open_blk();
-	});
-	
+				
 }
 function open_xferkto() {
 	window.clearInterval(account_interval);
@@ -566,6 +584,7 @@ function open_account() {
 											col='#000000';
 											mul=1;
 									}	
+									add_BLK(ref);
 									html+="<tr>";
 									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";					
 									html+="<td><a href='?account="+ref+"&sc="+sko_sc+"' class='"+ref+"'>"+lookup(ref)+"</a></td>";									
