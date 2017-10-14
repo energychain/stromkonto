@@ -737,7 +737,12 @@ if($.qparams("pk")!=null) {
 	pk=$.qparams("pk");
 	window.localStorage.setItem("ext:"+extid,pk);
 }
-var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+
+try {
+	var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+} catch(e) {	
+	var node = new document.StromDAOBO.Node({external_id:Math.random(0,10000000),testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+}
 
 // Fill View (HTML) using JQuery
 $('.account').html(node.wallet.address);
@@ -787,14 +792,36 @@ $('#open_username').click(function() {
 									// Require PK									
 									$('#pk_frm').show();
 								} else {
-									// Open with PK
 									node.stringstorage(tx).then(function(ss) {
 											ss.str().then(function(str) {
 											account_obj.decrypt(str).then(function(pk) {
-												reopenwithPK(pk);
+												console.log("PK",pk);
+												window.localStorage.setItem("ext:"+extid,wallet.privateKey);
+												var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+												
+												rl.relations(wallet.address,51).then(function(profile_str) {
+													// Open with PK
+													if(profile_str!="0x0000000000000000000000000000000000000000") {
+														node.stringstorage(profile_str).then(function(ss) {																
+																ss.str().then(function(str) {
+																console.log("Try to fetch","https://ipfs.io/ipfs/"+str);
+																$.get("https://ipfs.io/ipfs/"+str,function(p) {
+																	account_obj.decrypt(p).then(function(profile) {																		
+																		console.log("Prodile",profile,str,profile_str);
+																		
+																	});
+																});
+																reopenwithPK(pk);
+															});
+														});	
+													} else {
+														reopenwithPK(pk);
+													}																		
+												});	
 											});
 										});
-									});
+									});	
+								
 								}						
 					});
 			})				
@@ -842,8 +869,32 @@ $('#switchuser').click(function() {
 	location.href="?account="+node.wallet.address+"&sc="+sko_sc;
 });
 $('#downloadStorage').click(function() {	
-		uriContent = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(window.localStorage));
-		newWindow = window.open(uriContent, 'Storage');
+		$('#downloadStorage').attr('disabled','disabled');
+		if(($('#username').val().length>0)&&($('#password').val().length>0)) {
+			var account_obj=new document.StromDAOBO.Account($('#username').val(),$('#password').val());
+			account_obj.wallet().then(function(wallet) {
+						account_obj.encrypt(JSON.stringify(window.localStorage)).then(function(enc) {
+						ipfs.files.add({path:'/storage.txt',content:new ipfs.types.Buffer(enc,'ascii')}, function (err, files) {	
+							window.localStorage.setItem("ext:"+extid,wallet.privateKey);
+							var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+						
+							node.stringstoragefactory().then(function(ssf)  {						
+								ssf.build(files[0].hash).then(function(ss) {
+									node.roleLookup().then(function(rl) {
+											rl.setRelation(51,ss).then(function(tx) {
+												$('#downloadStorage').removeAttr('disabled');
+												uriContent = "https://ipfs.io/ipfs/"+files[0].hash;
+												newWindow = window.open(uriContent, 'Storage');
+											});
+									});
+								});
+							});							
+						});
+					});
+			});			
+		} else {
+			$('#downloadStorage').removeAttr('disabled');
+		}
 });
 $('#uploadStorage').click(function() {
 	$('#upForm').show();
