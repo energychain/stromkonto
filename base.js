@@ -692,7 +692,7 @@ function open_account() {
 				$('#edit_alias').hide();
 				var html="";
 				html+='<div  class="form-inline"><input type="text" class="form-control" value="'+$('#dsp_account').html()+'" id="inedit"><button id="save_edit" class="btn btn-danger"><span class="glyphicon glyphicon-play-circle"></span></button></div>';
-				 $('#dsp_account').html(html);	
+				$('#dsp_account').html(html);	
 				 $('#save_edit').click(function() {
 					 window.localStorage.setItem("address_"+$('#dsp_account').attr('data').toLowerCase(),$('#inedit').val());
 					 window.localStorage.setItem("name_"+$('#inedit').val(),$('#dsp_account').attr('data'));
@@ -802,6 +802,7 @@ $('#open_username').click(function() {
 });
 $('#open_pk').click(function() {
 	$('#open_pk').attr('disabled','disabled');
+	$('#dsp_account').html($('#username').val());
 	var account_obj=new document.StromDAOBO.Account($('#username').val(),$('#password').val());
 	account_obj.wallet().then(function(wallet) {
 		window.localStorage.setItem("ext:"+extid,wallet.privateKey);
@@ -869,6 +870,11 @@ $('#uploadStorage').click(function() {
 	});	
 });
 
+$('#cancel_pk').click(function() {
+		$('#open_username').removeAttr('disabled');
+		$('#pk_frm').hide();
+		$('#brain_frm').show();
+});
 const ipfs = new Ipfs()
 
 ipfs.on('ready', () => {
