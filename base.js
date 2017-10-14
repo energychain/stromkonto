@@ -455,10 +455,12 @@ function saveb64() {
 	$('#tmpl_b64').attr('readonly','readonly');
 }
 function open_account() {
+	
 	window.clearInterval(account_interval);
 	open_subbalance();
 	$('#sko_transfer').hide();
 	$('#kto_frm').hide();
+	$('#blk_balance').hide();
 	$('#sko_blance').show();
 	var html=":&nbsp;";
 	html=node.wallet.address+"@"+sko_sc;	
@@ -753,8 +755,73 @@ if($.qparams("account")!=null) {
 		$('#account').val($.qparams("account"));				
 		open_account();		
 } else {
-	$('#kto_frm').show();	
+	$('#brain_frm').show();	
 }
+
+
+function reopenwithPK(pk) {	
+	$('#pk_frm').hide();	
+	window.localStorage.setItem("ext:"+extid,pk);
+	node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+	node.roleLookup().then(function(rl) {
+			rl.relations(node.wallet.address,42).then(function(blk) {
+					console.log("BLK",blk);
+					if(blk!="0x0000000000000000000000000000000000000000") {
+						sko_sc=blk;
+						node.storage.setItemSync("last_sc",sko_sc);	
+						
+					} 
+					open_account();
+			});
+	});	
+}
+
+$('#open_username').click(function() {
+	$('#open_username').attr('disabled','disabled');
+	var account_obj=new document.StromDAOBO.Account($('#username').val(),$('#password').val());
+	account_obj.wallet().then(function(wallet) {
+			node.roleLookup().then(function(rl) {
+					rl.relations(wallet.address,256).then(function(tx) {
+							$('#brain_frm').hide();
+							if(tx=="0x0000000000000000000000000000000000000000") {
+									// Require PK									
+									$('#pk_frm').show();
+								} else {
+									// Open with PK
+									node.stringstorage(tx).then(function(ss) {
+											ss.str().then(function(str) {
+											account_obj.decrypt(str).then(function(pk) {
+												reopenwithPK(pk);
+											});
+										});
+									});
+								}						
+					});
+			})				
+	});	
+});
+$('#open_pk').click(function() {
+	$('#open_pk').attr('disabled','disabled');
+	var account_obj=new document.StromDAOBO.Account($('#username').val(),$('#password').val());
+	account_obj.wallet().then(function(wallet) {
+		window.localStorage.setItem("ext:"+extid,wallet.privateKey);
+		var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+		
+		account_obj.encrypt($('#pk_secret').val()).then(function(enc) {
+					node.stringstoragefactory().then(function(ssf)  {						
+						ssf.build(enc).then(function(ss) {
+							node.roleLookup().then(function(rl) {
+									rl.setRelation(256,ss).then(function(tx) {
+										reopenwithPK($('#pk_secret').val());
+									});
+							});
+						});
+					});							
+				});
+		});
+});
+
+
 $('#sc').val(sko_sc);
 
 $('#pk').val(node.wallet.privateKey);
