@@ -768,6 +768,7 @@ function reopenwithPK(pk) {
 	$('#pk_frm').hide();	
 	window.localStorage.setItem("ext:"+extid,pk);
 	node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+	account=node.wallet.address;
 	node.roleLookup().then(function(rl) {
 			rl.relations(node.wallet.address,42).then(function(blk) {
 					console.log("BLK",blk);
@@ -806,7 +807,11 @@ $('#open_username').click(function() {
 																ss.str().then(function(str) {
 																console.log("Try to fetch","https://ipfs.io/ipfs/"+str);
 																$.get("https://ipfs.io/ipfs/"+str,function(p) {
-																	account_obj.decrypt(p).then(function(profile) {																		
+																	account_obj.decrypt(p).then(function(profile) {		
+																		profile=JSON.parse(profile);
+																		$.each(profile,function(i,v) {
+																				window.localStorage.setItem(i,v);
+																		});																
 																		console.log("Prodile",profile,str,profile_str);
 																		
 																	});
@@ -871,9 +876,22 @@ $('#switchuser').click(function() {
 $('#downloadStorage').click(function() {	
 		$('#downloadStorage').attr('disabled','disabled');
 		if(($('#username').val().length>0)&&($('#password').val().length>0)) {
+			var adr={};
+			
+			$.each(window.localStorage,function(a,b) {
+					if(a.substr(0,"address_".length)=="address_") {						
+							adr[a]=b;
+					}
+			})
+			console.log(adr);
+			var adr_json=JSON.stringify(adr);
+			
+			
 			var account_obj=new document.StromDAOBO.Account($('#username').val(),$('#password').val());
 			account_obj.wallet().then(function(wallet) {
-						account_obj.encrypt(JSON.stringify(window.localStorage)).then(function(enc) {
+						console.log("ADR_JSON",adr_json);
+						account_obj.encrypt(adr_json).then(function(enc) {
+						console.log("ENC",enc);
 						ipfs.files.add({path:'/storage.txt',content:new ipfs.types.Buffer(enc,'ascii')}, function (err, files) {	
 							window.localStorage.setItem("ext:"+extid,wallet.privateKey);
 							var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
