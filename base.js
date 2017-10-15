@@ -23,6 +23,7 @@ function lookup(address) {
 	if(window.localStorage.getItem("address_"+address.toLowerCase())!=null) {
 			name=window.localStorage.getItem("address_"+address.toLowerCase());
 	}
+	if(name.length<1) name=address;
 	return name;
 }
 
@@ -53,18 +54,18 @@ function open_subbalance() {
 	node.roleLookup().then(function(rl) {
 			rl.relations($('#account').val(),42).then(function(tx) {
 				if(sko_sc!=xferkto) {
-					$('#btnxferkto').attr('href','?account='+$('#account').val()+'&sc='+xferkto);
-					$('#btnxferkto').show();
+					$('.btnxferkto').attr('href','?account='+$('#account').val()+'&sc='+xferkto);
+					$('.btnxferkto').removeAttr('disabled');
 				} else {
-					$('#btnxferkto').hide();
+					$('.btnxferkto').attr('disabled','disabled');
 				}
 				if(tx!="0x0000000000000000000000000000000000000000") {
 					if(sko_sc!=tx) {
-						$('#btnunterbilanzierung').attr('href','?account='+$('#account').val()+'&sc='+tx);
-						$('#btnunterbilanzierung').show();
+						$('.btnunterbilanzierung').attr('href','?account='+$('#account').val()+'&sc='+tx);
+						$('.btnunterbilanzierung').removeAttr('disabled');
 					}
 				} else {
-					$('#btnunterbilanzierung').hide();
+					$('.btnunterbilanzierung').attr('disabled','disabled');
 				}	
 				pers_sc=tx;				
 			});
@@ -455,7 +456,10 @@ function saveb64() {
 	$('#tmpl_b64').attr('readonly','readonly');
 }
 function open_account() {
-	
+	node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
+	$('.account').html(lookup(node.wallet.address));
+	//$('#account').val(node.wallet.address);
+
 	window.clearInterval(account_interval);
 	open_subbalance();
 	$('#sko_transfer').hide();
@@ -598,7 +602,8 @@ function open_account() {
 												$(v).html(new Date(o).toLocaleString());
 									});
 								});
-							}							
+							}		
+							$('#dsp_account').html(lookup(account));					
 						});						
 					} else {
 
@@ -686,6 +691,7 @@ function open_account() {
 									
 							});																		
 						});
+						$('#dsp_account').html(lookup(account));					
 					}
 			});
 			$('#edit_alias').click(function() {
@@ -702,9 +708,9 @@ function open_account() {
 			node.transferable(xferkto).then(function(sko) {
 				sko.history(account,20000).then(function(history) {	
 						if(history.length==0) {
-							$('#btnxferkto').hide();
+							$('.btnxferkto').attr('disabled','disabled');
 						} else {
-							$('#btnxferkto').show();
+							$('.btnxferkto').removeAttr('disabled');
 						}
 				});
 			});	
@@ -812,7 +818,7 @@ $('#open_username').click(function() {
 																		$.each(profile,function(i,v) {
 																				window.localStorage.setItem(i,v);
 																		});																
-																		console.log("Prodile",profile,str,profile_str);
+																		reopenwithPK(pk);
 																		
 																	});
 																});
@@ -888,10 +894,8 @@ $('#downloadStorage').click(function() {
 			
 			
 			var account_obj=new document.StromDAOBO.Account($('#username').val(),$('#password').val());
-			account_obj.wallet().then(function(wallet) {
-						console.log("ADR_JSON",adr_json);
-						account_obj.encrypt(adr_json).then(function(enc) {
-						console.log("ENC",enc);
+			account_obj.wallet().then(function(wallet) {						
+						account_obj.encrypt(adr_json).then(function(enc) {						
 						ipfs.files.add({path:'/storage.txt',content:new ipfs.types.Buffer(enc,'ascii')}, function (err, files) {	
 							window.localStorage.setItem("ext:"+extid,wallet.privateKey);
 							var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
@@ -953,4 +957,5 @@ ipfs.on('ready', () => {
   
 })
 
-$('#dsp_sc').click(function() {open_blk();});
+$('.dsp_sc').click(function() {open_blk();});
+$('.btnunterbilanzierung').click(function() { open_account(); });

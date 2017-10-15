@@ -14,11 +14,32 @@
   </head>
   <body>
 	<nav class="navbar navbar-default">
-		<div class="navbar-left">
-			<span class="navbar-brand">
-		  <span class="glyphicon glyphicon-user" id="switchuser"></span>&nbsp;<span class="account"></span>
-		  </span>
+	 <div class="container-fluid">
+		 
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#" id="switchuser"><span class="account"></span></a>
 		</div>
+		 
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				  <li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ansicht <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><a href="#" class="btnunterbilanzierung">Umsätze</a></li>
+					<li><a href="#" class="dsp_sc">Salden</a></li>	
+					<li role="separator" class="divider"></li>
+					<li><a href="#" class="btnxferkto" disabled="disabled">Offene Transfers</a></li>				
+				  </ul>
+				</li>
+			</ul>
+		</div>
+	    <!--	
 		<div class="navbar-right">	
 			<div class="form-inline">	
 			<div id="unlocked" style="display:none">					
@@ -31,9 +52,11 @@
 			<button class="btn btn-default" id="btnunlock" style="margin:10px;"><span class="glyphicon glyphicon-lock" ></span></button>
 			</div>
 		</div>
+		 -->
+	  </div> <!-- end fluid -->
 	</nav>
 	<div class="container">	
-		<h1 id="dsp_sc">Stromkonto</h1>
+		<h1 id="dsp_sc" class="dsp_sc">Stromkonto</h1>
 		<div class="panel panel-default">
 					<div class="panel-heading">
 					<h3><span id="dsp_account"></span>&nbsp;<span class="glyphicon glyphicon-pencil" id="edit_alias">&nbsp;</span></h3>
@@ -143,8 +166,6 @@
 									</div>
 								</div>
 								<hr/>
-								<a href="?" class="btn btn-primary" id="btnunterbilanzierung" style="display:none">Umsätze</a>
-								<a href="?" class="btn btn-primary" id="btnxferkto" style="display:none">Offene Transfers</a>
 								<div class="btn-group">
 								<button id="show_transfer" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none">Auftrag <span class="caret"></span></button>
 									<ul class="dropdown-menu">
