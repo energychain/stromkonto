@@ -28,7 +28,20 @@
 		 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				  <li class="dropdown">
+				<li class="dropdown">
+				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profil <span class="caret"></span></a>
+				  <ul class="dropdown-menu">
+					<li><button id="downloadStorage" class="btn btn-default">Profil speichern</button></li>
+					<li><button id="uploadStorage" class="btn btn-default">Profil hochladen</button>
+							<form id="upForm" style="display:none" >
+							  <p>
+								<input id="myfile" name="files[]" multiple="" class="form-control" type="file" />				
+							  </p>
+							</form>	
+					</li>										
+				  </ul>
+				</li>
+				 <li class="dropdown">
 				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ansicht <span class="caret"></span></a>
 				  <ul class="dropdown-menu">
 					<li><a href="#" class="btnunterbilanzierung">Umsätze</a></li>
@@ -39,20 +52,6 @@
 				</li>
 			</ul>
 		</div>
-	    <!--	
-		<div class="navbar-right">	
-			<div class="form-inline">	
-			<div id="unlocked" style="display:none">					
-						 <div class="form-group">
-							<input type="text" id="pk" class="form-control">							
-							<button class="btn btn-default" id="btnlockit" style="margin:10px;"><span class="glyphicon glyphicon-lock" ></span></button>
-						</div>
-					
-			</div>
-			<button class="btn btn-default" id="btnunlock" style="margin:10px;"><span class="glyphicon glyphicon-lock" ></span></button>
-			</div>
-		</div>
-		 -->
 	  </div> <!-- end fluid -->
 	</nav>
 	<div class="container">	
@@ -176,7 +175,7 @@
 									</ul>
 								</div>
 								<hr/>
-								<h4>Umsätze</h4>								
+								<h4>Umsätze</h4>												
 								<div id="history"><em>Bislang keine Transaktionen</em></div>
 						</div>
 						<div id="blk_balance" style="display:none">								
@@ -199,25 +198,12 @@
 					</div>
 					<div class="panel-footer">Konsens: <span id="konsens_block"></span> - (<span id="konsens_time"></span>)</div>
 		</div> 	
-		<div class="panel panel-warning">
-			<div class="panel-heading">Einstellungen</div>
-			<div class="panel-body">
-				<div class="btn-group">
-				<button id="downloadStorage" class="btn btn-default">Profil speichern</button>		
-				<button id="uploadStorage" class="btn btn-default">Profil hochladen</button>
-				</div>
-				<form id="upForm" style="display:none" >
-				  <p>
-					<input id="myfile" name="files[]" multiple="" class="form-control" type="file" />				
-				  </p>
-				</form>
-			</div>
-		</div>
 	</div>  
 	<script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>        
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>     
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<!-- <script src="https://rawgit.com/energychain/StromDAO-BusinessObject/master/dist/loader.js"></script> -->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
 	<script src="./loader.js"></script>
 	<script src="./base.js"></script>
   </body>

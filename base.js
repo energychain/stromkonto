@@ -4,6 +4,7 @@ var pers_sc="";
 var history_length=15;
 var last_block=0;
 var account_interval=0;
+var chart_data=[];
 
 function nameLookup(address) {
 		if(node.storage.getItemSync("rl_name_"+address)==null) {
@@ -28,7 +29,7 @@ function lookup(address) {
 }
 
 function getBlockTime(blocknr,cb) {
-	if(window.localStorage.getItem("ablock_"+blocknr)==null) 
+	if(typeof window.localStorage.getItem("block_"+blocknr)!="undefined") 
 	{			
 		$.ajax({
 			url: "https://fury.network/rpc",
@@ -46,7 +47,7 @@ function getBlockTime(blocknr,cb) {
 			  console.log("ERROR");
 			}
 		});
-	} else {			
+	} else {						
 			cb(window.localStorage.getItem("block_"+blocknr)*1);
 	}
 }
@@ -163,8 +164,8 @@ function open_blk() {
 				var rvalue="";
 				var renergy="";
 				
-				rvalue+="<tr><td>"+lookup(v)+"</td>";
-				renergy+="<tr><td>"+lookup(v)+"</td>";
+				rvalue+="<tr><td><a href='?account="+v+"&sc="+sko_sc+"'>"+lookup(v)+"</a></td>";
+				renergy+="<tr><td><a href='?account="+v+"&sc="+sko_sc+"'>"+lookup(v)+"</a></td>";
 				
 				rvalue+="<td id='v_soll_"+v+"' style='text-align:right' data='0' class='v_soll'>0,00</td>";
 				renergy+="<td id='e_soll_"+v+"' style='text-align:right' data='0' class='b_soll'>0,000</td>";
@@ -464,16 +465,14 @@ function open_account() {
 	open_subbalance();
 	$('#sko_transfer').hide();
 	$('#kto_frm').hide();
-	$('#blk_balance').hide();
-	$('#sko_blance').show();
+	$('#blk_balance').hide();	
 	var html=":&nbsp;";
 	html=node.wallet.address+"@"+sko_sc;	
 	$('#dsp_account').attr('title',html);
 	var account=$('#account').val();	
 	$('#dsp_account').attr('class',account);
 	$('#dsp_account').attr('data',account);
-	$('#dsp_account').html(lookup(account));
-	$('#edit_alias').show();
+	$('#dsp_account').html(lookup(account));	
 	if(sko_sc==xferkto) {
 			open_xferkto();
 			return;
@@ -486,7 +485,7 @@ function open_account() {
 			sko_name=lookup(sko_sc);
 	}
 	$('#dsp_sc').html(sko_name);
-	
+	chart_data=[];
 	node.stromkonto(sko_sc).then(function(sko) {
 
 			node.mpr().then(function(mpr) {
@@ -560,7 +559,8 @@ function open_account() {
 				}
 			});
 			sko.owner().then(function(owner) {	
-					$('#sko_blance').show();
+					$('#sko_blance').show();	
+					$('#edit_alias').show();				
 					if(owner[0]!=account) {
 						$('#edit_alias').show();
 					sko.history(account,10000).then(function(history) {	
@@ -571,7 +571,7 @@ function open_account() {
 							$.each(history,function(i,v) {
 								if(i<history_length) {
 									html+="<tr>";
-									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";
+									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"' data-value='"+(parseInt(v.value, 16)/10000000)+"'>#"+v.blockNumber+"</td>";
 									html+="<td><a href='?account="+v.from+"&sc="+sko_sc+"' class='"+v.from+"'>"+lookup(v.from)+"</a></td>";
 									if((sko_sc==xferkto)&&(v.to.toLowerCase()==node.wallet.address.toLowerCase())) {
 										html+="<td><a href='?account="+v.to+"&sc="+sko_sc+"' class='"+v.to+"'>"+lookup(v.to)+"</a></td>";
@@ -600,6 +600,10 @@ function open_account() {
 								$.each($('.blocks'),function(i,v) {
 									getBlockTime($(v).attr("data"),function(o) {
 												$(v).html(new Date(o).toLocaleString());
+												var datapoint={};
+												datapoint.x=new Date(o);
+												datapoint.y=$(v).attr("data-value");
+												chart_data.push(datapoint);
 									});
 								});
 							}		
@@ -608,6 +612,7 @@ function open_account() {
 					} else {
 
 						sko.history(account,10000).then(function(history) {
+							
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
 							html+="<tr><th>Konsens</th><th>Schuldner/Gläubiger</th><th align='right' style='text-align:right'>Energie (KWh)</th><th align='right' style='text-align:right'>Geld (€)</th></tr>";					
@@ -627,11 +632,12 @@ function open_account() {
 									}	
 									add_BLK(ref);
 									html+="<tr>";
-									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"'>#"+v.blockNumber+"</td>";					
+									html+="<td class='block_"+v.blockNumber+" blocks' data='"+v.blockNumber+"' data-value='"+saldo+"'>#"+v.blockNumber+"</td>";					
 									html+="<td><a href='?account="+ref+"&sc="+sko_sc+"' class='"+ref+"'>"+lookup(ref)+"</a></td>";									
 									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.base, 16)/1000*mul).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 })+"</td>";
 									html+="<td align='right' style='color:"+col+"'>"+(parseInt(v.value, 16)/10000000*mul).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+"</td>";							
 									html+="</tr>";
+									saldo+=(parseInt(v.value, 16)/1*mul)
 								}
 							});
 														
@@ -642,6 +648,11 @@ function open_account() {
 								$.each($('.blocks'),function(i,v) {
 									getBlockTime($(v).attr("data"),function(o) {
 												$(v).html(new Date(o).toLocaleString());
+												var datapoint={};
+												//datapoint.x=new Date(o);
+												datapoint.push($(v).attr("data")*1);
+												datapoint.push($(v).attr("data-value")*1);
+												chart_data.push(datapoint);
 									});
 									$('#more10').click(function() {
 											history_length+=10;
