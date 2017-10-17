@@ -510,6 +510,7 @@ function open_account() {
 		    nameLookup(account);
 		    
 			sko.balancesHaben(account).then(function(haben) {
+				$('#salden_transfer').attr("data-balanceshaben",haben);
 				haben=haben/10000000;
 				str_haben=haben.toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 });
 				$('#account_haben').html(str_haben);
@@ -525,6 +526,7 @@ function open_account() {
 				}
 			});
 			sko.balancesSoll(account).then(function(soll) {
+				$('#salden_transfer').attr("data-balancessoll",soll);
 				soll=soll/10000000;
 				str_soll=soll.toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 });
 				$('#account_soll').html(str_soll);				
@@ -540,6 +542,7 @@ function open_account() {
 				}
 			});
 			sko.baseSoll(account).then(function(soll) {
+				$('#salden_transfer').attr("data-basesoll",soll);
 				soll=soll/1000;				
 				str_soll=soll.toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 });
 				$('#power_soll').html(str_soll);				
@@ -555,6 +558,7 @@ function open_account() {
 				}
 			});
 			sko.baseHaben(account).then(function(haben) {
+				$('#salden_transfer').attr("data-basehaben",haben);
 				haben=haben/1000;				
 				str_haben=haben.toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 });
 				$('#power_haben').html(str_haben);
@@ -569,11 +573,54 @@ function open_account() {
 						$('#work_saldo').html(((($('#power_haben').attr('title')-$('#power_soll').attr('title'))/($('#account_haben').attr('title')-$('#account_soll').attr('title')))/10).toLocaleString(undefined, { minimumFractionDigits:4, maximumFractionDigits:4 }));
 				}
 			});
+			$('#salden_transfer').hide();	
 			sko.owner().then(function(owner) {	
 					$('#sko_blance').show();	
 					$('#edit_alias').show();				
 					if(owner[0]!=account) {
 						$('#edit_alias').show();
+						
+					if(owner[0].toLowerCase()==node.wallet.address.toLowerCase()) {
+						$('#salden_transfer').show();	
+						$('#btn_salden_transfer').click(function() {
+								$('#btn_salden_transfer').attr('disabled','disabled');
+								var rcp=$('#salden_rcp').val();
+								if(window.localStorage.getItem("name_"+rcp)!=null) {
+									rcp=window.localStorage.getItem("name_"+rcp);
+								}
+								var to=account;
+								var from=rcp;
+								var base=$('#salden_transfer').attr("data-basehaben")*1-$('#salden_transfer').attr("data-basesoll")*1;
+								var value=$('#salden_transfer').attr("data-balanceshaben")*1-$('#salden_transfer').attr("data-balancessoll")*1;
+								if((base>0)&&(value>0)) {
+										sko.addTx(to,from,Math.abs(value),Math.abs(base)).then(function(tx) {
+												console.log(to,from,Math.abs(value),Math.abs(base));
+												console.log(tx);
+												location.reload();
+										});
+								} else 
+								if((base<0)&&(value<0)) {
+										sko.addTx(from,to,Math.abs(value),Math.abs(base)).then(function(tx) {
+												location.reload();
+										});
+								} else {
+										if((value>=0)&&(base<0)) {
+											sko.addTx(to,from,Math.abs(value),0).then(function(tx) {
+													sko.addTx(from,to,0,Math.abs(base)).then(function(tx) {
+														location.reload();
+													});	
+											});										
+										} else {
+											sko.addTx(from,to,Math.abs(value),0).then(function(tx) {
+													sko.addTx(to,from,0,Math.abs(base)).then(function(tx) {
+														location.reload();
+													});	
+											});													
+										}
+								}								
+						});
+					}
+				
 					sko.history(account,10000).then(function(history) {	
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
@@ -950,6 +997,9 @@ $('#downloadStorage').click(function() {
 							adr[a]=b;
 					}
 					if(a.substr(0,"name_".length)=="name_") {						
+							adr[a]=b;
+					}
+					if(a=="balance_accounts") {
 							adr[a]=b;
 					}
 			})
