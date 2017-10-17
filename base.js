@@ -248,10 +248,12 @@ function open_xferkto() {
 			history=history.reverse();
 			var html="<table class='table table-striped'>";
 			html+="<tr><th>Konsens</th><th>Von</th><th>Art</th><th>&nbsp;</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
-			var saldo=0;							
+			var saldo=0;					
+					
 			$.each(history,function(i,v) {
+				
 				if(v.sender.toLowerCase()!=node.wallet.address.toLowerCase()) { 
-					if(i<150) {
+					if(i<150) {						
 						bc="#ffffff";
 						if(node.storage.getItemSync("rcpt_"+v.blockNumber)!=null) {
 								bc="#c0c0c0";							
@@ -275,9 +277,11 @@ function open_xferkto() {
 				}
 			});
 			saldo-=$('#account_haben').attr('title')-$('#account_soll').attr('title');			
-			html+="</table>";			
+			html+="</table>";	
+			
 			if(history.length>0) {
 				$('#history').html(html);
+				$('#sko_blance').show();
 			}
 			$('.applybtn').click(function(o) {
 					var from=$(o.currentTarget).attr('data-from');
@@ -911,8 +915,11 @@ $('#downloadStorage').click(function() {
 					if(a.substr(0,"address_".length)=="address_") {						
 							adr[a]=b;
 					}
+					if(a.substr(0,"name_".length)=="name_") {						
+							adr[a]=b;
+					}
 			})
-			console.log(adr);
+			
 			var adr_json=JSON.stringify(adr);
 			
 			
@@ -979,6 +986,6 @@ ipfs.on('ready', () => {
   // stopping a node
   
 })
-
+$('#edit_alias').hide();
 $('.dsp_sc').click(function() {open_blk();});
 $('.btnunterbilanzierung').click(function() { open_account(); });
