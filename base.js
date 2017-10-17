@@ -1071,3 +1071,30 @@ $('#cancel_pk').click(function() {
 $('#edit_alias').hide();
 $('.dsp_sc').click(function() {open_blk();});
 $('.btnunterbilanzierung').click(function() { open_account(); });
+
+$('#work_saldo').click(function() {
+		var money=$('#account_haben').attr('title')*1-$('#account_soll').attr('title')*1;
+		var power=$('#power_haben').attr('title')*1-$('#power_soll').attr('title')*1;
+		var money_color="black"; 
+		if(money<0) money_color="red";
+		var power_color="black"; 
+		if(power<0) power_color="red";
+		
+		var html="<div class='col-md-12'>";
+		
+		html+="<table class='table table-striped'>";
+		html+="<tr><th>Steuer/Umlage</th><th style='text-align:right'>Geld</th></tr>";
+		html+="<tr><td>Umsatzsteuer 19%</td><td style='text-align:right;color:"+money_color+"'>"+(money-(money/1.19)).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";
+		html+="<tr><td>Stromsteuer</td><td style='text-align:right;color:"+power_color+"'>"+(power*0.0205).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";		
+		html+="<tr><td>EEG Umlage</td><td style='text-align:right;color:"+power_color+"'>"+(power*0.0688).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";		
+		html+="<tr><td>KWK Aufschlag</td><td style='text-align:right;color:"+power_color+"'>"+(power*0.00463).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";		
+		html+="<tr><td>§ 19 StromNEV-Umlage</td><td style='text-align:right;color:"+power_color+"'>"+(power*0.00388).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";		
+		html+="<tr><td>Offshore-Haftungsumlage</td><td style='text-align:right;color:"+power_color+"'>"+(power*0.00028*(-1)).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";		
+		html+="<tr><td>Umlage für abschaltbare Lasten</td><td style='text-align:right;color:"+power_color+"'>"+(power*0.00006).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";		
+		html+="<tr><td>Energiesteuer</td><td style='text-align:right;color:"+power_color+"'>"+(power*0.0055).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })+" €</td></tr>";		
+		html+="<tr><th colspan='2'>alle Werte vorläufig</th>"; 
+		html+="</table></div>";
+		$('#umlagen').html(html);
+		$('#umlagen').toggle();
+});
+
