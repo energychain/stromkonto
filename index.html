@@ -106,11 +106,11 @@
 							<h3 id="dsp_auftrag">Auftrag</h3>
 							 <div class="form-group">
 								<label for="transfer_from">Von</label>
-								<input type="text" class="form-control tx" id="transfer_from" placeholder="0x.." >
+								<input type="text" class="form-control tx typeahead" id="transfer_from" placeholder="0x.." data-provider="typeahead" autocomplete="off">
 							  </div>
 							 <div class="form-group">
 								<label for="transfer_to">An</label>
-								<input type="text" class="form-control tx" id="transfer_to" placeholder="0x..">
+								<input type="text" class="form-control tx typeahead" id="transfer_to" placeholder="0x.." data-provider="typeahead" autocomplete="off">
 							  </div>	
 							 <div class="form-group">
 								<label for="transfer_value">Betrag Geld (€)</label>
@@ -205,7 +205,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>     
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="./typeahead.js"></script>
 	<script src="./loader.js"></script>
 	<script src="./base.js"></script>
   </body>

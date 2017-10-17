@@ -348,7 +348,14 @@ function open_xferkto() {
 }
 
 function skoEvents() {
-	
+	const ipfs = new Ipfs()
+
+		ipfs.on('ready', () => {
+		  // Your node is now ready to use \o/
+		  
+		  // stopping a node
+		  
+		})
 						
 		$('#show_transfer').show();
 		$('#show_transfer').click(function() {
@@ -840,9 +847,16 @@ $('#open_username').click(function() {
 																$.get("https://ipfs.io/ipfs/"+str,function(p) {
 																	account_obj.decrypt(p).then(function(profile) {		
 																		profile=JSON.parse(profile);
+																		var typa=[];
 																		$.each(profile,function(i,v) {
 																				window.localStorage.setItem(i,v);
-																		});																
+																				typa.push({name:v});
+																		});	
+																		var $input = $(".typeahead");
+																		$input.typeahead({
+																		  source: typa,
+																		  autoSelect: true
+																		});															
 																		reopenwithPK(pk);
 																		
 																	});
@@ -906,7 +920,27 @@ $('#btnunlock').click(function() {
 $('#switchuser').click(function() {
 	location.href="?account="+node.wallet.address+"&sc="+sko_sc;
 });
+
+var typa=[];
+$.each(window.localStorage,function(a,b) {
+					if(a.substr(0,"address_".length)=="address_") {						
+							typa.push({name:b});
+					}
+});
+var $input = $(".typeahead");
+$input.typeahead({
+  source: typa,
+  autoSelect: true
+});		
+																		
 $('#downloadStorage').click(function() {	
+	const ipfs = new Ipfs()
+
+		ipfs.on('ready', () => {
+		  // Your node is now ready to use \o/
+		  
+		  // stopping a node
+		  		
 		$('#btn_downloadStorage').addClass('disabled');
 		if(($('#username').val().length>0)&&($('#password').val().length>0)) {
 			var adr={};
@@ -947,6 +981,7 @@ $('#downloadStorage').click(function() {
 		} else {
 			$('#btn_downloadStorage').removeClass('disabled');
 		}
+	}); // END IPFS
 });
 $('#uploadStorage').click(function() {
 	$('#upForm').show();
@@ -978,14 +1013,7 @@ $('#cancel_pk').click(function() {
 		$('#pk_frm').hide();
 		$('#brain_frm').show();
 });
-const ipfs = new Ipfs()
 
-ipfs.on('ready', () => {
-  // Your node is now ready to use \o/
-  
-  // stopping a node
-  
-})
 $('#edit_alias').hide();
 $('.dsp_sc').click(function() {open_blk();});
 $('.btnunterbilanzierung').click(function() { open_account(); });
