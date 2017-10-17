@@ -736,6 +736,10 @@ function open_account() {
 
 							var peer=from;
 							var liab=false;
+							var value=$('#transfer_value').val();
+							var base=$('#transfer_base').val();
+							value=value.replace(",",".")*1;
+							base=base.replace(",",".")*1;
 							
 							if(from.toLowerCase()==node.wallet.address.toLowerCase()) { peer=to; liab=true;} 
 							
@@ -746,7 +750,7 @@ function open_account() {
 									ssf.build($('#tmpl_b64').val()).then(function(msg) {
 										$('#status_transfer').html("Übertrage Nachricht an Empfänger");
 										node.transferable().then(function(transferable) {
-											transferable.addRx(peer,msg,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000,liab).then(function(tx) {
+											transferable.addRx(peer,msg,value*10000000,base*1000,liab).then(function(tx) {
 												$('#fnct_transfer').removeAttr('disabled');
 												$('#fnct_transfer_cancel').removeAttr('disabled');
 												$('#sko_blance').show();
