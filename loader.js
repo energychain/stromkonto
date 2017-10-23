@@ -1151,6 +1151,15 @@ this.erc20token = function(obj_or_address) {
 					return p2;
 				};
 				
+				instance.owner=function() {					
+					var p2 = new Promise(function(resolve2, reject2) { 							
+							instance.obj.owner().then(function(o) {														
+								 resolve2(o[0].toString());									
+							});									
+					});
+					return p2;
+				};
+				
 				instance.balanceOf=function(address_account) {					
 						var p2 = new Promise(function(resolve2, reject2) { 
 											//console.log(instance.obj);
@@ -1608,7 +1617,7 @@ this.mpset=function(obj_or_address) {
 					var p2 = new Promise(function(resolve2, reject2) { 
 							instance.obj.meterpoints(uint256_idx).then(function(o) {									
 								resolve2(o[0]);											
-							});									
+							}).catch(function(e) {reject2();});									
 					});
 					return p2;
 				};
@@ -1616,7 +1625,7 @@ this.mpset=function(obj_or_address) {
 				instance.length=function() {
 					var p2 = new Promise(function(resolve2, reject2) { 
 							instance.obj.length().then(function(o) {									
-								resolve2(o[0]);											
+								resolve2(o);											
 							});									
 					});
 					return p2;
@@ -3722,7 +3731,7 @@ this.xtoken = function(obj_or_address) {
 				};
 				
 				instance.allocate=function(address_token,uint256_value) {
-					//_reading=Math.round(_reading);
+					
 					var p2 = new Promise(function(resolve2, reject2) { 
 							instance.obj.allocate(address_token,uint256_value).then(function(o) {	
 								parent._waitForTransactionKeepRef(o,resolve2);			
@@ -3731,7 +3740,7 @@ this.xtoken = function(obj_or_address) {
 					return p2;
 				};
 				instance.x=function(address_token) {
-					//_reading=Math.round(_reading);
+					
 					var p2 = new Promise(function(resolve2, reject2) { 
 							instance.obj.x(address_token).then(function(o) {	
 								parent._waitForTransactionKeepRef(o,resolve2);			

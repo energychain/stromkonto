@@ -48,8 +48,10 @@
 				  <ul class="dropdown-menu">
 					<li><a href="#" class="btnunterbilanzierung">Umsätze</a></li>
 					<li><a href="#" class="dsp_sc">Salden</a></li>	
-					<li role="separator" class="divider"></li>
+					<li role="separator" class="divider"></li>					
 					<li><a href="#" class="btnxferkto" disabled="disabled">Offene Transfers</a></li>				
+					<li role="separator" class="divider"></li>
+					<li><a href="#" class="dsp_assets">Digital Assets</a></li>	
 				  </ul>
 				</li>
 			</ul>
@@ -129,7 +131,13 @@
 									<input id="reffile" name="files[]" multiple="" class="form-control" type="file" />				
 								  </p>
 								</form>
-							  </div>							  
+							</div>	
+							<div class="form-group" style="display:none" id="hasToken">
+								<label for="transfer_tc">Digital Assets Vertrag</label>
+								<input type="text" class="form-control tx" id="transfer_tc" placeholder="0x12dc...">
+								<label for="transfer_tk">Digital Assets Anzahl</label>
+								<input type="number" class="form-control tx" id="transfer_tk" placeholder="0">
+							 </div>						  
 							<hr/>
 							<div class="row">
 								<div class="col-md-6">
@@ -199,12 +207,46 @@
 								</div>
 								<hr/>
 								<div class="form-group">
-									<label for="addBalance">Account:</label>
-									<input type="text" class="form-control" id="nblcadr">
+									<label for="addBalance">Buchungskonto:</label>
+									<input type="text" class="form-control" id="nblcadr" style="margin-bottom:10px;">
+									<button id="btn_balance_remove" class="btn btn-danger">entfernen</button>
 									<button id="btn_balance_add" class="btn btn-primary">hinzufügen</button>
 								</div>
 						</div>
-
+						<div id="token_div" style="display:none">		
+								<hr/>
+								<h2>Digital Assets (Token)</h2>
+								<div class="row" id="tokenstat">
+									<div class="col-md-4">
+										<h4>Emitiert</h4><h3><span id="total_tokens"></span></h3>
+									</div>								
+									<div class="col-md-4"  style="text-align:center">
+										<h4>Fremdbesitz</h4><h3><span id="foreign_tokens"></span></h3>
+									</div>				
+									<div class="col-md-4" style="text-align:right">
+										<h4>Eigenbesitz</h4><h3><span id="account_tokens"></span></h3>
+									</div>
+								</div>
+								<h4>Bestand</h4>
+								<div id="tk_wallet">
+									
+								</div>
+								<div class="form-group">
+									<label for="tkadr">Assets:</label>
+									<input type="text" class="form-control" id="tkadr" style="margin-bottom:10px;">
+									<button id="btn_wallet_remove" class="btn btn-danger">entfernen</button>
+									<button id="btn_wallet_add" class="btn btn-primary">hinzufügen</button>
+								</div>
+								<!--
+								<div class="form-group">
+								<label for="token_transfer_to">Übertrage an:</label>
+								<input type="text" id="token_transfer_to" class="form-control typeahead" placeholder="0x.." data-provider="typeahead" autocomplete="off">
+								<label for="token_transfer_volume">Anteile:</label>
+								<input type="number" id="token_transfer_volume" class="form-control">
+								<button id="btn_token_transfer" class="btn btn-danger" style="margin-top:10px;">Übertragen</button>										
+								</div>
+								-->
+						</div>
 					</div>
 					<div class="panel-footer">Konsens: <span id="konsens_block"></span> - (<span id="konsens_time"></span>)</div>
 		</div> 	

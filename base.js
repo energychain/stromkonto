@@ -51,6 +51,71 @@ function getBlockTime(blocknr,cb) {
 			cb(window.localStorage.getItem("block_"+blocknr)*1);
 	}
 }
+
+function unifyAddAccounts(address) {
+			var accounts = [];
+	
+			if(window.localStorage.getItem("balance_accounts")!=null) {
+					var adrbk=window.localStorage.getItem("balance_accounts");
+					adrbk=adrbk.split(',');
+					$.each(adrbk,function(i,v) {
+							accounts.push(v);
+					});
+			}	
+			if(accounts.length==0) {
+				accounts.push(node.wallet.address);	
+			}
+			accounts.push(address);
+			
+			var uniqueAccounts=[];
+			$.each(accounts, function(i, el){
+					if($.inArray(el, uniqueAccounts) === -1) uniqueAccounts.push(el);
+			});
+			window.localStorage.setItem("balance_accounts",uniqueAccounts);
+}
+
+function unifyAddTokens(address) {
+	var accounts = [];
+	unifyAddAccounts(address);
+	if(window.localStorage.getItem("wallet_accounts")!=null) {
+			var adrbk=window.localStorage.getItem("wallet_accounts");
+			adrbk=adrbk.split(',');
+			$.each(adrbk,function(i,v) {
+					accounts.push(v);
+			});
+	}	
+	if(accounts.length==0) {
+		accounts.push(node.wallet.address);	
+	}
+	
+	
+	
+	var unify=function() {
+		var uniqueAccounts=[];
+		$.each(accounts, function(i, el){
+				if($.inArray(el, uniqueAccounts) === -1) uniqueAccounts.push(el);
+		});
+		window.localStorage.setItem("wallet_accounts",uniqueAccounts);
+	}
+	
+	node.roleLookup().then(function(rl) {
+	rl.relations($("#tkadr").val(),43).then(function(tx) {
+		if(tx!="0x0000000000000000000000000000000000000000") {					
+			node.mptoken(tx).then(function(mpt) {
+				mpt.power_token().then(function(token) {
+					accounts.push(token);
+					accounts.push(address);
+					unify();
+				});
+			});
+		} else {
+			accounts.push(addess);
+			unify();
+		}
+		});
+	});
+	
+}
 function open_subbalance() {
 	node.roleLookup().then(function(rl) {
 			rl.relations($('#account').val(),42).then(function(tx) {
@@ -72,7 +137,133 @@ function open_subbalance() {
 			});
 		});	
 }
+function open_mptoken() {
+	node.roleLookup().then(function(rl) {
+			rl.relations($('#account').val(),43).then(function(tx) {
+				if(tx!="0x0000000000000000000000000000000000000000") {
+					//$('#token_div').show();
+					$('#hasToken').show();
+					$('#token_div').attr('data',tx);	
+					node.mptoken(tx).then(function(mpt) {
+						mpt.power_token().then(function(token) {							
+							$('#transfer_tc').val(token);
+							node.erc20token(token).then(function(e20) {
+								e20.totalSupply().then(function(x) { 									
+									$('#total_tokens').html(x); 
+									$('#foreign_tokens').html($('#total_tokens').html()*1-$('#account_tokens').html()*1);
+								});
+								e20.balanceOf($('#account').val()).then(function(x) { 
+									$('#account_tokens').html(x);
+									$('#foreign_tokens').html($('#total_tokens').html()*1-$('#account_tokens').html()*1);
+									
+									if(x>0) {
+										$('#btn_token_transfer').removeAttr('disabled');
+										$('#btn_token_transfer').click(function() {	
+												$('#btn_token_transfer').attr('disabled','disabled');	
+												var to=$('#token_transfer_to').val();
+								
+												if(window.localStorage.getItem("name_"+to)!=null) {
+													to=window.localStorage.getItem("name_"+to);
+												}
+												e20.transfer(to,$('#token_transfer_volume').val()*1).then(function(tx) {
+													open_mptoken();
+												});
+										});
+										
+									} else {
+										$('#btn_token_transfer').attr('disabled','disabled');											
+									}
+								});		
+											
+							});
+						});
+					});
+				} else {
+					//$('#token_div').hide();
+					//$('#hasToken').hide();
+				}
+			});
+		});
+		// Open Token stats
+		var html="";
+		html+="<table class='table table-striped'>";
+		html+="<tr><th>Asset</th><th>Emittent</th><th style='text-align:right'>Stückwert Energie</th><th style='text-align:right'>Stückwert Geld</th><th style='text-align:right'>Gesamt Emitiert</th><th style='text-align:right'>Besitz</th></tr>";
+		var accounts = [];
+	
+		if(window.localStorage.getItem("wallet_accounts")!=null) {
+				var adrbk=window.localStorage.getItem("wallet_accounts");
+				adrbk=adrbk.split(',');
+				$.each(adrbk,function(i,v) {
+						accounts.push(v);
+				});
+		}	
+		if(accounts.length==0) {
+			accounts.push($('#token_div').attr('data'));	
+		} else {			
+			$('#hasToken').show();	
+		}
 
+		$.each(accounts,function(i,v) {
+			
+			if(v!=null) {	
+							
+				if(v.length>1) {				
+					html+="<tr><td><a href='?account="+v+"&sc="+sko_sc+"'>"+lookup(v)+"</a></td>";
+					html+="<td id='tk_owner_"+v+"'></td>";
+					html+="<td align='right' id='tk_v_base_"+v+"'>0</td>";
+					html+="<td align='right' id='tk_v_value_"+v+"'>0</td>";
+					html+="<td align='right' id='tk_total_"+v+"'>0</td>";
+					html+="<td align='right' id='tk_own_"+v+"'>0</td>";				
+					html+="</tr>";
+				}
+			}
+		});
+		html+="</table>";	
+		$('#tk_wallet').html(html);		
+		$('#btn_wallet_add').click(function() {
+			add_token();
+			open_mptoken();
+		});
+		$('#btn_wallet_remove').click(function() {
+			remove_token();
+			open_mptoken();
+		});
+		fill_tk_balances(accounts);
+}
+
+function fill_tk_balances(accounts) {
+	$.each(accounts,function(i,v) {
+		node.erc20token(v).then(function(e20) {
+				e20.totalSupply().then(function(total) {
+						$('#tk_total_'+v).html(total);
+				});
+				e20.balanceOf($('#account').val()).then(function(total) {
+						$('#tk_own_'+v).html(total);
+						node.stromkonto(sko_sc).then(function(sko) {
+							sko.balancesHaben(v).then(function(haben) {
+								sko.balancesSoll(v).then(function(soll) {
+									value=haben-soll;
+									console.log(soll,haben);
+									$('#tk_v_value_'+v).html((value/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));								
+								});
+							});
+							sko.baseHaben(v).then(function(haben) {
+								sko.baseSoll(v).then(function(soll) {
+									value=haben-soll;
+									console.log(soll,haben);
+									$('#tk_v_base_'+v).html((value/1000).toLocaleString(undefined, { minimumFractionDigits:3, maximumFractionDigits:3 }));								
+								});
+							});
+						});
+				});
+				e20.owner().then(function(owner) {						
+						$('#tk_owner_'+v).html("<a href='?account="+owner+"&sc="+sko_sc+"'>"+lookup(owner)+"</a>");
+				});
+			
+		});
+	});
+	
+}
 function balanceAccount(account) {
 	var balance=0;	
 	balance=$('#v_haben_'+account).attr('data')-$('#v_soll_'+account).attr('data');
@@ -201,10 +392,16 @@ function open_blk() {
 			add_BLK();
 			open_blk();
 	});
-	
+	$('#btn_balance_remove').click(function() {
+			remove_BLK();
+			open_blk();
+	});
 }
 
 function add_BLK() {
+			unifyAddAccounts($("#nblcadr").val());										
+}
+function remove_BLK() {
 	
 			var accounts = [];
 	
@@ -212,13 +409,15 @@ function add_BLK() {
 					var adrbk=window.localStorage.getItem("balance_accounts");
 					adrbk=adrbk.split(',');
 					$.each(adrbk,function(i,v) {
+						if(v!=$("#nblcadr").val()) {
 							accounts.push(v);
+						}
 					});
 			}	
 			if(accounts.length==0) {
 				accounts.push(node.wallet.address);	
 			}
-			accounts.push($("#nblcadr").val());
+			//accounts.push($("#nblcadr").val());
 			var uniqueAccounts=[];
 			$.each(accounts, function(i, el){
 					if($.inArray(el, uniqueAccounts) === -1) uniqueAccounts.push(el);
@@ -226,6 +425,37 @@ function add_BLK() {
 			window.localStorage.setItem("balance_accounts",uniqueAccounts);
 				
 }
+
+function add_token() {
+	unifyAddTokens($("#tkadr").val());									
+}
+
+function remove_token() {
+	
+			var accounts = [];
+	
+			if(window.localStorage.getItem("wallet_accounts")!=null) {
+					var adrbk=window.localStorage.getItem("wallet_accounts");
+					adrbk=adrbk.split(',');
+					$.each(adrbk,function(i,v) {
+						if(v!=$("#tkadr").val()) {
+							accounts.push(v);
+						}
+					});
+			}	
+			if(accounts.length==0) {
+				accounts.push(node.wallet.address);	
+			}
+			//accounts.push($("#tkadr").val());
+			var uniqueAccounts=[];
+			$.each(accounts, function(i, el){
+					if($.inArray(el, uniqueAccounts) === -1) uniqueAccounts.push(el);
+			});
+			window.localStorage.setItem("wallet_accounts",uniqueAccounts);
+				
+}
+
+
 function open_xferkto() {
 	window.clearInterval(account_interval);
 	$('#account').val(node.wallet.address);	
@@ -326,13 +556,14 @@ function open_xferkto() {
 								if(from.toLowerCase()==node.wallet.address) { peer=to; liab=true;} 
 								node.stromkonto(pers_sc).then(function(sko) {	
 									sko.addTx(from,to,$('#transfer_value').val()*10000000,$('#transfer_base').val()*1000).then(function(tx1) {																				
-											$('#fnct_transfer').removeAttr('disabled');
-											$('#fnct_transfer_cancel').removeAttr('disabled');
-											$('#sko_blance').show();
-											$('#sko_transfer').hide();					
-											$('#status_transfer').html("");		
-											node.storage.setItemSync("rcpt_"+block,tx1);
-											open_account();																					
+												$('#fnct_transfer').removeAttr('disabled');
+												$('#fnct_transfer_cancel').removeAttr('disabled');
+												$('#sko_blance').show();
+												$('#sko_transfer').hide();					
+												$('#status_transfer').html("");		
+												node.storage.setItemSync("rcpt_"+block,tx1);											
+												open_account();		
+												console.log("NO Asset Transfer - as already done by peer");																													
 									});	
 								});																	
 							});	
@@ -356,8 +587,8 @@ function skoEvents() {
 		  // stopping a node
 		  
 		})
-						
 		$('#show_transfer').show();
+		
 		$('#show_transfer').click(function() {
 			$('#transfer_to').val("");
 			$('#transfer_from').val("");
@@ -367,6 +598,7 @@ function skoEvents() {
 			$('#dsp_auftrag').html("Auftrag - Überweisung");
 			$('#transfer_from').val(lookup(node.wallet.address));
 			$('#sko_blance').hide();
+			$('#token_div').hide();				
 			window.clearInterval(account_interval);
 			$('#sko_transfer').show();
 		});
@@ -374,11 +606,13 @@ function skoEvents() {
 			$('#dsp_auftrag').html("Auftrag - Lastschrift");
 			$('#transfer_to').val(lookup(node.wallet.address));
 			$('#sko_blance').hide();
+			$('#token_div').hide();				
 			window.clearInterval(account_interval);
 			$('#sko_transfer').show();
 		});
 		$('#show_transfer_free').click(function() {
 			$('#sko_blance').hide();
+			$('#token_div').hide();				
 			window.clearInterval(account_interval);
 			$('#sko_transfer').show();
 		});
@@ -432,6 +666,8 @@ function loadb64() {
 	$('#transfer_base').val(tx.base/1000);
 	$('#transfer_value').val(tx.value/10000000);
 	$('#transfer_text').val(tx.text);
+	$('#transfer_tk').val(tx.tk);
+	$('#transfer_tc').val(tx.tc);
 	if(tx.text.substr(0,6)=="/ipfs/") {
 		$('#refForm').hide();
 		$('#btnrefownload').show();
@@ -461,7 +697,8 @@ function saveb64() {
 	tx.base=$('#transfer_base').val()*1000;
 	tx.value=$('#transfer_value').val()*10000000;
 	tx.text=$('#transfer_text').val();
-	
+	tx.tk=$('#transfer_tk').val();
+	tx.tc=$('#transfer_tc').val();
 	var str=btoa(JSON.stringify(tx));
 	$('#tmpl_b64').val(str);
 	$('#tmpl_b64').show();
@@ -471,9 +708,10 @@ function open_account() {
 	node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./abi/"});
 	$('.account').html(lookup(node.wallet.address));
 	//$('#account').val(node.wallet.address);
-
+	
 	window.clearInterval(account_interval);
 	open_subbalance();
+	open_mptoken();
 	$('#sko_transfer').hide();
 	$('#kto_frm').hide();
 	$('#blk_balance').hide();	
@@ -708,9 +946,11 @@ function open_account() {
 												$(v).html(new Date(o).toLocaleString());
 												var datapoint={};
 												//datapoint.x=new Date(o);
+												/*
 												datapoint.push($(v).attr("data")*1);
 												datapoint.push($(v).attr("data-value")*1);
 												chart_data.push(datapoint);
+												* */
 									});
 									$('#more10').click(function() {
 											history_length+=10;
@@ -751,12 +991,24 @@ function open_account() {
 										$('#status_transfer').html("Übertrage Nachricht an Empfänger");
 										node.transferable().then(function(transferable) {
 											transferable.addRx(peer,msg,value*10000000,base*1000,liab).then(function(tx) {
+												
+												var cb = function() {
 												$('#fnct_transfer').removeAttr('disabled');
 												$('#fnct_transfer_cancel').removeAttr('disabled');
 												$('#sko_blance').show();
 												$('#sko_transfer').hide();					
 												$('#status_transfer').html("");		
-												open_account();												
+												open_account();	
+												}										
+												if($('#transfer_tk').val()*1>0) {
+													node.erc20token($('#transfer_tc').val()).then(function(e20) {
+														$('#status_transfer').html("Übertrage Digital Assets");
+														console.log("TRANSFER",peer,$('#transfer_tk').val()*1);
+														e20.transfer(peer,$('#transfer_tk').val()*1).then(function(tx) {
+															cb();	
+														});
+													});
+												} else { cb();};
 											});
 										});	
 									});	
@@ -848,6 +1100,9 @@ if($.qparams("account")!=null) {
 	$('#brain_frm').show();	
 }
 
+function handleMPToken() {		
+	
+}
 
 function reopenwithPK(pk) {	
 	$('#pk_frm').hide();	
@@ -1098,3 +1353,10 @@ $('#work_saldo').click(function() {
 		$('#umlagen').toggle();
 });
 
+$('.dsp_assets').click(function() {
+		open_mptoken();		
+		$('#blk_balance').hide();
+		$('#sko_blance').hide();
+		$('#sko_transfer').hide();
+		$('#token_div').show();
+});
