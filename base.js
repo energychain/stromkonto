@@ -1149,6 +1149,8 @@ $('#open_username').click(function() {
 														node.stringstorage(profile_str).then(function(ss) {																
 																ss.str().then(function(str) {
 																console.log("Try to fetch","https://ipfs.io/ipfs/"+str);
+																$.ajaxSetup({timeout:2000});
+																reopenwithPK(pk);
 																try {
 																$.get("https://ipfs.io/ipfs/"+str,function(p) {
 																	account_obj.decrypt(p).then(function(profile) {		
