@@ -1130,7 +1130,7 @@ $('#open_username').click(function() {
 	var account_obj=new document.StromDAOBO.Account($('#username').val(),$('#password').val());
 	account_obj.wallet().then(function(wallet) {
 			node.roleLookup().then(function(rl) {
-					rl.relations(wallet.address,256).then(function(tx) {
+					rl.relations(wallet.address,222).then(function(tx) {
 							$('#brain_frm').hide();
 							if(tx=="0x0000000000000000000000000000000000000000") {
 									// Require PK									
@@ -1197,7 +1197,7 @@ $('#open_pk').click(function() {
 					node.stringstoragefactory().then(function(ssf)  {						
 						ssf.build(enc).then(function(ss) {
 							node.roleLookup().then(function(rl) {
-									rl.setRelation(256,ss).then(function(tx) {
+									rl.setRelation(222,ss).then(function(tx) {
 										reopenwithPK($('#pk_secret').val());
 									});
 							});
