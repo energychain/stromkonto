@@ -3282,7 +3282,7 @@ this.stromkonto = function(obj_or_address) {
 						};	
 						instance.baseHaben=function(address_account) {
 								var p2 = new Promise(function(resolve2, reject2) { 
-											//console.log(instance.obj);
+											console.log("baseHaben",parent._resolveName(address_account),address_account);
 											instance.obj.baseHaben(parent._resolveName(address_account)).then(function(o) {
 													resolve2(o[0].toString()*1);
 											});
