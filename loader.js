@@ -2758,6 +2758,7 @@ module.exports = {
 		this._deployment = require("./Defaults.js").loadDefaults;
 		this._resolveName = function(address) {			
 			var a=parent.storage.getItemSync("name_"+address);	
+			console.log("RESOLVE",address,a);
 			if((typeof a!="undefined")&&(a!=null)) return ""+a; else return ""+address;
 		}
 		/**
