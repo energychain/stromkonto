@@ -233,20 +233,21 @@ function open_mptoken() {
 
 function fill_tk_balances(accounts) {
 	$.each(accounts,function(i,v) {
+		if(typeof v!="undefined") {
 		node.erc20token(v).then(function(e20) {
 				e20.totalSupply().then(function(total) {
 						$('#tk_total_'+v).html(total);
 				});
 				e20.balanceOf($('#account').val()).then(function(total) {
 						$('#tk_own_'+v).html(total);
-						node.stromkonto(sko_sc).then(function(sko) {
+						node.stromkonto(sko_sc).then(function(sko) {							
 							sko.balancesHaben(v).then(function(haben) {
 								sko.balancesSoll(v).then(function(soll) {
 									value=haben-soll;
 									console.log(soll,haben);
 									$('#tk_v_value_'+v).html((value/10000000).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 }));								
 								});
-							});
+							});							
 							sko.baseHaben(v).then(function(haben) {
 								sko.baseSoll(v).then(function(soll) {
 									value=haben-soll;
@@ -261,6 +262,7 @@ function fill_tk_balances(accounts) {
 				});
 			
 		});
+		}
 	});
 	
 }
@@ -860,6 +862,7 @@ function open_account() {
 					}
 				
 					sko.history(account,10000).then(function(history) {	
+							console.log("History",history,sko_sc);
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
 							html+="<tr><th>Konsens</th><th>Von</th><th>An</th><th>&nbsp;</th><th align='right' style='text-align:right'>Energie</th><th align='right' style='text-align:right'>Geld</th>";					
@@ -908,7 +911,7 @@ function open_account() {
 					} else {
 
 						sko.history(account,10000).then(function(history) {
-							
+							console.log("History2",history,sko_sc);
 							history=history.reverse();
 							var html="<table class='table table-striped'>";
 							html+="<tr><th>Konsens</th><th>Schuldner/Gläubiger</th><th align='right' style='text-align:right'>Energie (KWh)</th><th align='right' style='text-align:right'>Geld (€)</th></tr>";					
