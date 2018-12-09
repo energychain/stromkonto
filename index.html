@@ -26,12 +26,14 @@
                 <h5 class="text-light mb-0">Energie Blockchain - Kontoinformation</h5>
             </div>
             <div class="card-body">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend"><span class="input-group-text">Kontonummer</span></div><input class="form-control" type="text" value="0xe596B918cC07852dfA41dd7181492720C261C8E5" placeholder="0x1256..." id="account">
-                        <div class="input-group-append"><button class="btn btn-dark" type="submit" id="btn_open">Öffnen</button></div>
+                <form action="/" method="get">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend"><span class="input-group-text">Kontonummer</span></div><input class="form-control" type="text" name="a" placeholder="0x1256..." id="account">
+                            <div class="input-group-append"><button class="btn btn-dark" type="submit" id="btn_open">Öffnen</button></div>
+                        </div>
                     </div>
-                </div>
+                </form>
                 <p class="card-text"></p>
             </div>
         </div>
