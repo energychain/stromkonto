@@ -1,264 +1,82 @@
 <!DOCTYPE html>
-<html lang="de">
-  <head> 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <title>Stromkonto</title>	
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
-     <style>
-    h3 {
-			color:#909090;
-	}
-    </style>
-  </head>
-  <body>
-	<nav class="navbar navbar-default">
-	 <div class="container-fluid">
-		 
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#" id="switchuser"><span class="account"></span></a>
-		</div>
-		 
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profil <span class="caret"></span></a>
-				  <ul class="dropdown-menu">
-					<li id="btn_downloadStorage"><a href="#" id="downloadStorage" >Profil speichern</a></li>
-					<li><a href="#" id="uploadStorage">Profil hochladen</a>
-							<form id="upForm" style="display:none" >
-							  <p>
-								<input id="myfile" name="files[]" multiple="" class="form-control" type="file" />				
-							  </p>
-							</form>	
-					</li>		
-					<li role="separator" class="divider"></li>
-					<li><a href="?">Neu Anmelden</a></li>								
-				  </ul>
-				</li>
-				 <li class="dropdown">
-				  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ansicht <span class="caret"></span></a>
-				  <ul class="dropdown-menu">
-					<li><a href="#" class="btnunterbilanzierung">Umsätze</a></li>
-					<li><a href="#" class="dsp_sc">Salden</a></li>	
-					<li role="separator" class="divider"></li>					
-					<li><a href="#" class="btnxferkto" disabled="disabled">Offene Transfers</a></li>				
-					<li role="separator" class="divider"></li>
-					<li><a href="#" class="dsp_assets">Digital Assets</a></li>	
-				  </ul>
-				</li>
-			</ul>
-		</div>
-	  </div> <!-- end fluid -->
-	</nav>
-	<div class="container">	
-		<h1 id="dsp_sc" class="dsp_sc">Stromkonto</h1>
-		<div class="panel panel-default">
-					<div class="panel-heading">
-					<h3><span id="dsp_account"></span>&nbsp;<span class="glyphicon glyphicon-pencil" id="edit_alias">&nbsp;</span></h3>
-					</div>
-					<div class="panel-body">
-						<div id="kto_frm" style="display:none">
-							<form action="" method="GET">
-								 <div class="form-group">
-										<label for="sc">Vertrag</label>
-										<input type="text" class="form-control" id="sc" name="sc">						
-								</div>	
-								 <div class="form-group">
-										<label for="account">Nummer/Account</label>
-										<input type="text" class="form-control" id="account" name="account">
-										<button id="open_account" class="btn btn-primary" style="margin:5px;" type="submit">Öffnen</button>
-								</div>		
-							</form>
-						</div>
-						<div id="brain_frm" style="display:none">
-							<form action="" method="GET">
-								 <div class="form-group">
-										<label for="username">Benutzername</label>
-										<input type="text" class="form-control" id="username" name="username">						
-								</div>	
-								 <div class="form-group">
-										<label for="password">Passwort</label>
-										<input type="password" class="form-control" id="password" name="password">
-										<button id="open_username" class="btn btn-primary" style="margin:5px;" type="button">Öffnen</button>
-								</div>
-								<hr/>
-								Einen passenden Stromtarif zum Stromkonto finden Sie unter:<br/><a href="https://stromdao.de/tarif" title="STROMDAO - digital energy infrastructure for tomorrow.">https://stromdao.de/tarif</a>.
-							</form>
-						</div>
-						<div id="pk_frm" style="display:none">
-							<form action="" method="GET">
-								 <div class="form-group">
-										<label for="pk_secret">Privater Schlüssel</label>
-										<input type="text" class="form-control" id="pk_secret" name="pk_secret">						
-								</div>	
-								 <div class="form-group">
-										<button id="cancel_pk" class="btn btn-default" style="margin:5px;" type="button">Abbruch</button>
-										<button id="open_pk" class="btn btn-primary" style="margin:5px;" type="button">Öffnen</button>
-								</div>		
-							</form>
-						</div>
-						<div id="sko_transfer" style="display:none">
-					
-							<h3 id="dsp_auftrag">Auftrag</h3>
-							 <div class="form-group">
-								<label for="transfer_from">Von</label>
-								<input type="text" class="form-control tx typeahead" id="transfer_from" placeholder="0x.." data-provider="typeahead" autocomplete="off">
-							  </div>
-							 <div class="form-group">
-								<label for="transfer_to">An</label>
-								<input type="text" class="form-control tx typeahead" id="transfer_to" placeholder="0x.." data-provider="typeahead" autocomplete="off">
-							  </div>	
-							 <div class="form-group">
-								<label for="transfer_value">Betrag Geld (€)</label>
-								<input type="number" class="form-control tx" id="transfer_value" placeholder="0.12">
-							  </div>	
-							<div class="form-group">
-								<label for="transfer_base">Betrag Energie (KWh)</label>
-								<input type="number" class="form-control tx" id="transfer_base" placeholder="0.123">
-							  </div>	
-							<div class="form-group">
-								<label for="transfer_text">Referenz</label>
-								<input type="text" class="form-control tx" id="transfer_text" placeholder="">
-								<a id="btnrefownload" class="btn btn-primary" style="display:none" target="_blank">Herunterladen</a>
-								<form id="refForm">
-								  <p>
-									<input id="reffile" name="files[]" multiple="" class="form-control" type="file" />				
-								  </p>
-								</form>
-							</div>	
-							<div class="form-group" style="display:none" id="hasToken">
-								<label for="transfer_tc">Digital Assets Vertrag</label>
-								<input type="text" class="form-control tx" id="transfer_tc" placeholder="0x12dc...">
-								<label for="transfer_tk">Digital Assets Anzahl</label>
-								<input type="number" class="form-control tx" id="transfer_tk" placeholder="0">
-							 </div>						  
-							<hr/>
-							<div class="row">
-								<div class="col-md-6">
-									<button id="fnct_transfer_load" class="btn btn-primary">laden</button>						
-									<button id="fnct_transfer_template" class="btn btn-primary">speichern</button>
-								</div>
-								<div class="col-md-6" style="text-align:right">
-									<button id="fnct_transfer_cancel" class="btn btn-default">abbrechen</button>	
-									<button id="fnct_transfer" class="btn btn-danger">freigeben</button><br/>
-								</div>
-							</div>
+<html>
 
-							<span id="status_transfer" style="margin-top:30px;background-color:#f0f0f0"></span>
-							
-							<textarea class="form-control" id="tmpl_b64" style="display:none;margin-top:20px;"></textarea>
-							
-						</div>	
-						
-						<div id="sko_blance" style="display:none">												
-								<div class="row" id="enerstat">
-									<div class="col-md-4">
-										<h4>Energie</h4><h3><span class="power_saldo"></span> KWh</h3>
-										 <div style="display:none">
-										 Soll: <span id="power_soll"></span> / Haben: <span id="power_haben"></span>
-										 </div>
-									</div>								
-									<div class="col-md-4"  style="text-align:center">
-										<h4>Arbeitspreis</h4><h3><span id="work_saldo"></span> €/KWh</h3>
-									</div>				
-									<div class="col-md-4" style="text-align:right">
-										<h4>Geld</h4><h3><span class="account_saldo"></span> €</h3>
-										<div style="display:none">
-										Soll: <span id="account_soll"></span> / Haben: <span id="account_haben"></span>																	
-										</div>
-									</div>
-								</div>
-								<div class="row" id="umlagen" style="display:none">
-									
-								</div>
-								<hr/>
-								<div class="btn-group">
-								<button id="show_transfer" class="btn btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none">Auftrag <span class="caret"></span></button>
-									<ul class="dropdown-menu">
-										<li><a href="#" id="show_transfer_to">Überweisung</a></li>
-										<li><a href="#" id="show_transfer_from">Lastschrift</a></li>									
-										<li role="separator" class="divider"></li>
-										<li><a href="#" id="show_transfer_free">Freie Überweisung</a></li>
-									</ul>
-								</div>
-								<div class="form-group form-inline" id="salden_transfer" style="display:none">
-									<label for="salden_rcp">Salden Übertrag an</label>
-									<input type="text" id="salden_rcp" class="form-control typeahead" placeholder="0x.." data-provider="typeahead" autocomplete="off">
-									<button id="btn_salden_transfer" class="btn btn-danger">Freigeben</button>										
-								</div>
-								<hr/>
-								<h4>Umsätze</h4>												
-								<div id="history"><em>Bislang keine Transaktionen</em></div>
-						</div>
-						<div id="blk_balance" style="display:none">								
-								<h2>Geld</h2>
-								<div class="row" id="pvalue">
-									
-								</div>
-								<h2>Energie</h2>
-								<div class="row" id="penergy">
-									
-								</div>
-								<hr/>
-								<div class="form-group">
-									<label for="addBalance">Buchungskonto:</label>
-									<input type="text" class="form-control" id="nblcadr" style="margin-bottom:10px;">
-									<button id="btn_balance_remove" class="btn btn-danger">entfernen</button>
-									<button id="btn_balance_add" class="btn btn-primary">hinzufügen</button>
-								</div>
-						</div>
-						<div id="token_div" style="display:none">		
-								<hr/>
-								<h2>Digital Assets (Token)</h2>
-								<div class="row" id="tokenstat">
-									<div class="col-md-4">
-										<h4>Emitiert</h4><h3><span id="total_tokens"></span></h3>
-									</div>								
-									<div class="col-md-4"  style="text-align:center">
-										<h4>Fremdbesitz</h4><h3><span id="foreign_tokens"></span></h3>
-									</div>				
-									<div class="col-md-4" style="text-align:right">
-										<h4>Eigenbesitz</h4><h3><span id="account_tokens"></span></h3>
-									</div>
-								</div>
-								<h4>Bestand</h4>
-								<div id="tk_wallet">
-									
-								</div>
-								<div class="form-group">
-									<label for="tkadr">Assets:</label>
-									<input type="text" class="form-control" id="tkadr" style="margin-bottom:10px;">
-									<button id="btn_wallet_remove" class="btn btn-danger">entfernen</button>
-									<button id="btn_wallet_add" class="btn btn-primary">hinzufügen</button>
-								</div>
-								<!--
-								<div class="form-group">
-								<label for="token_transfer_to">Übertrage an:</label>
-								<input type="text" id="token_transfer_to" class="form-control typeahead" placeholder="0x.." data-provider="typeahead" autocomplete="off">
-								<label for="token_transfer_volume">Anteile:</label>
-								<input type="number" id="token_transfer_volume" class="form-control">
-								<button id="btn_token_transfer" class="btn btn-danger" style="margin-top:10px;">Übertragen</button>										
-								</div>
-								-->
-						</div>
-					</div>
-					<div class="panel-footer">Konsens: <span id="konsens_block"></span> - (<span id="konsens_time"></span>)</div>
-		</div> 	
-	</div>  
-	<script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>   
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>     
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script src="./typeahead.js"></script>
-	<script src="./loader.js"></script>
-	<script src="./base.js"></script>
-  </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Stromkonto</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.min.css">
+</head>
+
+<body style="margin: 0px;">
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean shadow-lg">
+        <div class="container"><a class="navbar-brand" href="/"><img src="assets/img/corrently_logo.png" alt="">&nbsp;</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div
+                class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="#"><strong>Stromkonto</strong></a></li>
+                </ul>
+        </div>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 45px;">
+        <div class="card shadow-lg">
+            <div class="card-header bg-dark shadow-none">
+                <h5 class="text-light mb-0">Energie Blockchain - Kontoinformation</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Kontonummer</span></div><input class="form-control" type="text" value="0xe596B918cC07852dfA41dd7181492720C261C8E5" placeholder="0x1256..." id="account">
+                        <div class="input-group-append"><button class="btn btn-dark" type="submit" id="btn_open">Öffnen</button></div>
+                    </div>
+                </div>
+                <p class="card-text"></p>
+            </div>
+        </div>
+    </div>
+    <div id="app" style="margin-top: 30px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-dark text-light appcard">
+                            <h6>Energiebilanz</h6>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="text-center"><span>{{ balance_base_3f }}</span>&nbsp;kWh</h1>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-dark text-light appcard">
+                            <h6>Wert</h6>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="text-center"><span>{{ balance_eur_2f }}</span>&nbsp;€</h1>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 120px;margin-bottom: 0px;">
+        <footer>
+            <div class="container">
+                <p class="copyright" style="font-size: 9px;">&nbsp;© 2018 <strong>STROM</strong>DAO | <a href="https://stromdao.de/impressum/">Impressum</a></p>
+            </div>
+        </footer>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
+    <script src="https://unpkg.com/correntlywallet@1.0.11/dist/correntlywallet.js"></script>
+    <script src="assets/js/script.min.js"></script>
+</body>
+
 </html>
