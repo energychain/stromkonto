@@ -44,10 +44,10 @@
                 <div class="col-md-6">
                     <div class="card shadow-lg">
                         <div class="card-header bg-dark text-light appcard">
-                            <h6>Energiebilanz</h6>
+                            <h6>Energiestand (kWh)</h6>
                         </div>
                         <div class="card-body">
-                            <h1 class="text-center"><span>{{ balance_base_3f }}</span>&nbsp;kWh</h1>
+                            <h1 class="text-center"><span>{{ balance_base_3f }}</span>&nbsp;</h1>
                             <p class="card-text"></p>
                         </div>
                     </div>
@@ -55,16 +55,47 @@
                 <div class="col-md-6">
                     <div class="card shadow-lg">
                         <div class="card-header bg-dark text-light appcard">
-                            <h6>Wert</h6>
+                            <h6>Kontostand (EUR)</h6>
                         </div>
                         <div class="card-body">
-                            <h1 class="text-center"><span>{{ balance_eur_2f }}</span>&nbsp;€</h1>
+                            <h1 class="text-center"><span>{{ balance_eur_2f }}</span>&nbsp;</h1>
                             <p class="card-text"></p>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card shadow-lg" style="margin-top: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6>Letzte Buchungen</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="margin-top: 0;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Buchungslauf (Block)</th>
+                                    <th>Bezeichnung</th>
+                                    <th class="text-right">Energie (kWh)</th>
+                                    <th class="text-right">Betrag (€)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tx in txs">
+                                    <td>{{ tx.blockNumber }}</td>
+                                    <td>{{ tx.peer }}</td>
+                                    <td class="text-right">{{ tx.base_abs }}</td>
+                                    <td class="text-right">{{ tx.value_abs }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="card-text"></p>
+                </div>
+            </div>
         </div>
+    </div>
+    <div class="card text-info bg-dark border-dark" style="margin-top: 50px;">
+        <div class="card-body" id="bcstatus"><small>Buchungslauf/Konsens:&nbsp;# {{ blocknumber }} &nbsp; {{ blocktime }}</small></div>
     </div>
     <div style="margin-top: 120px;margin-bottom: 0px;">
         <footer>
