@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Stromkonto</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
 </head>
 
@@ -21,9 +22,12 @@
         </div>
     </nav>
     <div class="container" id="appcontainer" style="margin-top: 45px;">
-        <div class="card shadow-lg d-print-none">
+        <div id="app_panel" class="appcontent">
+            <h2 class="text-dark mb-0" style="margin-bottom: 35px;" title="Corrently Kontonummer"><i class="fa fa-user shadow" style="margin-right: 5px;"></i><span id="account_nr">Text</span><button class="btn btn-warning float-right d-print-none" type="button" id="btn_change"><i class="fa fa-pencil"></i></button></h2>
+        </div>
+        <div class="card shadow-lg d-print-none" id="frm_panel">
             <div class="card-header bg-dark shadow-none">
-                <h5 class="text-light mb-0">Energie Blockchain - Kontoinformation</h5>
+                <h5 class="text-light mb-0">Energie Blockchain - Kontoauskunft</h5>
             </div>
             <div class="card-body">
                 <form action="/" method="get">
@@ -37,7 +41,7 @@
                 <p class="card-text"></p>
             </div>
         </div>
-        <div class="card d-print-none shadow-lg" id="gsi_card" style="margin-top: 25px;display:none;">
+        <div class="card d-print-none shadow-lg appcontent" id="gsi_card" style="margin-top: 25px;display:none;">
             <div class="card-header bg-dark text-light appcard">
                 <h6>Vorhersage Grünstrom Bonus</h6>
             </div>
@@ -111,7 +115,7 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
-    <script src="https://unpkg.com/correntlywallet@1.0.11/dist/correntlywallet.js"></script>
+    <script src="https://unpkg.com/correntlywallet@1.0.12/dist/correntlywallet.js"></script>
     <script src="assets/js/script.min.js"></script>
 </body>
 
