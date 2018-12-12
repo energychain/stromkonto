@@ -23,7 +23,7 @@
     </nav>
     <div class="container" id="appcontainer" style="margin-top: 45px;">
         <div id="app_panel" class="appcontent">
-            <h2 class="text-dark mb-0" style="margin-bottom: 35px;" title="Corrently Kontonummer"><i class="fa fa-user shadow" style="margin-right: 5px;"></i><span id="account_nr">Text</span><button class="btn btn-warning float-right d-print-none" type="button" id="btn_change"><i class="fa fa-pencil"></i></button></h2>
+            <h2 class="text-dark mb-0 text-truncate" style="margin-bottom: 35px;" title="Corrently Kontonummer"><i class="fa fa-user shadow" style="margin-right: 5px;"></i><span id="account_nr" class="text-truncate">Text</span><button class="btn btn-warning float-right d-print-none" type="button" id="btn_change"><i class="fa fa-pencil"></i></button></h2>
         </div>
         <div class="card shadow-lg d-print-none" id="frm_panel">
             <div class="card-header bg-dark shadow-none">
@@ -51,7 +51,7 @@
     <div id="app" class="appcontent" style="margin-top: 30px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col col-md-4">
                     <div class="card shadow-lg">
                         <div class="card-header bg-dark text-light appcard">
                             <h6>Lokaler Grünstrom (kWh)</h6>
@@ -62,7 +62,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col col-md-4">
+                    <div class="card shadow-lg">
+                        <div class="card-header bg-dark text-light appcard">
+                            <h6>Corrently Eigenerzeugung (kWh)</h6>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="text-center"><span>{{ generation_3f }}</span>&nbsp;</h1>
+                            <p class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-4">
                     <div class="card shadow-lg">
                         <div class="card-header bg-dark text-light appcard">
                             <h6>Corrently Guthaben (EUR)</h6>
@@ -73,6 +84,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-4"></div>
+                <div class="col-md-6 col-md-4"></div>
+                <div class="col-md-6"></div>
             </div>
             <div class="card shadow-lg" style="margin-top: 25px;">
                 <div class="card-header bg-dark text-light appcard">
@@ -91,7 +107,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="tx in txs">
-                                    <td>{{ tx.blockNumber }}</td>
+                                    <td>{{ tx.timeStamp }}</td>
                                     <td>{{ tx.peer }}</td>
                                     <td class="text-right">{{ tx.base_abs }}</td>
                                     <td class="text-right">{{ tx.value_abs }}</td>
