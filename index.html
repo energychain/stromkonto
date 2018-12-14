@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="assets/css/styles.min.css">
 </head>
 
-<body style="margin: 0px;">
+<body style="margin: 0 0 145px 0">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean shadow-lg">
         <div class="container"><a class="navbar-brand" href="/"><img src="assets/img/corrently_logo.png" alt="">&nbsp;</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
@@ -46,9 +46,10 @@
                 <p class="card-text"></p>
             </div>
         </div>
-        <div class="card d-print-none shadow-lg appcontent" id="gsi_card" style="margin-top: 25px;display:none;">
+        <div class="card d-print-none shadow-lg appcontent" id="gsi_card" style="margin-top: 25px;display:all;">
             <div class="card-header bg-dark text-light appcard">
-                <h6>Vorhersage Grünstrom Bonus</h6>
+                <h6>Vorhersage Grünstrom Bonus <br><span style="font-size: 12px;"><span id="gsi_bonus">0,00</span>&nbsp;Cent/kWh bei 100% Grünstrom am Lieferort</span>
+                </h6>
             </div>
             <div class="card-body" id="gsi" style="padding: 1px;"></div>
         </div>
@@ -90,11 +91,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-md-4"></div>
-                <div class="col-md-6 col-md-4"></div>
-                <div class="col-md-6"></div>
-            </div>
             <div class="card shadow-lg" style="margin-top: 25px;">
                 <div class="card-header bg-dark text-light appcard">
                     <h6>Letzte Buchungen</h6>
@@ -106,16 +102,19 @@
                                 <tr>
                                     <th>Buchungslauf (Block)</th>
                                     <th>Referenz</th>
-                                    <th class="text-right">Energie (kWh)</th>
                                     <th class="text-right">Betrag (€)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="tx in txs">
                                     <td>{{ tx.timeStamp }}</td>
-                                    <td>{{ tx.peer }}</td>
-                                    <td class="text-right">{{ tx.base_abs }}</td>
+                                    <td>{{ tx.peer }} &nbsp;&nbsp;</td>
                                     <td class="text-right">{{ tx.value_abs }}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-right"><strong>Vorheriger Saldo</strong></td>
+                                    <td class="text-right" id="start_saldo"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -124,7 +123,7 @@
                 </div>
             </div>
         </div>
-    </div><footer id="footer">
+    </div><footer id="footer" style="margin-top:25px;padding-top:25px;">
     
     <div style= "background: black; text-align: center; margin: 0px; padding:10px">
         <p style= "color:grey; font-family: raleway" id="bcstatus">(c) 2018 <a href="https://stromdao.de/"><strong>STROM</strong>DAO Ltd</a> | <a href="https://stromdao.de/impressum/">Impressum &amp; Datenschutz</a> | Konsens # {{ blocknumber }} </p>
