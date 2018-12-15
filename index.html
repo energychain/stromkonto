@@ -60,11 +60,10 @@
                 <div class="col col-md-4">
                     <div class="card shadow-lg">
                         <div class="card-header bg-dark text-light appcard">
-                            <h6>Lokaler Grünstrom (kWh)</h6>
+                            <h6>Lokaler Grünstrom (Anteil am Netzbezug)</h6>
                         </div>
                         <div class="card-body rcard">
-                            <h1 class="text-center"><span>{{ balance_base_3f }}</span>&nbsp;</h1>
-                            <p class="text-center card-text">von {{ account.meteredconsumption }} kWh</p>
+                            <h1 class="text-center"><span>{{ green_power }} %</span>&nbsp;</h1>
                         </div>
                     </div>
                 </div>
@@ -75,7 +74,6 @@
                         </div>
                         <div class="card-body rcard">
                             <h1 class="text-center"><span>{{ generation_3f }}</span>&nbsp;</h1>
-                            <p class="card-text"></p>
                         </div>
                     </div>
                 </div>
@@ -86,7 +84,6 @@
                         </div>
                         <div class="card-body rcard">
                             <h1 class="text-center"><span>{{ balance_eur_2f }}</span>&nbsp;</h1>
-                            <p class="card-text"></p>
                         </div>
                     </div>
                 </div>
