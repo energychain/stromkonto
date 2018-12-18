@@ -47,9 +47,10 @@
         </div>
         </div>
     </nav>
-    <div class="alert alert-danger d-none" role="alert" id="tarifalert"><span><strong>Hinweis</strong> Diesem Stromkonto ist kein Netzanschluss zugeordnet. <a class="btn btn-danger btn-sm" role="button" href="https://app.corrently.de/tarif" target="_blank">Tarif wählen</a></span></div>
-    <div class="container" id="appcontainer"
-        style="margin-top: 45px;">
+    <div class="alert alert-danger" role="alert" id="tarifalert">
+        <p><strong>Hinweis</strong>&nbsp;Diesem Stromkonto ist kein Netzanschluss zugeordnet. Die Zuordnung erfolgt nach Auswahl des Tarifes automatisch. Ihr Stromanbieter berät Sie gerne bei der Nutzung Ihres persönlichen Stromkontos.</p><span>&nbsp;<a class="btn btn-danger btn-sm" role="button" href="https://app.corrently.de/tarif" target="_blank">Tarif wählen</a></span></div>
+    <div
+        class="container" id="appcontainer" style="margin-top: 45px;">
         <div id="app_panel" class="appcontent">
             <h2 class="text-dark mb-0 text-truncate" style="margin-bottom: 35px;" title="Corrently Kontonummer"><i class="fa fa-user shadow" style="margin-right: 5px;"></i><span id="account_nr" class="text-truncate">Text</span><button class="btn btn-warning float-right d-print-none" type="button" id="btn_change"><i class="fa fa-pencil"></i></button></h2>
         </div>
@@ -80,84 +81,84 @@
             </div>
             <div class="card-body" id="gsi" style="padding: 1px;"></div>
         </div>
-    </div>
-    <div id="app" class="appcontent" style="margin-top: 30px;">
-        <div class="container">
-            <div class="row">
-                <div class="col col-md-4 d-flex align-items-stretch">
-                    <div class="card shadow-lg h-100">
-                        <div class="card-header bg-dark text-light appcard">
-                            <h6>Lokaler Grünstrom (Anteil am Netzbezug)</h6>
-                        </div>
-                        <div class="card-body rcard">
-                            <h1 class="text-center"><span>{{ green_power }}%</span>&nbsp;</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-md-4">
-                    <div class="card shadow-lg h-100">
-                        <div class="card-header bg-dark text-light appcard">
-                            <h6>Corrently Eigenerzeugung (kWh)</h6>
-                        </div>
-                        <div class="card-body rcard">
-                            <h1 class="text-center"><span>{{ generation_3f }}</span>&nbsp;</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-md-4">
-                    <div class="card shadow-lg h-100">
-                        <div class="card-header bg-dark text-light appcard">
-                            <h6>Corrently Guthaben (EUR)</h6>
-                        </div>
-                        <div class="card-body rcard">
-                            <h1 class="text-center"><span>{{ balance_eur_2f }}</span>&nbsp;</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card shadow-lg" style="margin-top: 25px;">
-                <div class="card-header bg-dark text-light appcard">
-                    <h6>Letzte Buchungen</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive" style="margin-top: 0;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Buchungslauf (Block)</th>
-                                    <th>Referenz</th>
-                                    <th class="text-right">Betrag (€)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="tx in txs">
-                                    <td>{{ tx.timeStamp }}</td>
-                                    <td>{{ tx.peer }} &nbsp;&nbsp;</td>
-                                    <td class="text-right">{{ tx.value_abs }}</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="text-right"><strong>Vorheriger Saldo</strong></td>
-                                    <td class="text-right"><span id="start_saldo"><br></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="card-text"></p>
-                </div>
-            </div>
         </div>
-    </div><footer id="footer" style="margin-top:25px;padding-top:25px;">
+        <div id="app" class="appcontent" style="margin-top: 30px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col col-md-4 d-flex align-items-stretch">
+                        <div class="card shadow-lg h-100">
+                            <div class="card-header bg-dark text-light appcard">
+                                <h6>Lokaler Grünstrom (Anteil am Netzbezug)</h6>
+                            </div>
+                            <div class="card-body rcard">
+                                <h1 class="text-center"><span>{{ green_power }}%</span>&nbsp;</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-4">
+                        <div class="card shadow-lg h-100">
+                            <div class="card-header bg-dark text-light appcard">
+                                <h6>Corrently Eigenerzeugung (kWh)</h6>
+                            </div>
+                            <div class="card-body rcard">
+                                <h1 class="text-center"><span>{{ generation_3f }}</span>&nbsp;</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-4">
+                        <div class="card shadow-lg h-100">
+                            <div class="card-header bg-dark text-light appcard">
+                                <h6>Corrently Guthaben (EUR)</h6>
+                            </div>
+                            <div class="card-body rcard">
+                                <h1 class="text-center"><span>{{ balance_eur_2f }}</span>&nbsp;</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-lg" style="margin-top: 25px;">
+                    <div class="card-header bg-dark text-light appcard">
+                        <h6>Letzte Buchungen</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="margin-top: 0;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Buchungslauf (Block)</th>
+                                        <th>Referenz</th>
+                                        <th class="text-right">Betrag (€)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="tx in txs">
+                                        <td>{{ tx.timeStamp }}</td>
+                                        <td>{{ tx.peer }} &nbsp;&nbsp;</td>
+                                        <td class="text-right">{{ tx.value_abs }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-right"><strong>Vorheriger Saldo</strong></td>
+                                        <td class="text-right"><span id="start_saldo"><br></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div><footer id="footer" style="margin-top:25px;padding-top:25px;">
     <div style= "background: black; text-align: center; margin: 0px; padding:10px">
         <p style= "color:grey; font-family: raleway" id="bcstatus">(c) 2018 <a href="https://stromdao.de/"><strong>STROM</strong>DAO Ltd</a> | <a href="https://stromdao.de/impressum/">Impressum &amp; Datenschutz</a> | <a href="http://corrently.blog">Blog</a> | Konsens # <a href="https://scan.corrently.io">{{ blocknumber }}</a> </p>
     </div>
 </footer>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
-    <script src="https://unpkg.com/correntlywallet@1.1.5/dist/correntlywallet.js"></script>
-    <script src="assets/js/script.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
+        <script src="https://unpkg.com/correntlywallet@1.1.5/dist/correntlywallet.js"></script>
+        <script src="assets/js/script.min.js"></script>
 </body>
 
 </html>
