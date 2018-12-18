@@ -118,3 +118,20 @@ To github.com:energychain/stromkonto.git
    6fee8d9..360964c  master -> master
 
 
+----------
+
+Tue Dec 18 2018 10:33:44 GMT+0100 (CET)
+
+ssh: Could not resolve hostname github.com: Name or service not known
+
+
+----------
+
+Tue Dec 18 2018 10:33:44 GMT+0100 (CET)
+
+fatal: Konnte nicht vom Remote-Repository lesen.
+
+Bitte stellen Sie sicher, dass die korrekten Zugriffsberechtigungen bestehen
+und das Repository existiert.
+
+
