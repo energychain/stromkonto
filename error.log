@@ -175,3 +175,26 @@ To github.com:energychain/stromkonto.git
    a164293..2c57f89  master -> master
 
 
+----------
+
+Tue Dec 18 2018 11:32:12 GMT+0100 (CET)
+
+To github.com:energychain/stromkonto.git
+   2c57f89..05ef6fa  master -> master
+
+
+----------
+
+Tue Dec 18 2018 11:32:12 GMT+0100 (CET)
+
+To github.com:energychain/stromkonto.git
+ ! [remote rejected] master -> master (cannot lock ref 'refs/heads/master': is at 05ef6facf8a39f2faa2419f6112cdda19d4db9a6 but expected 2c57f89f006f31da0fa5cb2cd466554a47743302)
+
+
+----------
+
+Tue Dec 18 2018 11:32:12 GMT+0100 (CET)
+
+error: Fehler beim Versenden einiger Referenzen nach 'git@github.com:energychain/stromkonto.git'
+
+
