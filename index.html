@@ -56,7 +56,7 @@
                 <button
                     class="btn btn-secondary float-right d-print-none" type="button" id="btn_change" style="margin-left: 1px;"><i class="fa fa-list-alt"></i></button><button class="btn btn-secondary float-right d-print-none" type="button" id="btn_remove"><i class="fa fa-trash-o"></i></button></h2>
         </div>
-        <div class="card shadow-lg d-print-none" id="frm_panel">
+        <div class="card shadow-lg d-print-none corrently-panels" id="frm_panel" style="margin-top: 15px;">
             <div class="card-header bg-dark shadow-none">
                 <div class="row">
                     <div class="col">
@@ -84,7 +84,7 @@
                 </div>
             </div>
         </div>
-        <div class="card shadow-lg d-print-none" id="web_panel">
+        <div class="card shadow-lg d-print-none corrently-panels" id="web_panel" style="margin-top: 15px;">
             <div class="card-header bg-dark shadow-none">
                 <h5 class="text-light mb-0">Energie Blockchain - Anmeldung/Registrierung</h5>
             </div>
@@ -105,7 +105,37 @@
                 <p class="card-text"></p>
             </div>
         </div>
-        <div class="card d-print-none shadow-lg appcontent" id="gsi_card" style="margin-top: 25px;display:all;">
+        <div class="card shadow-lg d-print-none corrently-panels" id="market_panel" style="margin-top: 15px;">
+            <div class="card-header bg-dark shadow-none">
+                <h5 class="text-light mb-0">Corrently Markplatz<button class="btn btn-secondary btn-sm float-right" type="button" id="btn_close_market"><i class="fa fa-close"></i></button></h5>
+            </div>
+            <div class="card-body">
+                <h5>Verfügbare Corrently Anlagen zur Eigenerzeugung</h5>
+                <p class="card-text"></p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Bezeichnung</th>
+                                <th>Emitent</th>
+                                <th>Erzeugung bis</th>
+                            </tr>
+                        </thead>
+                        <tbody id="market_table">
+                            <tr>
+                                <td>Cell 1</td>
+                                <td>Cell 2</td>
+                            </tr>
+                            <tr>
+                                <td>Cell 3</td>
+                                <td>Cell 4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card d-print-none shadow-lg appcontent corrently-panels" id="gsi_card" style="margin-top: 25px;display:all;">
             <div class="card-header bg-dark text-light appcard">
                 <h6>Vorhersage Grünstrom Bonus <br><span style="font-size: 12px;"><span id="gsi_bonus">0,00</span>&nbsp;Cent/kWh bei 100% Grünstrom am Lieferort</span>
                 </h6>
@@ -113,7 +143,7 @@
             <div class="card-body" id="gsi" style="padding: 1px;"></div>
         </div>
         </div>
-        <div id="app" class="appcontent" style="margin-top: 30px;">
+        <div id="app" class="appcontent corrently-panels" style="margin-top: 30px;">
             <div class="container">
                 <div class="row">
                     <div class="col col-md-4 d-flex align-items-stretch">
@@ -131,7 +161,7 @@
                             <div class="card-header bg-dark text-light appcard">
                                 <h6 class="text-truncate">Corrently Eigenerzeugung (kWh)</h6>
                             </div>
-                            <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="retrieve_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen."><i class="fa fa-cart-plus float-right"></i></button>
+                            <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="buy_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen."><i class="fa fa-cart-plus float-right"></i></button>
                                 <h1 class="text-center"><span>{{ generation_3f }}</span>&nbsp;</h1>
                             </div>
                         </div>
