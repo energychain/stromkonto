@@ -111,6 +111,7 @@
             </div>
             <div class="card-body">
                 <h5>Verfügbare Corrently Anlagen zur Eigenerzeugung</h5>
+                <div class="alert alert-danger" role="alert"><span><strong>Hinweis</strong>&nbsp;Die aktuelle Anmeldung ist nicht berechtigt, für dieses Stromkonto Erzeugung zu erwerben.</span></div>
                 <p class="card-text"></p>
                 <div class="table-responsive">
                     <table class="table">
@@ -119,6 +120,7 @@
                                 <th>Bezeichnung</th>
                                 <th>Emitent</th>
                                 <th>Erzeugung bis</th>
+                                <th>&nbsp;Guthaben einlösen für</th>
                             </tr>
                         </thead>
                         <tbody id="market_table">
@@ -172,7 +174,7 @@
                                 <h6 class="text-truncate">Corrently Guthaben (EUR)</h6>
                             </div>
                             <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="wire_btn" title="Guthaben auszahlen"><i class="fa fa-bank float-right"></i></button>
-                                <h1 class="text-center"><span>{{ balance_eur_2f }}</span>&nbsp;</h1>
+                                <h1 class="text-center"><span id="eur_balance" v-bind:data="balance_eur">{{ balance_eur_2f }}</span>&nbsp;</h1>
                             </div>
                         </div>
                     </div>
