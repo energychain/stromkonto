@@ -219,8 +219,8 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="tx in txs">
-                                        <td>{{ tx.timeStamp }}</td>
-                                        <td>{{ tx.peer }} &nbsp;&nbsp;</td>
+                                        <td v-bind:title="tx.blockNumber">{{ tx.timeStamp }}</td>
+                                        <td v-bind:title="tx.peer_account">{{ tx.peer }} &nbsp;&nbsp;</td>
                                         <td class="text-right">{{ tx.value_abs }}</td>
                                     </tr>
                                     <tr>
