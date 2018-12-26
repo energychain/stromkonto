@@ -117,8 +117,8 @@
                         <div class="input-group-append"></div>
                     </div>
                     <div class="input-group" style="margin-bottom: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Stromkonto</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_sko" style="min-width: 450px;"><input class="bg-light form-control" type="text" disabled=""
-                            readonly="" inputmode="numeric" id="market_sel_kap" style="width: 40px;">
+                        <div class="input-group-prepend"><span class="input-group-text">Stromkonto</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_sko" style="min-width: 450px;"><input class="bg-white form-control" type="text" inputmode="numeric"
+                            id="market_sel_kap" style="width: 40px;">
                         <div class="input-group-append"><span class="text-center text-light bg-secondary input-group-text">kWh/Jahr</span></div>
                     </div>
                     <div class="input-group" style="margin-bottom: 15px;">
@@ -171,7 +171,7 @@
         </div>
         <div id="app" class="appcontent corrently-panels" style="margin-top: 30px;">
             <div class="container">
-                <div class="row">
+                <div class="row appcontent">
                     <div class="col col-md-4 d-flex align-items-stretch">
                         <div class="card shadow-lg h-100">
                             <div class="card-header bg-dark text-light appcard">
@@ -188,7 +188,7 @@
                                 <h6 class="text-truncate">Corrently Eigenerzeugung (kWh)</h6>
                             </div>
                             <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="buy_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen."><i class="fa fa-cart-plus float-right"></i></button>
-                                <h1 class="text-center"><span>{{ generation_3f }}</span>&nbsp;</h1>
+                                <h1 class="text-center"><span v-bind:title="kwha">{{ generation_3f }}</span>&nbsp;</h1>
                             </div>
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card shadow-lg" style="margin-top: 25px;">
+                <div class="card shadow-lg appcard appcontent" style="margin-top: 25px;">
                     <div class="card-header bg-dark text-light appcard">
                         <h6>Letzte Buchungen</h6>
                     </div>
