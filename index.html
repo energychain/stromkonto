@@ -110,8 +110,32 @@
                 <h5 class="text-light mb-0">Corrently Markplatz<button class="btn btn-secondary btn-sm float-right" type="button" id="btn_close_market"><i class="fa fa-close"></i></button></h5>
             </div>
             <div class="card-body">
+                <div id="markettx" style="margin-bottom: 15px;">
+                    <h5>Umwandlung bestätigen durch Eingabe der Anmeldedaten</h5><input type="hidden" id="market_sel_cori"><input type="hidden" id="market_sel_asset">
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <div class="input-group-prepend"><span class="input-group-text">Anlage</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_title">
+                        <div class="input-group-append"></div>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <div class="input-group-prepend"><span class="input-group-text">Stromkonto</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_sko" style="min-width: 450px;"><input class="bg-light form-control" type="text" disabled=""
+                            readonly="" inputmode="numeric" id="market_sel_kap" style="width: 40px;">
+                        <div class="input-group-append"><span class="text-center text-light bg-secondary input-group-text">kWh/Jahr</span></div>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <div class="input-group-prepend"><span class="input-group-text">Kennung</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_contract">
+                        <div class="input-group-append"></div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Benutzername</span></div><input class="form-control" type="text" id="market_name">
+                        <div class="input-group-append"></div>
+                    </div>
+                    <div class="input-group" style="margin-top: 15px;">
+                        <div class="input-group-prepend"><span class="input-group-text">Passwort</span></div><input class="form-control" type="password" id="market_password">
+                        <div class="input-group-append"><button class="btn btn-dark" type="button" id="btn_markettx">Bestätigen</button></div>
+                    </div>
+                </div>
                 <h5>Verfügbare Corrently Anlagen zur Eigenerzeugung</h5>
-                <div class="alert alert-danger" role="alert" id="keyAlert" style="display:none;"><span><strong>Hinweis</strong>&nbsp;Die aktuelle Anmeldung ist nicht berechtigt, für dieses Stromkonto Erzeugung zu erwerben.</span></div>
+                <div class="alert alert-danger" role="alert" id="keyAlert" style="display:none;"><span><strong>Hinweis</strong>&nbsp;Die aktuelle Anmeldung ist nicht berechtigt, mit dem Guthaben dieses Stromkonto Erzeugung zu erwerben.</span></div>
                 <p class="card-text"></p>
                 <div class="table-responsive">
                     <table class="table">
@@ -220,7 +244,7 @@
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
-        <script src="https://unpkg.com/correntlywallet@1.1.5/dist/correntlywallet.js"></script>
+        <script src="https://unpkg.com/correntlywallet@1.1.7/dist/correntlywallet.js"></script>
         <script src="assets/js/script.min.js"></script>
 </body>
 
