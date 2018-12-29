@@ -269,6 +269,27 @@
                         </div>
                         <p class="card-text"></p>
                     </div>
+                    <div class="card-body" id="asset-card-collapsed">
+                        <div class="table-responsive" style="margin-top: 0;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Bezeichnung</th>
+                                        <th>Kapazität (KWh/Jahr)</th>
+                                        <th class="text-right">Erzeugung bisher (kWh)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="tx in account.txs_aggregated">
+                                        <td>{{ tx.peer }}</td>
+                                        <td class="text-right">{{ tx.cori }}</td>
+                                        <td class="text-right">{{ tx.generation.toFixed(3).replace('.',',') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="card-text"></p>
+                    </div>
                 </div>
             </div>
         </div><footer id="footer" style="margin-top:25px;padding-top:25px;">
