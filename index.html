@@ -303,7 +303,7 @@
                                     <tr>
                                         <th>Bezeichnung</th>
                                         <th>Zeitpunkt</th>
-                                        <th>Ablesung (kWh)</th>
+                                        <th class="text-right">Ablesung (kWh)</th>
                                         <th class="text-right">Betrag (€)</th>
                                     </tr>
                                 </thead>
@@ -311,7 +311,7 @@
                                     <tr v-for="tx in account.things">
                                         <td v-bind:title="tx.blockNumber">{{ tx.title }}</td>
                                         <td v-bind:title="tx.peer_account">{{ tx.timeStamp }} &nbsp;&nbsp;</td>
-                                        <td v-bind:title="tx.peer_account">{{ tx.base }} &nbsp;&nbsp;</td>
+                                        <td class="text-right" v-bind:title="tx.peer_account">{{ tx.base }} &nbsp;&nbsp;</td>
                                         <td class="text-right">{{ tx.eur }}</td>
                                     </tr>
                                 </tbody>
