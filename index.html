@@ -9,6 +9,7 @@
     <meta name="author" content="Corrently Corp ">
     <meta name="keywords" content="Stromkonto, STROMDAO, Blockchain, Corrently">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="assets/css/styles.min.css">
@@ -209,7 +210,7 @@
                 </div>
                 <div class="card shadow-lg appcard appcontent" style="margin-top: 25px;">
                     <div class="card-header bg-dark text-light appcard">
-                        <h6>Letzte Buchungen<button class="btn btn-success btn-sm float-right" type="button" id="btn_tx"><i class="fa fa-chevron-circle-down" id="toggle_tx"></i></button></h6>
+                        <h6><i class="fas fa-book" style="margin-right: 10px;"></i>Letzte Buchungen<button class="btn btn-success btn-sm float-right" type="button" id="btn_tx"><i class="fa fa-chevron-circle-down" id="toggle_tx"></i></button></h6>
                     </div>
                     <div class="card-body" id="tx-card">
                         <div class="table-responsive" style="margin-top: 0;">
@@ -240,7 +241,7 @@
                 </div>
                 <div class="card shadow-lg appcard appcontent" style="margin-top: 25px;">
                     <div class="card-header bg-dark text-light appcard">
-                        <h6>Bestand Erzeugungsanlagen&nbsp;<button class="btn btn-success btn-sm float-right" type="button" id="btn_asset"><i class="fa fa-chevron-circle-down" id="toggle_asset"></i></button></h6>
+                        <h6><i class="fas fa-chess-king" style="margin-right: 10px;"></i>Bestand Erzeugungsanlagen&nbsp;<button class="btn btn-success btn-sm float-right" type="button" id="btn_asset"><i class="fa fa-chevron-circle-down" id="toggle_asset"></i></button></h6>
                     </div>
                     <div class="card-body" id="asset-card">
                         <div class="table-responsive" style="margin-top: 0;">
@@ -249,7 +250,7 @@
                                     <tr>
                                         <th>Seit</th>
                                         <th>Bezeichnung</th>
-                                        <th>Kapazität (KWh/Jahr)</th>
+                                        <th>Kapazität (kWh/Jahr)</th>
                                         <th class="text-right">Erzeugung bisher (kWh)</th>
                                     </tr>
                                 </thead>
@@ -275,7 +276,7 @@
                                 <thead>
                                     <tr>
                                         <th>Bezeichnung</th>
-                                        <th>Kapazität (KWh/Jahr)</th>
+                                        <th>Kapazität (kWh/Jahr)</th>
                                         <th class="text-right">Erzeugung bisher (kWh)</th>
                                     </tr>
                                 </thead>
@@ -288,6 +289,38 @@
                                 </tbody>
                             </table>
                         </div>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+                <div class="card shadow-lg appcard appcontent" style="margin-top: 25px;">
+                    <div class="card-header bg-dark text-light appcard">
+                        <h6><i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i>Internet der Dinge<button class="btn btn-success btn-sm float-right" type="button" id="btn_things"><i class="fa fa-chevron-circle-down" id="toggle_things"></i></button></h6>
+                    </div>
+                    <div class="card-body" id="things-card">
+                        <div class="table-responsive" style="margin-top: 0;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Bezeichnung</th>
+                                        <th>Zeitpunkt</th>
+                                        <th>Ablesung (kWh)</th>
+                                        <th class="text-right">Betrag (€)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="tx in account.things">
+                                        <td v-bind:title="tx.blockNumber">{{ tx.title }}</td>
+                                        <td v-bind:title="tx.peer_account">{{ tx.timeStamp }} &nbsp;&nbsp;</td>
+                                        <td v-bind:title="tx.peer_account">{{ tx.base }} &nbsp;&nbsp;</td>
+                                        <td class="text-right">{{ tx.eur }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="card-text"></p>
+                    </div>
+                    <div class="card-body" id="things-card-collapsed" style="display:none">
+                        <div class="alert alert-warning" role="alert"><span><strong>Kein IoT Gerät erkannt!</strong>&nbsp;Für dieses Stromkonto wurde kein Gerät erkannt oder zugeordnet.</span></div>
                         <p class="card-text"></p>
                     </div>
                 </div>
