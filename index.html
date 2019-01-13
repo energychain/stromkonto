@@ -54,10 +54,9 @@
         </div>
         </div>
     </nav>
-    <div class="alert alert-danger d-none" role="alert" id="tarifalert">
-        <p><strong>Hinweis</strong>&nbsp;Diesem Stromkonto ist kein Netzanschluss zugeordnet. Die Zuordnung erfolgt nach Auswahl des Tarifes automatisch. Ihr Stromanbieter berät Sie gerne bei der Nutzung Ihres persönlichen Stromkontos.</p><span>&nbsp;<a class="btn btn-danger btn-sm" role="button" href="https://stromtarif.shop/" target="_blank">Tarif wählen</a></span></div>
-    <div
-        class="container" id="appcontainer" style="margin-top: 45px;">
+    <div class="container"><div role="alert" class="alert alert-danger d-none" id="tarifalert">
+    <p><strong>Hinweis</strong> Diesem Stromkonto ist kein Netzanschluss zugeordnet. Die Zuordnung erfolgt nach Auswahl des Tarifes automatisch. Ihr Stromanbieter berät Sie gerne bei der Einrichtung und Nutzung Ihres persönlichen Stromkontos.</p><span><a class="btn btn-danger btn-sm" role="button" href="https://stromtarif.shop/" target="_blank" style="margin-right:5px;">Tarif wählen</a><a class="btn btn-warning btn-sm" role="button" href="./produktauswahl.html" target="_blank" style="margin-right:5px;" title="Neues Stromkonto einrichten ohne Versorgerwechsel">Neu einrichten</a></span></div></div>
+    <div class="container" id="appcontainer" style="margin-top: 45px;">
         <div id="app_panel" class="appcontent">
             <h2 class="text-dark mb-0 text-truncate" style="margin-bottom: 35px;"><i class="fa fa-signal shadow" style="margin-right: 5px;"></i><span id="account_nr" class="text-truncate">Text</span><button class="btn btn-secondary float-right d-print-none" type="button" id="btn_switch_ledger" style="margin-left: 1px;"><i class="fa fa-user d-print-none"></i></button>
                 <button
@@ -170,174 +169,174 @@
         </div>
         <div class="card d-print-none shadow-lg appcontent corrently-panels" id="gsi_card" style="margin-top: 25px;display:all;">
             <div class="card-header bg-dark text-light appcard">
-                <h6>Vorhersage Grünstrom Bonus <br><span style="font-size: 12px;"><span id="gsi_bonus">0,00</span>&nbsp;Cent/kWh bei 100% Grünstrom am Lieferort</span>
+                <h6 id="info_gsi_ort">Vorhersage Grünstrom Bonus <br><span style="font-size: 12px;"><span id="gsi_bonus">0,00</span>&nbsp;Cent/kWh bei 100% Grünstrom am Lieferort</span>
                 </h6>
             </div>
             <div class="card-body" id="gsi" style="padding: 1px;"></div>
         </div>
-        </div>
-        <div id="app" class="appcontent corrently-panels" style="margin-top: 30px;">
-            <div class="container">
-                <div class="row">
-                    <div class="col col-md-4 d-flex align-items-stretch">
-                        <div class="card shadow-lg h-100">
-                            <div class="card-header bg-dark text-light appcard">
-                                <h6 class="text-truncate">Lokaler Grünstrom (Anteil am Netzbezug)</h6>
-                            </div>
-                            <div class="card-body rcard">
-                                <h1 class="text-center"><span>{{ green_power }}%</span>&nbsp;</h1>
-                            </div>
+    </div>
+    <div id="app" class="appcontent corrently-panels" style="margin-top: 30px;">
+        <div class="container">
+            <div class="row">
+                <div class="col col-md-4 d-flex align-items-stretch">
+                    <div class="card shadow-lg h-100">
+                        <div class="card-header bg-dark text-light appcard">
+                            <h6 class="text-truncate">Lokaler Grünstrom (Anteil am Netzbezug)</h6>
                         </div>
-                    </div>
-                    <div class="col col-md-4">
-                        <div class="card shadow-lg h-100">
-                            <div class="card-header bg-dark text-light appcard">
-                                <h6 class="text-truncate">Corrently Eigenerzeugung (kWh)</h6>
-                            </div>
-                            <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="buy_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen."><i class="fa fa-cart-plus float-right"></i></button>
-                                <h1 class="text-center"><span v-bind:title="kwha">{{ generation_3f }}</span>&nbsp;</h1>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col col-md-4">
-                        <div class="card shadow-lg h-100">
-                            <div class="card-header bg-dark text-light appcard">
-                                <h6 class="text-truncate">Corrently Guthaben (EUR)</h6>
-                            </div>
-                            <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="wire_btn" title="Guthaben auszahlen"><i class="fa fa-bank float-right"></i></button>
-                                <h1 class="text-center"><span id="eur_balance" v-bind:data="balance_eur">{{ balance_eur_2f }}</span>&nbsp;</h1>
-                            </div>
+                        <div class="card-body rcard">
+                            <h1 class="text-center"><span>{{ green_power }}%</span>&nbsp;</h1>
                         </div>
                     </div>
                 </div>
-                <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
-                    <div class="card-header bg-dark text-light appcard">
-                        <h6><i class="fas fa-book" style="margin-right: 10px;"></i>Letzte Buchungen<button class="btn btn-success btn-sm float-right" type="button" id="btn_tx"><i class="fa fa-chevron-circle-down" id="toggle_tx"></i></button></h6>
-                    </div>
-                    <div class="card-body" id="tx-card">
-                        <div class="table-responsive" style="margin-top: 0;">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Buchungslauf (Block)</th>
-                                        <th>Referenz</th>
-                                        <th class="text-right">Betrag (€)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="tx in txs">
-                                        <td v-bind:title="tx.blockNumber">{{ tx.timeStamp }}</td>
-                                        <td v-bind:title="tx.peer_account">{{ tx.peer }} &nbsp;&nbsp;</td>
-                                        <td class="text-right">{{ tx.value_abs }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td class="text-right"><strong>Vorheriger Saldo</strong></td>
-                                        <td class="text-right"><span id="start_saldo" style="filter: blur(0px);"><br></span></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="col col-md-4">
+                    <div class="card shadow-lg h-100">
+                        <div class="card-header bg-dark text-light appcard">
+                            <h6 class="text-truncate">Corrently Eigenerzeugung (kWh)</h6>
                         </div>
-                        <p class="card-text"></p>
+                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="buy_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen."><i class="fa fa-cart-plus float-right"></i></button>
+                            <h1 class="text-center"><span v-bind:title="kwha">{{ generation_3f }}</span>&nbsp;</h1>
+                        </div>
                     </div>
                 </div>
-                <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
-                    <div class="card-header bg-dark text-light appcard">
-                        <h6><i class="fas fa-chess-king" style="margin-right: 10px;"></i>Bestand Erzeugungsanlagen&nbsp;<button class="btn btn-success btn-sm float-right" type="button" id="btn_asset"><i class="fa fa-chevron-circle-down" id="toggle_asset"></i></button></h6>
-                    </div>
-                    <div class="card-body" id="asset-card">
-                        <div class="table-responsive" style="margin-top: 0;">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Seit</th>
-                                        <th>Bezeichnung</th>
-                                        <th>Kapazität (kWh/Jahr)</th>
-                                        <th class="text-right">Erzeugung bisher (kWh)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="tx in account.txs">
-                                        <td>{{ tx.timeStamp }}</td>
-                                        <td v-bind:title="tx.asset">{{ tx.peer }} &nbsp;&nbsp;</td>
-                                        <td class="text-right">{{ tx.cori }}</td>
-                                        <td class="text-right">{{ tx.generation }}</td>
-                                    </tr>
-                                    <tr id="max_asset_rows" style="display:none">
-                                        <td></td>
-                                        <td class="text-left"><strong>Es werden maximal 12 Einträge angezeigt!</strong></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="col col-md-4">
+                    <div class="card shadow-lg h-100">
+                        <div class="card-header bg-dark text-light appcard">
+                            <h6 class="text-truncate">Corrently Guthaben (EUR)</h6>
                         </div>
-                        <p class="card-text"></p>
-                    </div>
-                    <div class="card-body" id="asset-card-collapsed">
-                        <div class="table-responsive" style="margin-top: 0;">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Bezeichnung</th>
-                                        <th>Kapazität (kWh/Jahr)</th>
-                                        <th class="text-right">Erzeugung bisher (kWh)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="tx in account.txs_aggregated">
-                                        <td>{{ tx.peer }}</td>
-                                        <td class="text-right">{{ tx.cori }}</td>
-                                        <td class="text-right">{{ tx.generation.toFixed(3).replace('.',',') }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="wire_btn" title="Guthaben auszahlen"><i class="fa fa-bank float-right"></i></button>
+                            <h1 class="text-center"><span id="eur_balance" v-bind:data="balance_eur">{{ balance_eur_2f }}</span>&nbsp;</h1>
                         </div>
-                        <p class="card-text"></p>
-                    </div>
-                </div>
-                <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
-                    <div class="card-header bg-dark text-light appcard">
-                        <h6><i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i>Internet der Dinge<button class="btn btn-success btn-sm float-right" type="button" id="btn_things"><i class="fa fa-chevron-circle-down" id="toggle_things"></i></button></h6>
-                    </div>
-                    <div class="card-body" id="things-card">
-                        <div class="table-responsive" style="margin-top: 0;">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Bezeichnung</th>
-                                        <th>Zeitpunkt</th>
-                                        <th class="text-right">Ablesung (kWh)</th>
-                                        <th class="text-right">Betrag (€)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="tx in account.things">
-                                        <td v-bind:title="tx.blockNumber">{{ tx.title }}</td>
-                                        <td v-bind:title="tx.peer_account">{{ tx.timeStamp }} &nbsp;&nbsp;</td>
-                                        <td class="text-right" v-bind:title="tx.peer_account">{{ tx.base }} &nbsp;&nbsp;</td>
-                                        <td class="text-right">{{ tx.eur }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p class="card-text"></p>
-                    </div>
-                    <div class="card-body" id="things-card-collapsed" style="display:none">
-                        <div class="alert alert-warning" role="alert"><span><strong>Kein IoT Gerät erkannt!</strong>&nbsp;Für dieses Stromkonto wurde kein Gerät erkannt oder zugeordnet. <a href="https://corrently.io/libraries/iot">Weitere Informationen</a></span></div>
-                        <p class="card-text"></p>
                     </div>
                 </div>
             </div>
-        </div><footer id="footer" style="margin-top:25px;padding-top:25px;">
+            <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6><i class="fas fa-book" style="margin-right: 10px;"></i>Letzte Buchungen<button class="btn btn-success btn-sm float-right" type="button" id="btn_tx"><i class="fa fa-chevron-circle-down" id="toggle_tx"></i></button></h6>
+                </div>
+                <div class="card-body" id="tx-card">
+                    <div class="table-responsive" style="margin-top: 0;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Buchungslauf (Block)</th>
+                                    <th>Referenz</th>
+                                    <th class="text-right">Betrag (€)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tx in txs">
+                                    <td v-bind:title="tx.blockNumber">{{ tx.timeStamp }}</td>
+                                    <td v-bind:title="tx.peer_account">{{ tx.peer }} &nbsp;&nbsp;</td>
+                                    <td class="text-right">{{ tx.value_abs }}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-right"><strong>Vorheriger Saldo</strong></td>
+                                    <td class="text-right"><span id="start_saldo" style="filter: blur(0px);"><br></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+            <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6><i class="fas fa-chess-king" style="margin-right: 10px;"></i>Bestand Erzeugungsanlagen&nbsp;<button class="btn btn-success btn-sm float-right" type="button" id="btn_asset"><i class="fa fa-chevron-circle-down" id="toggle_asset"></i></button></h6>
+                </div>
+                <div class="card-body" id="asset-card">
+                    <div class="table-responsive" style="margin-top: 0;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Seit</th>
+                                    <th>Bezeichnung</th>
+                                    <th>Kapazität (kWh/Jahr)</th>
+                                    <th class="text-right">Erzeugung bisher (kWh)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tx in account.txs">
+                                    <td>{{ tx.timeStamp }}</td>
+                                    <td v-bind:title="tx.asset">{{ tx.peer }} &nbsp;&nbsp;</td>
+                                    <td class="text-right">{{ tx.cori }}</td>
+                                    <td class="text-right">{{ tx.generation }}</td>
+                                </tr>
+                                <tr id="max_asset_rows" style="display:none">
+                                    <td></td>
+                                    <td class="text-left"><strong>Es werden maximal 12 Einträge angezeigt!</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="card-text"></p>
+                </div>
+                <div class="card-body" id="asset-card-collapsed">
+                    <div class="table-responsive" style="margin-top: 0;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Bezeichnung</th>
+                                    <th>Kapazität (kWh/Jahr)</th>
+                                    <th class="text-right">Erzeugung bisher (kWh)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tx in account.txs_aggregated">
+                                    <td>{{ tx.peer }}</td>
+                                    <td class="text-right">{{ tx.cori }}</td>
+                                    <td class="text-right">{{ tx.generation.toFixed(3).replace('.',',') }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+            <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6><i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i>Internet der Dinge<button class="btn btn-success btn-sm float-right" type="button" id="btn_things"><i class="fa fa-chevron-circle-down" id="toggle_things"></i></button></h6>
+                </div>
+                <div class="card-body" id="things-card">
+                    <div class="table-responsive" style="margin-top: 0;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Bezeichnung</th>
+                                    <th>Zeitpunkt</th>
+                                    <th class="text-right">Ablesung (kWh)</th>
+                                    <th class="text-right">Betrag (€)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="tx in account.things">
+                                    <td v-bind:title="tx.blockNumber">{{ tx.title }}</td>
+                                    <td v-bind:title="tx.peer_account">{{ tx.timeStamp }} &nbsp;&nbsp;</td>
+                                    <td class="text-right" v-bind:title="tx.peer_account">{{ tx.base }} &nbsp;&nbsp;</td>
+                                    <td class="text-right">{{ tx.eur }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="card-text"></p>
+                </div>
+                <div class="card-body" id="things-card-collapsed" style="display:none">
+                    <div class="alert alert-warning" role="alert"><span><strong>Kein IoT Gerät erkannt!</strong>&nbsp;Für dieses Stromkonto wurde kein Gerät erkannt oder zugeordnet. <a href="https://corrently.io/libraries/iot">Weitere Informationen</a></span></div>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+        </div>
+    </div><footer id="footer" style="margin-top:25px;padding-top:25px;">
     <div style= "background: black; text-align: center; margin: 0px; padding:10px">
         <p style= "color:grey; font-family: raleway" id="bcstatus">(c) 2018 <a href="https://stromdao.de/"><strong>STROM</strong>DAO Ltd</a> | <a href="https://stromdao.de/impressum/">Impressum &amp; Datenschutz</a> | <a href="http://corrently.blog">Blog</a> | Konsens # <a href="https://scan.corrently.io">{{ blocknumber }}</a> <span id='webuser' class="text-muted"></span> </p>
     </div>
 </footer>
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
-        <script src="https://unpkg.com/correntlywallet@1.1.7/dist/correntlywallet.js"></script>
-        <script src="assets/js/script.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
+    <script src="https://unpkg.com/correntlywallet@1.1.7/dist/correntlywallet.js"></script>
+    <script src="assets/js/script.min.js"></script>
 </body>
 
 </html>
