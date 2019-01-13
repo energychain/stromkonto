@@ -58,7 +58,7 @@
                         <div class="card-body rcard">
                             <h1 class="text-center"><span>kostenlos</span>&nbsp;</h1>
                             <p class="text-right">für <a href="https://stromtarif.shop/">Tarifkunden</a></p>
-                            <hr><button class="btn btn-secondary prod_btn" type="button">Auswählen</button>
+                            <hr><button class="btn btn-secondary prod_btn" type="button" id="prod_std">Auswählen</button>
                             <hr>
                             <ul>
                                 <li class="text-left">Kontoführung in Echtzeit</li>
@@ -110,7 +110,7 @@
             </div>
             <div class="card-body text-left rcard">
                 <h1 class="text-left" id="stammdaten">Stammdaten</h1>
-                <form action="https://formspree.io/kontakt@stromdao.de" method="post">
+                <form action="https://formspree.io/kontakt@stromdao.de" method="post"><input class="form-control" type="hidden" name="produkt" id="prodauswahl">
                     <div class="form-group"><label class="text-left">Ihr Name (Vornamen und Nachnamen)</label><input class="form-control" type="text" name="name"></div>
                     <div class="form-group"><label>Anschrift (Straße und Hausnummer)</label><input class="form-control" type="text" name="strasse"></div>
                     <div class="form-group"><label>Ort (Postleitzahl und Wohnort)</label><input class="form-control" type="text" name="ort"></div>
