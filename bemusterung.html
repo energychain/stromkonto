@@ -78,7 +78,12 @@
         <div class="form-group text-center"><label></label><button class="btn btn-success btn-lg text-center" type="submit">Absenden</button>
             <p style="color: rgb(137,147,156);margin-top: 15px;">Durch Ausfüllen und Absenden erkären Sie sich einverstanden, dass die von Ihnen gemachten Angaben zum Zwecke der Einrichtung &nbsp;verarbeitet werden dürfen. Eine persönliche Kontaktaufnahme erfolgt nur, wenn es zu Rückfragen kommen sollte.</p>
         </div><script>  
-
+function boot() {
+     $('#nda').change(function() {
+        $('#c2').show();
+        
+    });
+}
 </script></form>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
