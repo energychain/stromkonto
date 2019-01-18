@@ -74,15 +74,90 @@
                     <p>Es wurde Zugriff auf ein Demo-Konto eingerichtet. Bei diesem Demo-Stromkonto mit Corrently handelt es sich um einen realen Stromkunden am Lieferort Heidelberg. Auf das Demo-Konto kann nur lesend zugegriffen werden.</p><a class="btn btn-warning"
                         role="button" href="https://www.stromkonto.net/?a=0xe596B918cC07852dfA41dd7181492720C261C8E5&amp;setalias=true" target="_blank">Demo-Kunde benennen</a></div>
             </div>
+        </div>
+        <div class="container" id="c3" style="margin-top: 50px;display:none">
+            <div class="card shadow-lg h-100" style="margin-bottom: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6 class="text-truncate">Marge/Einlage</h6>
+                </div>
+                <div class="card-body text-left rcard">
+                    <p>Der variable Anteil beim Corrently-Produkt hat eine Höchstgrenze in Höhe des Arbeitspreises. Mit der Eingabe der "Marge" wird die maximale Höhe des Rabattes für den Kunden angegeben. Beim Demo-Stromkonto liegt dieser Wert bei 0,02€/kWh
+                        und entspricht der Vertriebsmarge im Stromtarif.</p>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Max. Bonus je kWh</span></div><input class="form-control" type="text" name="marge" inputmode="numeric">
+                        <div class="input-group-append"><button class="btn btn-warning" type="button" id="b3">weiter</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="c4" style="margin-top: 50px;display:none">
+            <div class="card shadow-lg h-100" style="margin-bottom: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6 class="text-truncate">Projektphasen</h6>
+                </div>
+                <div class="card-body text-left rcard">
+                    <p>Für ein reibungslose Zusammenspiel des Stromproduktes mit einem Tarif sind 3 Projektphasen vorgesehen.&nbsp;</p><label for="p1_user">Phase 1 - Integrationstest</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Nutzer</span></div><input class="form-control" type="text" name="p1_user" id="p1_user">
+                        <div class="input-group-append"></div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Zeitplan</span></div><input class="form-control" type="text" name="p1_time" id="p1_time">
+                        <div class="input-group-append"></div>
+                    </div><label for="p2_user" style="margin-top: 15px;">Phase 2 - Kundenakzeptanz mit Testgruppe</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Nutzer</span></div><input class="form-control" type="text" name="p2_user" id="p2_user">
+                        <div class="input-group-append"></div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Zeitplan</span></div><input class="form-control" type="text" name="p2_time" id="p2_time">
+                        <div class="input-group-append"></div>
+                    </div><label for="p3_user" style="margin-top: 15px;">Phase 3 - Produktivbetrieb</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Nutzer</span></div><input class="form-control" type="text" name="p3_user" id="p3_user">
+                        <div class="input-group-append"></div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">Zeitplan</span></div><input class="form-control" type="text" name="p3_time" id="p3_time">
+                        <div class="input-group-append"></div>
+                    </div><button class="btn btn-warning" type="button" id="b4" style="margin-top: 15px;">weiter</button></div>
+            </div>
         </div><input class="form-control" type="hidden" name="produkt" id="prodauswahl">
+        <div class="container" id="c5" style="margin-top: 50px;display:none">
+            <div class="card shadow-lg h-100" style="margin-bottom: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6 class="text-truncate">Preisvariable</h6>
+                </div>
+                <div class="card-body text-left rcard">
+                    <p>Im Demo-Stromkonto wird der GrünstromIndex verwendet, um einen sich veränderten Bonus auf Basis der Netzdienlichkeit zu ermitteln. Dieser Grünstromindex ist bundesweit verfügbar. Alternativ kann eine Erzeugungsprognose von bestehenden
+                        Anlagen verwendet werden.</p>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" name="use_gsi" checked="" id="use_gsi"><label class="form-check-label" for="formCheck-1">Preisvariable auf Basis des GrünstromIndex</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" name="use_ptype" id="use_ptype"><label class="form-check-label" for="formCheck-2">Preisvariable auf Basis einer bestimmten Erzeugungsart (lokaler Sonnestrom/Windstrom)</label></div>
+                    <div
+                        class="form-check"><input class="form-check-input" type="checkbox" name="use_custom" id="use_custom"><label class="form-check-label" for="formCheck-2">Preisvariable auf Basis bestimmter Anlagen (36 Stunden Prognose wird benötigt als Upload)</label></div>
+                <button
+                    class="btn btn-warning" type="button" id="b5">weiter</button>
+            </div>
+        </div>
+        </div>
         <div class="form-group text-center"><label></label><button class="btn btn-success btn-lg text-center" type="submit">Absenden</button>
             <p style="color: rgb(137,147,156);margin-top: 15px;">Durch Ausfüllen und Absenden erkären Sie sich einverstanden, dass die von Ihnen gemachten Angaben zum Zwecke der Einrichtung &nbsp;verarbeitet werden dürfen. Eine persönliche Kontaktaufnahme erfolgt nur, wenn es zu Rückfragen kommen sollte.</p>
         </div><script>  
 function boot() {
      $('#nda').change(function() {
-        $('#c2').show();
-        
+        $('#c2').show();        
+        $('#c3').show();        
     });
+    $('#b3').click(function() {
+        $('#c4').show();
+    });
+    $('#b4').click(function() {
+        $('#c5').show();
+    });
+    $('#b5').click(function() {
+        $('#c6').show();
+    });
+    
 }
 </script></form>
     <script src="assets/js/jquery.min.js"></script>
