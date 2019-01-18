@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Corrently - Projektentwickliung</title>
+    <title>Corrently - Projektentwicklung</title>
     <meta name="description" content="Entwicklung eines Projektes mit Corrently">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -144,6 +144,47 @@
             </div>
         </div>
         </div>
+        <div class="container" id="c6" style="margin-top: 50px;display:none">
+            <div class="card shadow-lg h-100" style="margin-bottom: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6 class="text-truncate">Datenschutz / Zuordnung Personenbezogener Daten</h6>
+                </div>
+                <div class="card-body text-left rcard">
+                    <p>Der einzelne Stromkunde muss dem Stromkonto zugeordnet werden. Hierzu gibt es unter Einhaltung des Datenschutzes mehrere Möglichkeiten.</p>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" name="ds_option_1" checked="" id="ds_option_1"><label class="form-check-label" for="formCheck-1">Kontaktdaten werden monatlich von Projektgeber an den Projektnehmer elektronisch übermittelt.</label></div>
+                    <div
+                        class="form-check"><input class="form-check-input" type="checkbox" name="ds_option_2" id="use_ptype"><label class="form-check-label" for="formCheck-2">Personenbezogene Daten werden nicht übermittelt. Es wird nur eine Kundennummer/ID, Postleitzahl und Jahresverbrauch übermittelt</label></div>
+                <div
+                    class="form-check"><input class="form-check-input" type="checkbox" name="ds_option_3" id="use_custom"><label class="form-check-label" for="formCheck-2">Es findet kein Datenaustausch statt. Der Kunde pflegt seine Daten selbst.</label></div><button class="btn btn-warning"
+                type="button" id="b5">weiter</button></div>
+        </div>
+        </div>
+        <div class="container" id="c7" style="margin-top: 50px;display:none">
+            <div class="card shadow-lg h-100" style="margin-bottom: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6 class="text-truncate">Geldfluss</h6>
+                </div>
+                <div class="card-body text-left rcard">
+                    <p>Die Abrechnung mit dem Kunden kann auf verschiedene Arten erfolgen.&nbsp;</p>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" name="clearing_option_1" checked="" id="clearing_option_1"><label class="form-check-label" for="formCheck-1">Sämtlicher Geldtransfer mit dem Kunden läuft über den Projektgeber</label></div>
+                    <div
+                        class="form-check"><input class="form-check-input" type="checkbox" name="clearing_option_2" id="clearing_option_2"><label class="form-check-label" for="formCheck-2">Sämtlicher Geldtransfer mti dem Kunden läuft über den Projektnehmer</label></div>
+                <div
+                    class="form-check"><input class="form-check-input" type="checkbox" name="clearing_option_3" id="clearing_option_3"><label class="form-check-label" for="formCheck-2">Soll-Buchungen laufen über den Projektgeber, Erstattungen laufen über den Projektnehmer</label></div>
+            <button
+                class="btn btn-warning" type="button" id="b7">weiter</button>
+        </div>
+        </div>
+        </div>
+        <div class="container" id="c8" style="margin-top: 50px;display:none">
+            <div class="card shadow-lg h-100" style="margin-bottom: 25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6 class="text-truncate">Zusättliche Angaben</h6>
+                </div>
+                <div class="card-body text-left rcard">
+                    <p></p><label>Sonstiges</label><textarea class="form-control" name="txt_other" id="txt_other"></textarea></div>
+            </div>
+        </div>
         <div class="form-group text-center"><label></label><button class="btn btn-success btn-lg text-center" type="submit">Absenden</button>
             <p style="color: rgb(137,147,156);margin-top: 15px;">Durch Ausfüllen und Absenden erkären Sie sich einverstanden, dass die von Ihnen gemachten Angaben zum Zwecke der Einrichtung &nbsp;verarbeitet werden dürfen. Eine persönliche Kontaktaufnahme erfolgt nur, wenn es zu Rückfragen kommen sollte.</p>
         </div><script>  
@@ -160,6 +201,12 @@ function boot() {
     });
     $('#b5').click(function() {
         $('#c6').show();
+    });
+    $('#b6').click(function() {
+        $('#c7').show();
+    });
+    $('#b7').click(function() {
+        $('#c8').show();
     });
     
 }
