@@ -1,0 +1,27 @@
+.appcontent, .corrently-panels {
+  display: none;
+}
+
+#footer {
+}
+
+.input-group-prepend {
+  min-width: 130px;
+}
+
+.input-group-text {
+  min-width: 130px;
+}
+
+td.gsi {
+  border-right: 1px solid #c6c6c6;
+  border-left: 1px solid #c6c6c6;
+}
+
+.rcard {
+  min-height: 100px;
+}
+
+span {
+}
+
