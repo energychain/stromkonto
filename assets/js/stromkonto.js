@@ -138,8 +138,8 @@ function gsiTable() {
         var yyyy = today.getFullYear();
         var datestr = dd+"."+mm;
         if(ts>new Date().getTime()) {
-            if(item.eevalue < 30) row_bonus+="<td class='bg-danger gsi'  style='text-align:center' title='"+item.eevalue+"%'>"; else
-            if(item.eevalue > 70) row_bonus+="<td class='bg-success gsi' style='text-align:center' title='"+item.eevalue+"%'>"; else
+            if(item.eevalue < 40) row_bonus+="<td class='bg-danger gsi'  style='text-align:center' title='"+item.eevalue+"%'>"; else
+            if(item.eevalue > 60) row_bonus+="<td class='bg-success gsi' style='text-align:center' title='"+item.eevalue+"%'>"; else
             row_bonus+="<td class='bg-warning gsi' style='text-align:center' title='"+item.eevalue+"%'>";
             row_bonus+=(stromkonto_data.account.gsi.bonus*item.eevalue).toFixed(2).replace('.',',')
             row_bonus+="</td>";
