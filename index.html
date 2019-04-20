@@ -47,13 +47,13 @@
 
 <body style="margin: 0 0 145px 0">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean shadow-lg">
-        <div class="container"><a class="navbar-brand" href="https://corrently.de/"><img src="assets/img/corrently_logo.png" alt="">&nbsp;</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand" href="https://corrently.de/"><img alt="" src="assets/img/corrently_logo.png">&nbsp;</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
                 class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item" role="presentation"><a class="nav-link text-black-50" href="https://stromtarif.shop/" target="_blank" id="reload_link"><strong>Stromtarif</strong></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link text-dark" href="#" id="reload_link"><strong>Stromkonto</strong></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link text-nowrap text-black-50" href="https://corrently.blog" target="_blank" id="reload_link"><strong>Blog</strong></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link text-black-50" id="reload_link" href="https://stromtarif.shop/" target="_blank"><strong>Stromtarif</strong></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link text-dark" id="reload_link" href="#"><strong>Stromkonto</strong></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link text-nowrap text-black-50" id="reload_link" href="https://corrently.blog" target="_blank"><strong>Blog</strong></a></li>
                 </ul>
         </div>
         </div>
@@ -62,9 +62,9 @@
     <p><strong>Hinweis</strong> Diesem Stromkonto ist kein Netzanschluss zugeordnet. Die Zuordnung erfolgt nach Auswahl des Tarifes automatisch. Ihr Stromanbieter berät Sie gerne bei der Einrichtung und Nutzung Ihres persönlichen Stromkontos.</p><span><a class="btn btn-danger btn-sm" role="button" href="https://stromtarif.shop/" target="_blank" style="margin-right:5px;">Tarif wählen</a><a class="btn btn-warning btn-sm" role="button" href="./produktauswahl.html" target="_blank" style="margin-right:5px;" title="Neues Stromkonto einrichten ohne Versorgerwechsel">Neu einrichten</a></span></div></div>
     <div class="container" id="appcontainer" style="margin-top: 45px;">
         <div id="app_panel" class="appcontent">
-            <h2 class="text-dark mb-0 text-truncate" style="margin-bottom: 35px;"><i class="fa fa-signal shadow" style="margin-right: 5px;"></i><span id="account_nr" class="text-truncate">Text</span><button class="btn btn-secondary float-right d-print-none" type="button" id="btn_switch_ledger" style="margin-left: 1px;"><i class="fa fa-user d-print-none"></i></button>
+            <h2 class="text-dark mb-0 text-truncate" style="margin-bottom: 35px;"><i class="fa fa-signal shadow" style="margin-right: 5px;"></i><span id="account_nr" class="text-truncate">Text</span><button class="btn btn-secondary float-right d-print-none" id="btn_switch_ledger" style="margin-left: 1px;" type="button"><i class="fa fa-user d-print-none"></i></button>
                 <button
-                    class="btn btn-secondary float-right d-print-none" type="button" id="btn_change" style="margin-left: 1px;"><i class="fa fa-list-alt"></i></button><button class="btn btn-secondary float-right d-print-none" type="button" id="btn_remove"><i class="fa fa-trash-o"></i></button></h2>
+                    class="btn btn-secondary float-right d-print-none" id="btn_change" style="margin-left: 1px;" type="button"><i class="fa fa-list-alt"></i></button><button class="btn btn-secondary float-right d-print-none" id="btn_remove" type="button"><i class="fa fa-trash-o"></i></button></h2>
         </div>
         <div class="card shadow-lg d-print-none corrently-panels" id="frm_panel" style="margin-top: 15px;">
             <div class="card-header bg-dark shadow-none">
@@ -73,23 +73,23 @@
                         <h5 class="text-light mb-0">Energie Blockchain - Kontoauskunft</h5>
                     </div>
                     <div class="col">
-                        <div class="dropdown d-inline-flex float-right"><button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button" style="margin-bottom: 15px;">&nbsp;<i class="fa fa-history"></i></button>
+                        <div class="dropdown d-inline-flex float-right"><button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="margin-bottom: 15px;" type="button">&nbsp;<i class="fa fa-history"></i></button>
                             <div class="dropdown-menu" role="menu" id="history"><a class="dropdown-item" role="presentation" href="#">First Item</a></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-body">
-                <form action="/" method="get" id="mform">
+                <form id="mform" action="/" method="get">
                     <div class="form-group">
                         <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Kontonummer</span></div><input class="form-control" type="text" name="a" placeholder="0x1256..." id="account">
-                            <div class="input-group-append"><button class="btn btn-dark" type="submit" id="btn_open">Öffnen</button></div>
+                            <div class="input-group-prepend"><span class="input-group-text">Kontonummer</span></div><input class="form-control" type="text" id="account" name="a" placeholder="0x1256...">
+                            <div class="input-group-append"><button class="btn btn-dark" id="btn_open" type="submit">Öffnen</button></div>
                         </div>
                     </div>
                 </form>
                 <div class="input-group">
-                    <div class="input-group-prepend"><span class="input-group-text">Alias</span></div><input class="form-control" type="text" placeholder="(optional)" id="account_alias">
+                    <div class="input-group-prepend"><span class="input-group-text">Alias</span></div><input class="form-control" type="text" id="account_alias" placeholder="(optional)">
                     <div class="input-group-append"></div>
                 </div>
             </div>
@@ -106,33 +106,33 @@
                 </div>
                 <div class="input-group" style="margin-top: 15px;">
                     <div class="input-group-prepend"><span class="input-group-text">Passwort</span></div><input class="form-control" type="password" id="web_password">
-                    <div class="input-group-append"><button class="btn btn-dark" type="button" id="btn_webview">Öffnen</button></div>
+                    <div class="input-group-append"><button class="btn btn-dark" id="btn_webview" type="button">Öffnen</button></div>
                 </div>
                 <div class="input-group" id="valigroup" style="margin-top: 15px;">
                     <div class="input-group-prepend"><span class="input-group-text">Passwort</span></div><input class="form-control" type="password" id="pwd2">
-                    <div class="input-group-append"><button class="btn btn-dark" type="button" id="btn_vali">Bestätigen</button></div>
+                    <div class="input-group-append"><button class="btn btn-dark" id="btn_vali" type="button">Bestätigen</button></div>
                 </div>
                 <p class="card-text"></p>
             </div>
         </div>
         <div class="card shadow-lg d-print-none corrently-panels" id="market_panel" style="margin-top: 15px;">
             <div class="card-header bg-dark shadow-none">
-                <h5 class="text-light mb-0">Corrently Markplatz<button class="btn btn-secondary btn-sm float-right" type="button" id="btn_close_market"><i class="fa fa-close"></i></button></h5>
+                <h5 class="text-light mb-0">Corrently Markplatz<button class="btn btn-secondary btn-sm float-right" id="btn_close_market" type="button"><i class="fa fa-close"></i></button></h5>
             </div>
             <div class="card-body">
                 <div id="markettx" style="margin-bottom: 15px;">
                     <h5>Umwandlung bestätigen durch Eingabe der Anmeldedaten</h5><input type="hidden" id="market_sel_cori"><input type="hidden" id="market_sel_asset">
                     <div class="input-group" style="margin-bottom: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Anlage</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_title">
+                        <div class="input-group-prepend"><span class="input-group-text">Anlage</span></div><input class="bg-light form-control" type="text" id="market_sel_title" disabled="" readonly="">
                         <div class="input-group-append"></div>
                     </div>
                     <div class="input-group" style="margin-bottom: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Stromkonto</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_sko" style="min-width: 450px;"><input class="bg-white form-control" type="text" inputmode="numeric"
-                            id="market_sel_kap" style="width: 40px;">
+                        <div class="input-group-prepend"><span class="input-group-text">Stromkonto</span></div><input class="bg-light form-control" type="text" id="market_sel_sko" style="min-width: 450px;" disabled="" readonly=""><input class="bg-white form-control" type="text" id="market_sel_kap"
+                            style="width: 40px;" inputmode="numeric">
                         <div class="input-group-append"><span class="text-center text-light bg-secondary input-group-text">kWh/Jahr</span></div>
                     </div>
                     <div class="input-group" style="margin-bottom: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Kennung</span></div><input class="bg-light form-control" type="text" disabled="" readonly="" id="market_sel_contract">
+                        <div class="input-group-prepend"><span class="input-group-text">Kennung</span></div><input class="bg-light form-control" type="text" id="market_sel_contract" disabled="" readonly="">
                         <div class="input-group-append"></div>
                     </div>
                     <div class="input-group">
@@ -141,7 +141,7 @@
                     </div>
                     <div class="input-group" style="margin-top: 15px;">
                         <div class="input-group-prepend"><span class="input-group-text">Passwort</span></div><input class="form-control" type="password" id="market_password">
-                        <div class="input-group-append"><button class="btn btn-dark" type="button" id="btn_markettx">Bestätigen</button></div>
+                        <div class="input-group-append"><button class="btn btn-dark" id="btn_markettx" type="button">Bestätigen</button></div>
                     </div>
                 </div>
                 <h5>Verfügbare Corrently Anlagen zur Eigenerzeugung</h5>
@@ -181,6 +181,14 @@
     </div>
     <div id="app" class="appcontent corrently-panels" style="margin-top: 30px;">
         <div class="container">
+            <div class="card shadow-lg shadow-lg appcard appcontent" id="fc_tarif" style="margin-top: 25px;margin-bottom:25px;">
+                <div class="card-header bg-dark text-light appcard">
+                    <h6><i class="fas fa-dna" style="margin-right: 10px;"></i>Aktuell<button class="btn btn-success btn-sm float-right" id="btn_iot" type="button"><i class="fa fa-chevron-circle-down" id="toggle_tarif"></i></button></h6>
+                </div>
+                <div class="card-body" id="iot-card">
+                    <div class="row" id="iot-row"></div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col col-md-4 d-flex align-items-stretch">
                     <div class="card shadow-lg h-100">
@@ -197,7 +205,7 @@
                         <div class="card-header bg-dark text-light appcard">
                             <h6 class="text-truncate">Corrently Eigenerzeugung (kWh)</h6>
                         </div>
-                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="buy_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen."><i class="fa fa-cart-plus float-right"></i></button>
+                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" id="buy_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen." type="button"><i class="fa fa-cart-plus float-right"></i></button>
                             <h1 class="text-center"><span v-bind:title="kwha">{{ generation_3f }}</span>&nbsp;</h1>
                         </div>
                     </div>
@@ -207,7 +215,7 @@
                         <div class="card-header bg-dark text-light appcard">
                             <h6 class="text-truncate">Corrently Guthaben (EUR)</h6>
                         </div>
-                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" type="button" id="wire_btn" title="Guthaben auszahlen"><i class="fa fa-bank float-right"></i></button>
+                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" id="wire_btn" title="Guthaben auszahlen" type="button"><i class="fa fa-bank float-right"></i></button>
                             <h1 class="text-center"><span id="eur_balance" v-bind:data="balance_eur">{{ balance_eur_2f }}</span>&nbsp;</h1>
                         </div>
                     </div>
@@ -215,7 +223,7 @@
             </div>
             <div class="card shadow-lg shadow-lg appcard appcontent" id="fc_tarif" style="margin-top: 25px;">
                 <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-dna" style="margin-right: 10px;"></i>Abrechnung Tarif<button class="btn btn-success btn-sm float-right" type="button" id="btn_tarif"><i class="fa fa-chevron-circle-down" id="toggle_tarif"></i></button></h6>
+                    <h6><i class="fas fa-dna" style="margin-right: 10px;"></i>Abrechnung Tarif<button class="btn btn-success btn-sm float-right" id="btn_tarif" type="button"><i class="fa fa-chevron-circle-down" id="toggle_tarif"></i></button></h6>
                 </div>
                 <div class="card-body" id="tarif-card">
                     <div class="table-responsive">
@@ -246,7 +254,7 @@
             </div>
             <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
                 <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-book" style="margin-right: 10px;"></i>Letzte Buchungen<button class="btn btn-success btn-sm float-right" type="button" id="btn_tx"><i class="fa fa-chevron-circle-down" id="toggle_tx"></i></button></h6>
+                    <h6><i class="fas fa-book" style="margin-right: 10px;"></i>Letzte Buchungen<button class="btn btn-success btn-sm float-right" id="btn_tx" type="button"><i class="fa fa-chevron-circle-down" id="toggle_tx"></i></button></h6>
                 </div>
                 <div class="card-body" id="tx-card">
                     <div class="table-responsive" style="margin-top: 0;">
@@ -277,7 +285,7 @@
             </div>
             <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
                 <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-chess-king" style="margin-right: 10px;"></i>Bestand Erzeugungsanlagen&nbsp;<button class="btn btn-success btn-sm float-right" type="button" id="btn_asset"><i class="fa fa-chevron-circle-down" id="toggle_asset"></i></button></h6>
+                    <h6><i class="fas fa-chess-king" style="margin-right: 10px;"></i>Bestand Erzeugungsanlagen&nbsp;<button class="btn btn-success btn-sm float-right" id="btn_asset" type="button"><i class="fa fa-chevron-circle-down" id="toggle_asset"></i></button></h6>
                 </div>
                 <div class="card-body" id="asset-card">
                     <div class="table-responsive" style="margin-top: 0;">
@@ -330,7 +338,7 @@
             </div>
             <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
                 <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i>Internet der Dinge<button class="btn btn-success btn-sm float-right" type="button" id="btn_things"><i class="fa fa-chevron-circle-down" id="toggle_things"></i></button></h6>
+                    <h6><i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i>Internet der Dinge<button class="btn btn-success btn-sm float-right" id="btn_things" type="button"><i class="fa fa-chevron-circle-down" id="toggle_things"></i></button></h6>
                 </div>
                 <div class="card-body" id="things-card">
                     <div class="table-responsive" style="margin-top: 0;">
@@ -376,8 +384,10 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/Corrently-IoT-Card.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
     <script src="https://unpkg.com/correntlywallet@1.1.7/dist/correntlywallet.js"></script>
+    <script src="assets/js/iot_corrently.js"></script>
     <script src="assets/js/stromkonto.js"></script>
 </body>
 

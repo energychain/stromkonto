@@ -44,7 +44,7 @@
 
 <body class="text-center">
     <nav class="navbar navbar-light navbar-expand-md navigation-clean shadow-lg">
-        <div class="container"><a class="navbar-brand" href="/"><img src="assets/img/corrently_logo.png" alt="">&nbsp;</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand" href="/"><img alt="" src="assets/img/corrently_logo.png">&nbsp;</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
                 class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav ml-auto"></ul>
@@ -63,7 +63,7 @@
                         <div class="card-body rcard">
                             <h1 class="text-center"><span>kostenlos</span>&nbsp;</h1>
                             <p class="text-right">für <a href="https://stromtarif.shop/">Tarifkunden</a></p>
-                            <hr><button class="btn btn-secondary prod_btn" type="button" id="prod_std">Auswählen</button>
+                            <hr><button class="btn btn-secondary prod_btn" id="prod_std" type="button">Auswählen</button>
                             <hr>
                             <ul>
                                 <li class="text-left">Kontoführung in Echtzeit</li>
@@ -83,7 +83,7 @@
                         <div class="card-body rcard">
                             <h1 class="text-center"><span>2,50€</span>&nbsp;</h1>
                             <p class="text-right">im Monat</p>
-                            <hr><button class="btn btn-warning prod_btn" type="button" id="prod_profi">Auswählen</button>
+                            <hr><button class="btn btn-warning prod_btn" id="prod_profi" type="button">Auswählen</button>
                             <hr>
                             <p class="text-left">Ihr bestehender Stromtarif bleibt erhalten, es ist kein Anbieterwechsel für die Nutzung des Stromkonto notwendig.</p>
                             <p class="text-left">Sie erhalten die Möglichkeit Corrently-Eigenerzeugung zu bekommen, sowie Boni aus dem Grünstrom-Index.</p>
@@ -98,7 +98,7 @@
                         <div class="card-body rcard">
                             <h1 class="text-center"><span>9,50€</span>&nbsp;</h1>
                             <p class="text-right">im Monat</p>
-                            <hr><button class="btn btn-success prod_btn" type="button" id="prod_premium">Auswählen</button>
+                            <hr><button class="btn btn-success prod_btn" id="prod_premium" type="button">Auswählen</button>
                             <hr>
                             <p class="text-left">Zusätzlich zum Profi-Stromkonto beinhaltet diese Variante ein intelligentes Messystem, mit dem eine genauere Abrechnung der Boni aus Corrently-Eigenerzeugung und dem Grünstrom-Index möglich wird.</p>
                             <p class="text-left">Mit der Premium Option erhalten Sie Zugriff auf unser <a href="https://prosume.de/">Team von Experten</a>, die Ihnen telefonisch oder per Mail beratend zur Seite stehen.</p>
@@ -115,7 +115,7 @@
             </div>
             <div class="card-body text-left rcard">
                 <h1 class="text-left" id="stammdaten">Stammdaten</h1>
-                <form action="https://formspree.io/kontakt@stromdao.de" method="post"><input class="form-control" type="hidden" name="produkt" id="prodauswahl">
+                <form action="https://formspree.io/kontakt@stromdao.de" method="post"><input class="form-control" type="hidden" id="prodauswahl" name="produkt">
                     <div class="form-group"><label class="text-left">Ihr Name (Vornamen und Nachnamen)</label><input class="form-control" type="text" name="name"></div>
                     <div class="form-group"><label>Anschrift (Straße und Hausnummer)</label><input class="form-control" type="text" name="strasse"></div>
                     <div class="form-group"><label>Ort (Postleitzahl und Wohnort)</label><input class="form-control" type="text" name="ort"></div>
@@ -143,8 +143,10 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/Corrently-IoT-Card.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
     <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
     <script src="https://unpkg.com/correntlywallet@1.1.7/dist/correntlywallet.js"></script>
+    <script src="assets/js/iot_corrently.js"></script>
     <script src="assets/js/stromkonto.js"></script>
 </body>
 
