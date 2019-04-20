@@ -259,8 +259,8 @@ function openAccount() {
                     
                     html+='<table class="table table-striped">';
                   html+='<tr><td>Stromverbrauch</td><td><span class="usageKwh" data-account="'+stromkonto_data.account.iot+'"></span>&nbsp; kWh</td></tr>';
-                  html+='<tr><td>&nbsp;grün</td><td><span class="greenKwh" data-account="'+stromkonto_data.account.iot+'"></span>&nbsp; kWh</td></tr>';
-                  html+='<tr><td>&nbsp;grau</td><td><span class="greyKwh" data-account="'+stromkonto_data.account.iot+'"></span>&nbsp; kWh</td></tr>';
+                  html+='<tr><td>&nbsp;davon grün</td><td><span class="greenKwh" data-account="'+stromkonto_data.account.iot+'"></span>&nbsp; kWh</td></tr>';
+                  html+='<tr><td>&nbsp;davon grau</td><td><span class="greyKwh" data-account="'+stromkonto_data.account.iot+'"></span>&nbsp; kWh</td></tr>';
                   html+='</table>';             
                   
                   html+='</div>'; 
