@@ -53,8 +53,9 @@ const drawGSI = function(el) {
         ts = new Date(ctx.attr("data-from")*1);
         let long_title = 'von '+ts.getDate()+"."+(ts.getMonth()+1)+"."+(ts.getYear()+1900)+' '+title;
         let ctype = ctx.attr("data-chart");
-        let l1 = Math.round(Math.abs(data.history[data.history.length-1]["1.8.1"]-data.history[0]["1.8.1"])/10000);
-        let l2 = Math.round(Math.abs(data.history[data.history.length-1]["1.8.2"]-data.history[0]["1.8.2"])/10000);
+        let l1 = Math.round(Math.abs(data.history[data.history.length-1]["1.8.1"]-data.history[0]["1.8.1"])/100000000);
+        let totalConsumption = Math.round(Math.abs(data.history[data.history.length-1]["1.8.0"]-data.history[0]["1.8.0"])/100000000);
+        let l2 = Math.round(Math.abs(data.history[data.history.length-1]["1.8.2"]-data.history[0]["1.8.2"])/100000000);
         let green = Math.round((l1/(l1+l2))*100);
         let grey = 100-green;
         let donut_data = [
@@ -62,9 +63,9 @@ const drawGSI = function(el) {
           grey,
         ];
         // Render in html Elements
-        $('.usageKwh,[data-account="'+ctx.attr('data-account')+"]").html(((l1+l2)/10000000).toFixed(3).replace('.',','));
-        $('.greenKwh,[data-account="'+ctx.attr('data-account')+"]").html(((l1)/10000000).toFixed(3).replace('.',','));
-        $('.greyKwh,[data-account="'+ctx.attr('data-account')+"]").html(((l2)/10000000).toFixed(3).replace('.',','));
+        $('.usageKwh').filter('[data-account="'+ctx.attr('data-account')+'"]').html((totalConsumption/1000).toFixed(3).replace('.',','));
+        $('.greenKwh').filter('[data-account="'+ctx.attr('data-account')+'"]').html((l1/1000).toFixed(3).replace('.',','));
+        $('.greyKwh').filter('[data-account="'+ctx.attr('data-account')+'"]').html((l2/1000).toFixed(3).replace('.',','));
         console.log(l1,l2);
         if((ctype=="line")||(ctype=='bar')) {
           let myChart = new Chart(ctx, {
