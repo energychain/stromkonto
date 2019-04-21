@@ -27,7 +27,7 @@ const drawGSI = function(el) {
     }
     if(ctx.attr("data-to") != null) {
       add_query += "&to="+ctx.attr("data-to");
-    }
+    }    
     $.getJSON("https://api.corrently.io/core/reading?account="+ctx.attr('data-account')+"&history="+ctx.attr('data-resolution')+add_query,function(data) {
         let data_1_8_0 = [];
         let data_9_99_0 = [];

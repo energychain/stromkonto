@@ -117,6 +117,9 @@ function gsiTable() {
         });
         return;
     }
+    $.getJSON("https://api.corrently.io/core/gsi?account="+stromkonto_data.account.account,function(data) {
+        console.log("Updated GSI"); 
+    });
     //if(typeof stromkonto_data.account.gsi.forecast == "undefined") return;
     //if(typeof stromkonto_data.account.gsi.bonus == "undefined") return;
     console.log("Account gsi();");
