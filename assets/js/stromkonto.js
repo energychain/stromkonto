@@ -27,7 +27,7 @@ function webview_save(cb) {
         data[keys[i]]=window.localStorage.getItem(keys[i]);
     }           
     if(data !=null) {
-        $.post('https://api.corrently.io/core/webuser',data,function(c) { 
+        $.post('https://api.corrently.io/backend/webuser',data,function(c) { 
             if(typeof cb == "function") cb();
         });
     }
@@ -42,7 +42,7 @@ function webview() {
     let wallet = new CorrentlyWallet.default.Wallet(CorrentlyWallet.default.utils.id($('#web_name').val()+"@"+$('#web_password').val()),new CorrentlyWallet.default.providers.JsonRpcProvider("https://node.corrently.io/"));
     window.localStorage.setItem("webview",wallet.address);
     webview_wallet=wallet;
-    $.getJSON('https://api.corrently.io/core/webuser?webview='+wallet.address,function(viewdata) {
+    $.getJSON('https://api.corrently.io/backend/webuser?webview='+wallet.address,function(viewdata) {
         if(typeof viewdata.webview == "undefined") {
             $('#btn_webview').hide();
             $('#valigroup').show();
@@ -52,7 +52,7 @@ function webview() {
                         let data = {};
                         data.webview=wallet.address;
                         data.account_alias=$('#account').val();
-                      $.post('https://api.corrently.io/core/webuser',data,function(c) {                           
+                      $.post('https://api.corrently.io/backend/webuser',data,function(c) {                           
                                $('.corrently-panels').hide();        
                                $('.appcontent').show();
                       });
