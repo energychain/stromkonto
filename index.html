@@ -9,8 +9,6 @@
     <meta name="keywords" content="Stromkonto, STROMDAO, Blockchain, Corrently">
     <meta name="description" content="Stromkonto der STROMDAO">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="assets/css/Corrently-IoT-Card-1.css">
     <link rel="stylesheet" href="assets/css/Corrently-IoT-Card.css">
@@ -58,320 +56,97 @@
         </div>
         </div>
     </nav>
-    <div class="container"><div role="alert" class="alert alert-danger d-none" id="tarifalert">
-    <p><strong>Hinweis</strong> Diesem Stromkonto ist kein Netzanschluss zugeordnet. Die Zuordnung erfolgt nach Auswahl des Tarifes automatisch. Ihr Stromanbieter berät Sie gerne bei der Einrichtung und Nutzung Ihres persönlichen Stromkontos.</p><span><a class="btn btn-danger btn-sm" role="button" href="https://stromtarif.shop/" target="_blank" style="margin-right:5px;">Tarif wählen</a><a class="btn btn-warning btn-sm" role="button" href="./produktauswahl.html" target="_blank" style="margin-right:5px;" title="Neues Stromkonto einrichten ohne Versorgerwechsel">Neu einrichten</a></span></div></div>
-    <div class="container" id="appcontainer" style="margin-top: 45px;">
-        <div id="app_panel" class="appcontent">
-            <h2 class="text-dark mb-0 text-truncate" style="margin-bottom: 35px;"><i class="fa fa-signal shadow" style="margin-right: 5px;"></i><span id="account_nr" class="text-truncate">Text</span><button class="btn btn-secondary float-right d-print-none" id="btn_switch_ledger" style="margin-left: 1px;" type="button"><i class="fa fa-user d-print-none"></i></button>
-                <button
-                    class="btn btn-secondary float-right d-print-none" id="btn_change" style="margin-left: 1px;" type="button"><i class="fa fa-list-alt"></i></button><button class="btn btn-secondary float-right d-print-none" id="btn_remove" type="button"><i class="fa fa-trash-o"></i></button></h2>
-        </div>
-        <div class="card shadow-lg d-print-none corrently-panels" id="frm_panel" style="margin-top: 15px;">
-            <div class="card-header bg-dark shadow-none">
-                <div class="row">
-                    <div class="col">
-                        <h5 class="text-light mb-0">Energie Blockchain - Kontoauskunft</h5>
+    <div class="container" style="margin-bottom: 25px;margin-top: 25px;">
+        <div class="row" style="margin-bottom: 25px;">
+            <div class="col">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-dark text-light">
+                        <h3>Vorhersage GrünstromIndex</h3>
                     </div>
-                    <div class="col">
-                        <div class="dropdown d-inline-flex float-right"><button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="margin-bottom: 15px;" type="button">&nbsp;<i class="fa fa-history"></i></button>
-                            <div class="dropdown-menu" role="menu" id="history"><a class="dropdown-item" role="presentation" href="#">First Item</a></div>
+                    <div class="card-body">
+                        <div id="gsi_vorhersage"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: 25px;">
+            <div class="col">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-dark text-light">
+                        <h3>Kontostand</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="stromkonto_overview"></div>
+                        <div class="row">
+                            <div class="col" id="soll">
+                                <p class="text-secondary">Soll</p>
+                                <h1><span id="soll_eur">-&nbsp;</span><span>€</span></h1>
+                            </div>
+                            <div class="col" id="soll">
+                                <p class="text-secondary">Haben</p>
+                                <h1><span id="haben_eur">-&nbsp;</span><span>€</span></h1>
+                            </div>
+                            <div class="col" id="soll">
+                                <p class="text-secondary">Saldo</p>
+                                <h1><span id="balance_eur">-&nbsp;</span><span>€</span></h1>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <form id="mform" action="/" method="get">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text">Kontonummer</span></div><input class="form-control" type="text" id="account" name="a" placeholder="0x1256...">
-                            <div class="input-group-append"><button class="btn btn-dark" id="btn_open" type="submit">Öffnen</button></div>
-                        </div>
+                    <div class="card-footer">
+                        <p class="text-center text-muted">Eigenerzeugung aus Corrently Anlagen:&nbsp;<span id="p_2_8_0">-</span><span>&nbsp;kWh</span></p>
                     </div>
-                </form>
-                <div class="input-group">
-                    <div class="input-group-prepend"><span class="input-group-text">Alias</span></div><input class="form-control" type="text" id="account_alias" placeholder="(optional)">
-                    <div class="input-group-append"></div>
                 </div>
             </div>
         </div>
-        <div class="card shadow-lg d-print-none corrently-panels" id="web_panel" style="margin-top: 15px;">
-            <div class="card-header bg-dark shadow-none">
-                <h5 class="text-light mb-0">Energie Blockchain - Anmeldung/Registrierung</h5>
-            </div>
-            <div class="card-body">
-                <h5>Anmelden mit Webkonto</h5>
-                <div class="input-group">
-                    <div class="input-group-prepend"><span class="input-group-text">Benutzername</span></div><input class="form-control" type="text" id="web_name">
-                    <div class="input-group-append"></div>
-                </div>
-                <div class="input-group" style="margin-top: 15px;">
-                    <div class="input-group-prepend"><span class="input-group-text">Passwort</span></div><input class="form-control" type="password" id="web_password">
-                    <div class="input-group-append"><button class="btn btn-dark" id="btn_webview" type="button">Öffnen</button></div>
-                </div>
-                <div class="input-group" id="valigroup" style="margin-top: 15px;">
-                    <div class="input-group-prepend"><span class="input-group-text">Passwort</span></div><input class="form-control" type="password" id="pwd2">
-                    <div class="input-group-append"><button class="btn btn-dark" id="btn_vali" type="button">Bestätigen</button></div>
-                </div>
-                <p class="card-text"></p>
-            </div>
-        </div>
-        <div class="card shadow-lg d-print-none corrently-panels" id="market_panel" style="margin-top: 15px;">
-            <div class="card-header bg-dark shadow-none">
-                <h5 class="text-light mb-0">Corrently Markplatz<button class="btn btn-secondary btn-sm float-right" id="btn_close_market" type="button"><i class="fa fa-close"></i></button></h5>
-            </div>
-            <div class="card-body">
-                <div id="markettx" style="margin-bottom: 15px;">
-                    <h5>Umwandlung bestätigen durch Eingabe der Anmeldedaten</h5><input type="hidden" id="market_sel_cori"><input type="hidden" id="market_sel_asset">
-                    <div class="input-group" style="margin-bottom: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Anlage</span></div><input class="bg-light form-control" type="text" id="market_sel_title" disabled="" readonly="">
-                        <div class="input-group-append"></div>
+        <div class="row" style="margin-bottom: 25px;">
+            <div class="col">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-dark text-light">
+                        <h3>Grünstromzähler</h3>
                     </div>
-                    <div class="input-group" style="margin-bottom: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Stromkonto</span></div><input class="bg-light form-control" type="text" id="market_sel_sko" style="min-width: 450px;" disabled="" readonly=""><input class="bg-white form-control" type="text" id="market_sel_kap"
-                            style="width: 40px;" inputmode="numeric">
-                        <div class="input-group-append"><span class="text-center text-light bg-secondary input-group-text">kWh/Jahr</span></div>
-                    </div>
-                    <div class="input-group" style="margin-bottom: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Kennung</span></div><input class="bg-light form-control" type="text" id="market_sel_contract" disabled="" readonly="">
-                        <div class="input-group-append"></div>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-prepend"><span class="input-group-text">Benutzername</span></div><input class="form-control" type="text" id="market_name">
-                        <div class="input-group-append"></div>
-                    </div>
-                    <div class="input-group" style="margin-top: 15px;">
-                        <div class="input-group-prepend"><span class="input-group-text">Passwort</span></div><input class="form-control" type="password" id="market_password">
-                        <div class="input-group-append"><button class="btn btn-dark" id="btn_markettx" type="button">Bestätigen</button></div>
-                    </div>
-                </div>
-                <h5>Verfügbare Corrently Anlagen zur Eigenerzeugung</h5>
-                <div class="alert alert-danger" role="alert" id="keyAlert" style="display:none;"><span><strong>Hinweis</strong>&nbsp;Die aktuelle Anmeldung ist nicht berechtigt, mit dem Guthaben dieses Stromkonto Erzeugung zu erwerben.</span></div>
-                <p class="card-text"></p>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Bezeichnung</th>
-                                <th>Emitent</th>
-                                <th>Erzeugung bis</th>
-                                <th>&nbsp;Guthaben einlösen für</th>
-                            </tr>
-                        </thead>
-                        <tbody id="market_table">
-                            <tr>
-                                <td>Cell 1</td>
-                                <td>Cell 2</td>
-                            </tr>
-                            <tr>
-                                <td>Cell 3</td>
-                                <td>Cell 4</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="card d-print-none shadow-lg appcontent corrently-panels" id="gsi_card" style="margin-top: 25px;display:all;">
-            <div class="card-header bg-dark text-light appcard">
-                <h6 id="info_gsi_ort">Vorhersage Grünstrom Bonus <br><span style="font-size: 12px;"><span id="gsi_bonus">0,00</span>&nbsp;Cent/kWh bei 100% Grünstrom am Lieferort</span>
-                </h6>
-            </div>
-            <div class="card-body" id="gsi" style="padding: 1px;"></div>
-        </div>
+                    <div class="card-body"><div class="row" id="has_meter">
+    <div class="col col-sm-8">
+        <canvas class="usageChart" width="600" height="400"  data-chart="line" id="usageChart"></canvas>
     </div>
-    <div id="app" class="appcontent corrently-panels" style="margin-top: 30px;">
-        <div class="container">
-            <div class="card shadow-lg shadow-lg appcard appcontent" id="fc_tarif" style="margin-top: 25px;margin-bottom:25px;">
-                <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-broadcast-tower" style="margin-right: 10px;"></i>Aktuell<button class="btn btn-success btn-sm float-right" id="btn_iot" type="button"><i class="fa fa-chevron-circle-down" id="toggle_tarif"></i></button></h6>
-                </div>
-                <div class="card-body" id="iot-card">
-                    <div class="row" id="iot-row"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-md-4 d-flex align-items-stretch">
-                    <div class="card shadow-lg h-100">
-                        <div class="card-header bg-dark text-light appcard">
-                            <h6 class="text-truncate">Lokaler Grünstrom (Anteil am Netzbezug)</h6>
-                        </div>
-                        <div class="card-body rcard">
-                            <h1 class="text-center"><span>{{ green_power }}%</span>&nbsp;</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-md-4">
-                    <div class="card shadow-lg h-100">
-                        <div class="card-header bg-dark text-light appcard">
-                            <h6 class="text-truncate">Corrently Eigenerzeugung (kWh)</h6>
-                        </div>
-                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" id="buy_btn" title="Guthaben für Anlagenanteile zur Eigenerzeugung nutzen." type="button"><i class="fa fa-cart-plus float-right"></i></button>
-                            <h1 class="text-center"><span v-bind:title="kwha">{{ generation_3f }}</span>&nbsp;</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-md-4">
-                    <div class="card shadow-lg h-100">
-                        <div class="card-header bg-dark text-light appcard">
-                            <h6 class="text-truncate">Corrently Guthaben (EUR)</h6>
-                        </div>
-                        <div class="card-body rcard"><button class="btn btn-success btn-sm float-right" id="wire_btn" title="Guthaben auszahlen" type="button"><i class="fa fa-bank float-right"></i></button>
-                            <h1 class="text-center"><span id="eur_balance" v-bind:data="balance_eur">{{ balance_eur_2f }}</span>&nbsp;</h1>
-                        </div>
-                    </div>
+    <div class="col col-sm-4">
+        <canvas width="276" height="184" id="donutChart" data-chart="donut"  class="usageChart chartjs-render-monitor" data-resolution="3600000" style="display: block; width: 276px; height: 184px;"></canvas>
+        
+        <table class="table table-striped"><tbody>
+            <tr><td>Stromverbrauch</td><td><span class="usageKwh">-</span>&nbsp; kWh</td></tr>
+            <tr><td>&nbsp;davon grün</td><td><span class="greenKwh" >-</span>&nbsp; kWh</td></tr>
+            <tr><td>&nbsp;davon grau</td><td><span class="greyKwh" >-</span>&nbsp; kWh</td></tr>
+        </tbody></table>
+    </div>
+</div>
+<div class="row" id="no_meter" style="display:none">
+    <div class="col">
+    <h3>Kein Grünstromzähler vorhanden</h3>
+    <p>Mit einem intelligten Grünstromzähler kann der Bonus genauer berechnet werden und fällt garantiert höher aus, da die tatsächlichen Verbrauchszeiten berücksichtigt werden.</p>.
+    <a href="https://stromdao.com/kontakt/" class="btn btn-warning">Kontakt zur <strong>STROM</strong>DAO</a>
+    </div>
+</div></div>
+                    <div id="lastReadingTable"></div>
                 </div>
             </div>
-            <div class="card shadow-lg shadow-lg appcard appcontent" id="fc_tarif" style="margin-top: 25px;">
-                <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-dna" style="margin-right: 10px;"></i>Abrechnung Tarif<button class="btn btn-success btn-sm float-right" id="btn_tarif" type="button"><i class="fa fa-chevron-circle-down" id="toggle_tarif"></i></button></h6>
-                </div>
-                <div class="card-body" id="tarif-card">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Tarifierung {{ account.sev.ja }} kWh/Jahr</th>
-                                    <th class="text-right">Wert/Betrag</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Entnahme laut Tarif (Soll)</td>
-                                    <td class="text-right">{{ account.sev.t_instalment }} kWh</td>
-                                </tr>
-                                <tr>
-                                    <td>Entnahme laut Stromzähler (Ist)</td>
-                                    <td class="text-right">{{ account.sev.m_instalment }} kWh</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Mehr-/Minderverbrauch (Saldo)</strong></td>
-                                    <td class="text-right"><strong>{{ account.sev.c_instalment*-1 }} kWh</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
+        </div>
+        <div class="row" style="margin-bottom: 25px;">
+            <div class="col">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-dark text-light">
+                        <h3>Corrently Erzeugung</h3>
                     </div>
-                </div>
-            </div>
-            <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
-                <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-book" style="margin-right: 10px;"></i>Letzte Buchungen<button class="btn btn-success btn-sm float-right" id="btn_tx" type="button"><i class="fa fa-chevron-circle-down" id="toggle_tx"></i></button></h6>
-                </div>
-                <div class="card-body" id="tx-card">
-                    <div class="table-responsive" style="margin-top: 0;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Buchungslauf (Block)</th>
-                                    <th>Referenz</th>
-                                    <th class="text-right">Betrag (€)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="tx in txs">
-                                    <td v-bind:title="tx.blockNumber">{{ tx.timeStamp }}</td>
-                                    <td v-bind:title="tx.peer_account">{{ tx.peer }} &nbsp;&nbsp;</td>
-                                    <td class="text-right">{{ tx.value_abs }}</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="text-right"><strong>Vorheriger Saldo</strong></td>
-                                    <td class="text-right"><span id="start_saldo" style="filter: blur(0px);"><br></span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card-body">
+                        <h4>Bestand</h4>
+                        <div id="deport_overview"></div>
+                        <h4>Verfügbar / Marktplatz</h4>
+                        <div id="market"></div>
                     </div>
-                    <p class="card-text"></p>
-                </div>
-            </div>
-            <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
-                <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-chess-king" style="margin-right: 10px;"></i>Bestand Erzeugungsanlagen&nbsp;<button class="btn btn-success btn-sm float-right" id="btn_asset" type="button"><i class="fa fa-chevron-circle-down" id="toggle_asset"></i></button></h6>
-                </div>
-                <div class="card-body" id="asset-card">
-                    <div class="table-responsive" style="margin-top: 0;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Seit</th>
-                                    <th>Bezeichnung</th>
-                                    <th>Kapazität (kWh/Jahr)</th>
-                                    <th class="text-right">Erzeugung bisher (kWh)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="tx in account.txs">
-                                    <td>{{ tx.timeStamp }}</td>
-                                    <td v-bind:title="tx.asset">{{ tx.peer }} &nbsp;&nbsp;</td>
-                                    <td class="text-right">{{ tx.cori }}</td>
-                                    <td class="text-right">{{ tx.generation }}</td>
-                                </tr>
-                                <tr id="max_asset_rows" style="display:none">
-                                    <td></td>
-                                    <td class="text-left"><strong>Es werden maximal 12 Einträge angezeigt!</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="card-text"></p>
-                </div>
-                <div class="card-body" id="asset-card-collapsed">
-                    <div class="table-responsive" style="margin-top: 0;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Bezeichnung</th>
-                                    <th>Kapazität (kWh/Jahr)</th>
-                                    <th class="text-right">Erzeugung bisher (kWh)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="tx in account.txs_aggregated">
-                                    <td>{{ tx.peer }}</td>
-                                    <td class="text-right">{{ tx.cori }}</td>
-                                    <td class="text-right">{{ tx.generation.toFixed(3).replace('.',',') }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="card-text"></p>
-                </div>
-            </div>
-            <div class="card shadow-lg shadow-lg appcard appcontent" style="margin-top: 25px;">
-                <div class="card-header bg-dark text-light appcard">
-                    <h6><i class="fas fa-tachometer-alt" style="margin-right: 10px;"></i>Internet der Dinge<button class="btn btn-success btn-sm float-right" id="btn_things" type="button"><i class="fa fa-chevron-circle-down" id="toggle_things"></i></button></h6>
-                </div>
-                <div class="card-body" id="things-card">
-                    <div class="table-responsive" style="margin-top: 0;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Bezeichnung</th>
-                                    <th>Zeitpunkt</th>
-                                    <th class="text-right">Ablesung (kWh)</th>
-                                    <th class="text-right">Betrag (€)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="tx in account.things">
-                                    <td v-bind:title="tx.blockNumber">{{ tx.title }}</td>
-                                    <td v-bind:title="tx.peer_account">{{ tx.timeStamp }} &nbsp;&nbsp;</td>
-                                    <td class="text-right" v-bind:title="tx.peer_account">{{ tx.base }} &nbsp;&nbsp;</td>
-                                    <td class="text-right">{{ tx.eur }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="card-text"></p>
-                </div>
-                <div class="card-body" id="things-card-collapsed" style="display:none">
-                    <div class="alert alert-warning" role="alert"><span><strong>Kein IoT Gerät erkannt!</strong>&nbsp;Für dieses Stromkonto wurde kein Gerät erkannt oder zugeordnet. <a href="https://corrently.io/libraries/iot">Weitere Informationen</a></span></div>
-                    <p class="card-text"></p>
                 </div>
             </div>
         </div>
     </div><footer id="footer" style="margin-top:25px;padding-top:25px;">
     <div style= "background: black; text-align: center; margin: 0px; padding:10px">
-        <p style= "color:grey; font-family: raleway" id="bcstatus">(c) 2019 <a href="https://stromdao.de/"><strong>STROM</strong>DAO</a> | <a href="https://stromdao.de/impressum/">Impressum &amp; Datenschutz</a> | <a href="http://corrently.blog">Blog</a> | Konsens # <a href="https://scan.corrently.io">{{ blocknumber }}</a> <span id='webuser' class="text-muted"></span> </p>
+        <p style= "color:grey; font-family: raleway" id="bcstatus">(c) 2019 <a href="https://stromdao.de/"><strong>STROM</strong>DAO</a> | <a href="https://stromdao.de/impressum/">Impressum &amp; Datenschutz</a> | <a href="http://corrently.blog">Blog</a> |  <a href="https://scan.corrently.io">Konsens</a> </p>
     </div>
 </footer>
 <script>
@@ -382,13 +157,9 @@
 </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/Corrently-IoT-Card.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-    <script src="https://unpkg.com/corrently-iot-jquery@latest/index.js"></script>
-    <script src="https://unpkg.com/correntlywallet@1.1.7/dist/correntlywallet.js"></script>
-    <script src="assets/js/iot_corrently.js"></script>
-    <script src="assets/js/stromkonto.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="https://elements.corrently.io/assets/js/Chart.bundle.min.js"></script>
+    <script src="https://elements.corrently.io/dist/correntlyElements-min.js"></script>
 </body>
 
 </html>
